@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './RecipeCard'
+import RecipeCard from './RecipeCard.jsx'
 
 export default  class Home extends Component {
   constructor(props) {
