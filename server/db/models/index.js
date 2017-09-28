@@ -13,7 +13,7 @@ Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
 module.exports = {
   User,
   Category,
-  OrderHistory, 
+  OrderHistory,
   Ingredient,
   Recipe,
   ReceiptRepresentation
