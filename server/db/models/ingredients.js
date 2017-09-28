@@ -6,9 +6,6 @@ const Ingredient = db.define('ingredient', {
     type: Sequelize.STRING,
     primaryKey: true,
     allowNull: false
-  },
-  daysToSpoil: {
-    type: Sequelize.INTEGER
   }
 })
 
