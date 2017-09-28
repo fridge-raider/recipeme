@@ -8,10 +8,10 @@ const Recipe = db.define('recipe', {
     allowNull: false
   },
   website: {
-    type: Sequelize.URL
+    type: Sequelize.STRING
   },
   image: {
-    type: Sequelize.URL
+    type: Sequelize.STRING
   }
 },
 {
