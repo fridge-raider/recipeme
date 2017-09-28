@@ -2,16 +2,19 @@ const Sequelize = require('sequelize')
 const db = require('../db')
 
 // how much of each ingredient each user has
-const Inventory = db.define('inventory', {
+const OrderHistory = db.define('orderHistory', {
   quantity: {
     type: Sequelize.INTEGER
   },
   units: {
     type: Sequelize.STRING
   },
+  price: {
+    type: Sequelize.FLOAT
+  },
   orderId: {
     type: Sequelize.INTEGER
   }
 })
 
-module.exports = Inventory
+module.exports = OrderHistory
