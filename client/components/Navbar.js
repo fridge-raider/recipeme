@@ -5,7 +5,7 @@ import { withRouter, Link, NavLink } from 'react-router-dom'
 import { Container, Menu, Grid } from 'semantic-ui-react'
 
 
-class Navbar extends Component {
+export default class Navbar extends Component {
   
   render() {
     return (
@@ -15,10 +15,10 @@ class Navbar extends Component {
           <NavLink to='/'>FeedMe</NavLink>
         </Menu.Item>
         <Menu.Item>
-            Sign Up
+            <NavLink to='/signup'>Sign Up</NavLink>
         </Menu.Item>
         <Menu.Item>
-            Log In
+          <NavLink to='/login'>Log In</NavLink>
         </Menu.Item>
       </Menu>
     )
