@@ -8,4 +8,5 @@ const ReceiptRepresentations = db.define('receiptRepresentations', {
   }
 })
 
+
 module.exports = ReceiptRepresentations
