@@ -15,11 +15,16 @@ export default class Navbar extends Component {
           <NavLink to='/'>FeedMe</NavLink>
         </Menu.Item>
         <Menu.Item>
-            <NavLink to='/signup'>Sign Up</NavLink>
+          <NavLink to='/findrecipes'>Find Recipes</NavLink>
         </Menu.Item>
-        <Menu.Item>
-          <NavLink to='/login'>Log In</NavLink>
-        </Menu.Item>
+        <Menu.Menu position='right'>
+          <Menu.Item>
+              <NavLink to='/signup'>Sign Up</NavLink>
+          </Menu.Item>
+          <Menu.Item>
+            <NavLink to='/login'>Log In</NavLink>
+          </Menu.Item>
+        </Menu.Menu>
       </Menu>
     )
   }

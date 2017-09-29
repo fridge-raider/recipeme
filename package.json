@@ -35,11 +35,15 @@
     "d3-transition": "1.1.0",
     "express": "^4.14.1",
     "express-session": "^1.15.1",
+    "file-system": "^2.2.2",
+    "fs": "0.0.1-security",
+    "fs-extra": "^4.0.2",
     "history": "^4.6.3",
     "material-ui": "^0.19.2",
     "material-ui-table-edit": "^3.0.3",
     "keen-tracking": "^1.2.1",
     "morgan": "^1.8.1",
+    "needle": "^2.0.1",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^6.1.2",
@@ -58,7 +62,9 @@
     "redux-thunk": "^2.2.0",
     "semantic-ui-react": "^0.74.2",
     "sequelize": "^4.3.1",
-    "socket.io": "^2.0.3"
+    "socket.io": "^2.0.3",
+    "ws-yummly": "^1.0.24",
+    "yummly": "^0.2.4"
   },
   "devDependencies": {
     "axios-mock-adapter": "^1.9.0",

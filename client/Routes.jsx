@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, Signup, UserHome, Navbar, Home, ReceiptUpload, Data} from './components'
+import {Main, Login, Signup, UserHome, Navbar, FindRecipes, ReceiptUpload, Data} from './components'
 import {me} from './store'
 
 /**
@@ -24,12 +24,11 @@ class Routes extends Component {
         <Main>
           <Navbar />
             <Switch>
-            <Route path='/receipt' component={ReceiptUpload} />
-
               {/* Routes placed here are available to all visitors */}
-              <Route exact path='/' component={Home} />
+              <Route path='/findrecipes' component={FindRecipes} />
               <Route path='/login' component={Login} />
               <Route path='/signup' component={Signup} />
+              <Route path='/receipt' component={ReceiptUpload} />
               <Route path='/data' component={Data} />
               {
                 isLoggedIn &&
