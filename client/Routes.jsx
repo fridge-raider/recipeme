@@ -20,6 +20,7 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
+      <div className ="container-fluid">
         <Main>
           <Navbar />
             <Switch>
@@ -40,6 +41,7 @@ class Routes extends Component {
               <Route component={Login} />
             </Switch>
         </Main>
+        </div>
       </Router>
     )
   }
