@@ -36845,7 +36845,7 @@ var Routes = function (_Component) {
           _react2.default.createElement(
             _reactRouterDom.Switch,
             null,
-            _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _components.Home }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/findrecipes', component: _components.FindRecipes }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: _components.Login }),
             _react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _components.Signup }),
             isLoggedIn && _react2.default.createElement(
@@ -37863,13 +37863,13 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var Home = function (_Component) {
-  _inherits(Home, _Component);
+var FindRecipes = function (_Component) {
+  _inherits(FindRecipes, _Component);
 
-  function Home(props) {
-    _classCallCheck(this, Home);
+  function FindRecipes(props) {
+    _classCallCheck(this, FindRecipes);
 
-    var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (FindRecipes.__proto__ || Object.getPrototypeOf(FindRecipes)).call(this, props));
 
     _this.state = {
       mainIngredient: ''
@@ -37877,7 +37877,7 @@ var Home = function (_Component) {
     return _this;
   }
 
-  _createClass(Home, [{
+  _createClass(FindRecipes, [{
     key: 'render',
     value: function render() {
       var _this2 = this;
@@ -37888,8 +37888,8 @@ var Home = function (_Component) {
       console.log(getRecipes);
 
       return _react2.default.createElement(
-        'div',
-        null,
+        _semanticUiReact.Container,
+        { fluid: true, style: { padding: '1em 2em' } },
         _react2.default.createElement(
           _semanticUiReact.Form,
           { onSubmit: function onSubmit(evt) {
@@ -37925,7 +37925,7 @@ var Home = function (_Component) {
     }
   }]);
 
-  return Home;
+  return FindRecipes;
 }(_react.Component);
 
 var mapProps = function mapProps(state) {
@@ -37943,7 +37943,7 @@ var mapDispatch = function mapDispatch(dispatch, ownProps) {
   };
 };
 
-exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapProps, mapDispatch)(Home));
+exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapProps, mapDispatch)(FindRecipes));
 
 /***/ }),
 /* 537 */
@@ -38335,12 +38335,12 @@ Object.defineProperty(exports, 'Navbar', {
   }
 });
 
-var _Home = __webpack_require__(536);
+var _FindRecipes = __webpack_require__(536);
 
-Object.defineProperty(exports, 'Home', {
+Object.defineProperty(exports, 'FindRecipes', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_Home).default;
+    return _interopRequireDefault(_FindRecipes).default;
   }
 });
 

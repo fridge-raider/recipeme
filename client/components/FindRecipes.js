@@ -6,7 +6,7 @@ import { Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeCard'
 import { getRecipesByIngredient } from '../store'
 
-class Home extends Component {
+class FindRecipes extends Component {
   constructor(props) {
     super(props)
 
@@ -25,7 +25,7 @@ class Home extends Component {
     console.log(getRecipes)
 
     return (
-      <div>
+      <Container fluid style={{padding: '1em 2em'}}>
         <Form onSubmit={(evt) => this.props.handleSubmit(evt, this.state.mainIngredient)}>
           <Form.Group widths='equal'>
             <Form.Input 
@@ -43,8 +43,7 @@ class Home extends Component {
             return <RecipeCard recipe={recipe} /> })
           }
         </Card.Group>
-        
-      </div>
+      </Container>
     )
   }
 }
@@ -64,4 +63,4 @@ const mapDispatch = (dispatch, ownProps) => {
   }
 }
 
-export default withRouter(connect(mapProps, mapDispatch)(Home));
+export default withRouter(connect(mapProps, mapDispatch)(FindRecipes));
