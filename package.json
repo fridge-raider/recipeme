@@ -39,6 +39,8 @@
     "q": "^1.5.0",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
+    "react-images-upload": "^1.1.1",
+    "react-images-uploader": "^1.1.0",
     "react-redux": "^5.0.6",
     "react-router": "^4.1.1",
     "react-router-dom": "^4.1.1",

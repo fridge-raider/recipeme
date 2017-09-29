@@ -36770,132 +36770,7 @@ module.exports = yeast;
 
 
 /***/ }),
-/* 515 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(50);
-
-var _reactRouter = __webpack_require__(237);
-
-var _reactRouterDom = __webpack_require__(102);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _history = __webpack_require__(276);
-
-var _history2 = _interopRequireDefault(_history);
-
-var _components = __webpack_require__(540);
-
-var _store = __webpack_require__(86);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-/**
- * COMPONENT
- */
-var Routes = function (_Component) {
-  _inherits(Routes, _Component);
-
-  function Routes() {
-    _classCallCheck(this, Routes);
-
-    return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).apply(this, arguments));
-  }
-
-  _createClass(Routes, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      this.props.loadInitialData();
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      var isLoggedIn = this.props.isLoggedIn;
-
-
-      return _react2.default.createElement(
-        _reactRouter.Router,
-        { history: _history2.default },
-        _react2.default.createElement(
-          _components.Main,
-          null,
-          _react2.default.createElement(_components.Navbar, null),
-          _react2.default.createElement(
-            _reactRouterDom.Switch,
-            null,
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/findrecipes', component: _components.FindRecipes }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: _components.Login }),
-            _react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _components.Signup }),
-            isLoggedIn && _react2.default.createElement(
-              _reactRouterDom.Switch,
-              null,
-              _react2.default.createElement(_reactRouterDom.Route, { path: '/home', component: _components.UserHome })
-            ),
-            _react2.default.createElement(_reactRouterDom.Route, { component: _components.Login })
-          )
-        )
-      );
-    }
-  }]);
-
-  return Routes;
-}(_react.Component);
-
-/**
- * CONTAINER
- */
-
-
-var mapState = function mapState(state) {
-  return {
-    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
-    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
-    isLoggedIn: !!state.user.id
-  };
-};
-
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    loadInitialData: function loadInitialData() {
-      dispatch((0, _store.me)());
-    }
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Routes);
-
-/**
- * PROP TYPES
- */
-
-Routes.propTypes = {
-  loadInitialData: _propTypes2.default.func.isRequired,
-  isLoggedIn: _propTypes2.default.bool.isRequired
-};
-
-/***/ }),
+/* 515 */,
 /* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -37825,464 +37700,10 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 536 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(50);
-
-var _reactRouter = __webpack_require__(237);
-
-var _reactRouterDom = __webpack_require__(102);
-
-var _semanticUiReact = __webpack_require__(249);
-
-var _RecipeCard = __webpack_require__(538);
-
-var _RecipeCard2 = _interopRequireDefault(_RecipeCard);
-
-var _store = __webpack_require__(86);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var FindRecipes = function (_Component) {
-  _inherits(FindRecipes, _Component);
-
-  function FindRecipes(props) {
-    _classCallCheck(this, FindRecipes);
-
-    var _this = _possibleConstructorReturn(this, (FindRecipes.__proto__ || Object.getPrototypeOf(FindRecipes)).call(this, props));
-
-    _this.state = {
-      mainIngredient: ''
-    };
-    return _this;
-  }
-
-  _createClass(FindRecipes, [{
-    key: 'render',
-    value: function render() {
-      var _this2 = this;
-
-      var getRecipes = this.props.getRecipes;
-
-      var options = [{ key: 'chn', text: 'Chinese', value: 'chinese' }, { key: 'krn', text: 'Korean', value: 'korean' }, { key: 'ity', text: 'Italian', value: 'italian' }];
-      console.log(getRecipes);
-
-      return _react2.default.createElement(
-        _semanticUiReact.Container,
-        { fluid: true, style: { padding: '1em 2em' } },
-        _react2.default.createElement(
-          _semanticUiReact.Form,
-          { onSubmit: function onSubmit(evt) {
-              return _this2.props.handleSubmit(evt, _this2.state.mainIngredient);
-            } },
-          _react2.default.createElement(
-            _semanticUiReact.Form.Group,
-            { widths: 'equal' },
-            _react2.default.createElement(_semanticUiReact.Form.Input, {
-              label: 'Main ingredient',
-              placeholder: 'what do you want to eat today?',
-              onChange: function onChange(evt) {
-                return _this2.setState({ mainIngredient: evt.target.value });
-              }
-            }),
-            _react2.default.createElement(_semanticUiReact.Form.Select, { label: 'Cuisine', options: options, placeholder: 'Anything' })
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Form.Button,
-            null,
-            'Submit'
-          )
-        ),
-        _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          _semanticUiReact.Card.Group,
-          { itemsPerRow: '3' },
-          getRecipes && getRecipes.map(function (recipe) {
-            return _react2.default.createElement(_RecipeCard2.default, { recipe: recipe });
-          })
-        )
-      );
-    }
-  }]);
-
-  return FindRecipes;
-}(_react.Component);
-
-var mapProps = function mapProps(state) {
-  return {
-    getRecipes: state.getRecipes
-  };
-};
-
-var mapDispatch = function mapDispatch(dispatch, ownProps) {
-  return {
-    handleSubmit: function handleSubmit(evt, ingred) {
-      dispatch((0, _store.getRecipesByIngredient)(ingred));
-      evt.preventDefault();
-    }
-  };
-};
-
-exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapProps, mapDispatch)(FindRecipes));
-
-/***/ }),
-/* 537 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(167);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _reactRedux = __webpack_require__(50);
-
-var _reactRouterDom = __webpack_require__(102);
-
-var _semanticUiReact = __webpack_require__(249);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Navbar = function (_Component) {
-  _inherits(Navbar, _Component);
-
-  function Navbar() {
-    _classCallCheck(this, Navbar);
-
-    return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
-  }
-
-  _createClass(Navbar, [{
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        _semanticUiReact.Menu,
-        { color: 'grey', size: 'large', inverted: true, secondary: true, className: 'nav-bar' },
-        _react2.default.createElement(
-          _semanticUiReact.Menu.Item,
-          null,
-          _react2.default.createElement('img', { src: 'http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' }),
-          _react2.default.createElement(
-            _reactRouterDom.NavLink,
-            { to: '/' },
-            'FeedMe'
-          )
-        ),
-        _react2.default.createElement(
-          _semanticUiReact.Menu.Item,
-          null,
-          _react2.default.createElement(
-            _reactRouterDom.NavLink,
-            { to: '/signup' },
-            'Sign Up'
-          )
-        ),
-        _react2.default.createElement(
-          _semanticUiReact.Menu.Item,
-          null,
-          _react2.default.createElement(
-            _reactRouterDom.NavLink,
-            { to: '/login' },
-            'Log In'
-          )
-        )
-      );
-    }
-  }]);
-
-  return Navbar;
-}(_react.Component);
-
-exports.default = Navbar;
-
-/***/ }),
-/* 538 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(50);
-
-var _reactRouter = __webpack_require__(237);
-
-var _reactRouterDom = __webpack_require__(102);
-
-var _semanticUiReact = __webpack_require__(249);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var RecipeCard = function (_Component) {
-  _inherits(RecipeCard, _Component);
-
-  function RecipeCard(props) {
-    _classCallCheck(this, RecipeCard);
-
-    return _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).call(this, props));
-  }
-
-  _createClass(RecipeCard, [{
-    key: 'render',
-    value: function render() {
-      var recipe = this.props.recipe;
-
-      return _react2.default.createElement(
-        _semanticUiReact.Card,
-        null,
-        _react2.default.createElement(_semanticUiReact.Image, { src: recipe.smallImageUrls }),
-        _react2.default.createElement(
-          _semanticUiReact.Card.Content,
-          null,
-          _react2.default.createElement(
-            _semanticUiReact.Card.Header,
-            null,
-            recipe.recipeName
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Card.Meta,
-            null,
-            _react2.default.createElement(
-              'span',
-              { className: 'date' },
-              recipe.sourceDisplayName
-            )
-          ),
-          _react2.default.createElement(
-            _semanticUiReact.Card.Description,
-            null,
-            recipe.ingredients.join(', ')
-          )
-        ),
-        _react2.default.createElement(
-          _semanticUiReact.Card.Content,
-          { extra: true },
-          _react2.default.createElement(
-            'a',
-            null,
-            _react2.default.createElement(_semanticUiReact.Icon, { name: 'user' }),
-            'Link to full recipe'
-          )
-        )
-      );
-    }
-  }]);
-
-  return RecipeCard;
-}(_react.Component);
-
-// const mapState = (state) => {
-//   return {
-//     getRecipes: state.getRecipes
-//   }
-// }
-
-// const mapDispatch = (dispatch) => {
-//   return {
-
-//   }
-// }
-
-
-exports.default = RecipeCard;
-
-/***/ }),
-/* 539 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.Signup = exports.Login = undefined;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactRedux = __webpack_require__(50);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _store = __webpack_require__(86);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * COMPONENT
- */
-var AuthForm = function AuthForm(props) {
-  var name = props.name,
-      displayName = props.displayName,
-      handleSubmit = props.handleSubmit,
-      error = props.error;
-
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'form',
-      { onSubmit: handleSubmit, name: name },
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'email' },
-          _react2.default.createElement(
-            'small',
-            null,
-            'Email'
-          )
-        ),
-        _react2.default.createElement('input', { name: 'email', type: 'text' })
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'label',
-          { htmlFor: 'password' },
-          _react2.default.createElement(
-            'small',
-            null,
-            'Password'
-          )
-        ),
-        _react2.default.createElement('input', { name: 'password', type: 'password' })
-      ),
-      _react2.default.createElement(
-        'div',
-        null,
-        _react2.default.createElement(
-          'button',
-          { type: 'submit' },
-          displayName
-        )
-      ),
-      error && error.response && _react2.default.createElement(
-        'div',
-        null,
-        ' ',
-        error.response.data,
-        ' '
-      )
-    ),
-    _react2.default.createElement(
-      'a',
-      { href: '/auth/google' },
-      displayName,
-      ' with Google'
-    )
-  );
-};
-
-/**
- * CONTAINER
- *   Note that we have two different sets of 'mapStateToProps' functions -
- *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
- *   function, and share the same Component. This is a good example of how we
- *   can stay DRY with interfaces that are very similar to each other!
- */
-var mapLogin = function mapLogin(state) {
-  return {
-    name: 'login',
-    displayName: 'Login',
-    error: state.user.error
-  };
-};
-
-var mapSignup = function mapSignup(state) {
-  return {
-    name: 'signup',
-    displayName: 'Sign Up',
-    error: state.user.error
-  };
-};
-
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    handleSubmit: function handleSubmit(evt) {
-      evt.preventDefault();
-      var formName = evt.target.name;
-      var email = evt.target.email.value;
-      var password = evt.target.password.value;
-      dispatch((0, _store.auth)(email, password, formName));
-    }
-  };
-};
-
-var Login = exports.Login = (0, _reactRedux.connect)(mapLogin, mapDispatch)(AuthForm);
-var Signup = exports.Signup = (0, _reactRedux.connect)(mapSignup, mapDispatch)(AuthForm);
-
-/**
- * PROP TYPES
- */
-AuthForm.propTypes = {
-  name: _propTypes2.default.string.isRequired,
-  displayName: _propTypes2.default.string.isRequired,
-  handleSubmit: _propTypes2.default.func.isRequired,
-  error: _propTypes2.default.object
-};
-
-/***/ }),
+/* 536 */,
+/* 537 */,
+/* 538 */,
+/* 539 */,
 /* 540 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38293,40 +37714,40 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _main = __webpack_require__(541);
+var _Main = __webpack_require__(1047);
 
 Object.defineProperty(exports, 'Main', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_main).default;
+    return _interopRequireDefault(_Main).default;
   }
 });
 
-var _userHome = __webpack_require__(542);
+var _UserHome = __webpack_require__(1050);
 
 Object.defineProperty(exports, 'UserHome', {
   enumerable: true,
   get: function get() {
-    return _interopRequireDefault(_userHome).default;
+    return _interopRequireDefault(_UserHome).default;
   }
 });
 
-var _authForm = __webpack_require__(539);
+var _AuthForm = __webpack_require__(1045);
 
 Object.defineProperty(exports, 'Login', {
   enumerable: true,
   get: function get() {
-    return _authForm.Login;
+    return _AuthForm.Login;
   }
 });
 Object.defineProperty(exports, 'Signup', {
   enumerable: true,
   get: function get() {
-    return _authForm.Signup;
+    return _AuthForm.Signup;
   }
 });
 
-var _Navbar = __webpack_require__(537);
+var _Navbar = __webpack_require__(1048);
 
 Object.defineProperty(exports, 'Navbar', {
   enumerable: true,
@@ -38335,7 +37756,7 @@ Object.defineProperty(exports, 'Navbar', {
   }
 });
 
-var _FindRecipes = __webpack_require__(536);
+var _FindRecipes = __webpack_require__(1051);
 
 Object.defineProperty(exports, 'FindRecipes', {
   enumerable: true,
@@ -38344,165 +37765,29 @@ Object.defineProperty(exports, 'FindRecipes', {
   }
 });
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+var _RecipeCard = __webpack_require__(1043);
 
-/***/ }),
-/* 541 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, 'RecipeCard', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_RecipeCard).default;
+  }
 });
 
-var _react = __webpack_require__(1);
+var _ReceiptUpload = __webpack_require__(1049);
 
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactRedux = __webpack_require__(50);
-
-var _reactRouterDom = __webpack_require__(102);
-
-var _store = __webpack_require__(86);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-/**
- * COMPONENT
- *  The Main component is our 'picture frame' - it displays the navbar and anything
- *  else common to our entire app. The 'picture' inside the frame is the space
- *  rendered out by the component's `children`.
- */
-var Main = function Main(props) {
-  var children = props.children,
-      handleClick = props.handleClick,
-      isLoggedIn = props.isLoggedIn;
-
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    children
-  );
-};
-
-/**
- * CONTAINER
- */
-var mapState = function mapState(state) {
-  return {
-    isLoggedIn: !!state.user.id
-  };
-};
-
-var mapDispatch = function mapDispatch(dispatch) {
-  return {
-    handleClick: function handleClick() {
-      dispatch((0, _store.logout)());
-    }
-  };
-};
-
-// The `withRouter` wrapper makes sure that updates are not blocked
-// when the url changes
-exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapState, mapDispatch)(Main));
-
-/**
- * PROP TYPES
- */
-
-Main.propTypes = {
-  children: _propTypes2.default.object,
-  handleClick: _propTypes2.default.func.isRequired,
-  isLoggedIn: _propTypes2.default.bool.isRequired
-  // <hr />
-  // <nav>
-  //   {
-  //     isLoggedIn
-  //       ? <div>
-  //         {/* The navbar will show these links after you log in */}
-  //         <Link to='/home'>Home</Link>
-  //         <a href='#' onClick={handleClick}>Logout</a>
-  //       </div>
-  //       : <div>
-  //         {/* The navbar will show these links before you log in */}
-  //         <Link to='/login'>Login</Link>
-  //         <Link to='/signup'>Sign Up</Link>
-  //       </div>
-  //   }
-  // </nav>
-
-};
-
-/***/ }),
-/* 542 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
+Object.defineProperty(exports, 'ReceiptUpload', {
+  enumerable: true,
+  get: function get() {
+    return _interopRequireDefault(_ReceiptUpload).default;
+  }
 });
-exports.UserHome = undefined;
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(2);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _reactRedux = __webpack_require__(50);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * COMPONENT
- */
-var UserHome = exports.UserHome = function UserHome(props) {
-  var email = props.email;
-
-
-  return _react2.default.createElement(
-    'div',
-    null,
-    _react2.default.createElement(
-      'h3',
-      null,
-      'Welcome, ',
-      email
-    )
-  );
-};
-
-/**
- * CONTAINER
- */
-var mapState = function mapState(state) {
-  return {
-    email: state.user.email
-  };
-};
-
-exports.default = (0, _reactRedux.connect)(mapState)(UserHome);
-
-/**
- * PROP TYPES
- */
-
-UserHome.propTypes = {
-  email: _propTypes2.default.string
-};
-
 /***/ }),
+/* 541 */,
+/* 542 */,
 /* 543 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -38523,9 +37808,9 @@ var _store = __webpack_require__(86);
 
 var _store2 = _interopRequireDefault(_store);
 
-var _routes = __webpack_require__(515);
+var _Routes = __webpack_require__(1044);
 
-var _routes2 = _interopRequireDefault(_routes);
+var _Routes2 = _interopRequireDefault(_Routes);
 
 __webpack_require__(516);
 
@@ -38534,7 +37819,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 _reactDom2.default.render(_react2.default.createElement(
   _reactRedux.Provider,
   { store: _store2.default },
-  _react2.default.createElement(_routes2.default, null)
+  _react2.default.createElement(_Routes2.default, null)
 ), document.getElementById('app'));
 
 // establishes socket connection
@@ -76931,6 +76216,875 @@ function toArray(list, index) {
 /***/ (function(module, exports) {
 
 /* (ignored) */
+
+/***/ }),
+/* 1042 */,
+/* 1043 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouter = __webpack_require__(237);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _semanticUiReact = __webpack_require__(249);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RecipeCard = function (_Component) {
+  _inherits(RecipeCard, _Component);
+
+  function RecipeCard(props) {
+    _classCallCheck(this, RecipeCard);
+
+    return _possibleConstructorReturn(this, (RecipeCard.__proto__ || Object.getPrototypeOf(RecipeCard)).call(this, props));
+  }
+
+  _createClass(RecipeCard, [{
+    key: 'render',
+    value: function render() {
+      var recipe = this.props.recipe;
+
+      return _react2.default.createElement(
+        _semanticUiReact.Card,
+        null,
+        _react2.default.createElement(_semanticUiReact.Image, { src: recipe.smallImageUrls }),
+        _react2.default.createElement(
+          _semanticUiReact.Card.Content,
+          null,
+          _react2.default.createElement(
+            _semanticUiReact.Card.Header,
+            null,
+            recipe.recipeName
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Card.Meta,
+            null,
+            _react2.default.createElement(
+              'span',
+              { className: 'date' },
+              recipe.sourceDisplayName
+            )
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Card.Description,
+            null,
+            recipe.ingredients.join(', ')
+          )
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Card.Content,
+          { extra: true },
+          _react2.default.createElement(
+            'a',
+            null,
+            _react2.default.createElement(_semanticUiReact.Icon, { name: 'user' }),
+            'Link to full recipe'
+          )
+        )
+      );
+    }
+  }]);
+
+  return RecipeCard;
+}(_react.Component);
+
+// const mapState = (state) => {
+//   return {
+//     getRecipes: state.getRecipes
+//   }
+// }
+
+// const mapDispatch = (dispatch) => {
+//   return {
+
+//   }
+// }
+
+
+exports.default = RecipeCard;
+
+/***/ }),
+/* 1044 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouter = __webpack_require__(237);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _history = __webpack_require__(276);
+
+var _history2 = _interopRequireDefault(_history);
+
+var _components = __webpack_require__(540);
+
+var _store = __webpack_require__(86);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+/**
+ * COMPONENT
+ */
+var Routes = function (_Component) {
+  _inherits(Routes, _Component);
+
+  function Routes() {
+    _classCallCheck(this, Routes);
+
+    return _possibleConstructorReturn(this, (Routes.__proto__ || Object.getPrototypeOf(Routes)).apply(this, arguments));
+  }
+
+  _createClass(Routes, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.props.loadInitialData();
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var isLoggedIn = this.props.isLoggedIn;
+
+
+      return _react2.default.createElement(
+        _reactRouter.Router,
+        { history: _history2.default },
+        _react2.default.createElement(
+          _components.Main,
+          null,
+          _react2.default.createElement(_components.Navbar, null),
+          _react2.default.createElement(
+            _reactRouterDom.Switch,
+            null,
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/findrecipes', component: _components.FindRecipes }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/login', component: _components.Login }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/signup', component: _components.Signup }),
+            _react2.default.createElement(_reactRouterDom.Route, { path: '/receipt', component: _components.ReceiptUpload }),
+            isLoggedIn && _react2.default.createElement(
+              _reactRouterDom.Switch,
+              null,
+              _react2.default.createElement(_reactRouterDom.Route, { path: '/home', component: _components.UserHome })
+            ),
+            _react2.default.createElement(_reactRouterDom.Route, { component: _components.Login })
+          )
+        )
+      );
+    }
+  }]);
+
+  return Routes;
+}(_react.Component);
+
+/**
+ * CONTAINER
+ */
+
+
+var mapState = function mapState(state) {
+  return {
+    // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
+    // Otherwise, state.user will be an empty object, and state.user.id will be falsey
+    isLoggedIn: !!state.user.id
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    loadInitialData: function loadInitialData() {
+      dispatch((0, _store.me)());
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapState, mapDispatch)(Routes);
+
+/**
+ * PROP TYPES
+ */
+
+Routes.propTypes = {
+  loadInitialData: _propTypes2.default.func.isRequired,
+  isLoggedIn: _propTypes2.default.bool.isRequired
+};
+
+/***/ }),
+/* 1045 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Signup = exports.Login = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _store = __webpack_require__(86);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * COMPONENT
+ */
+var AuthForm = function AuthForm(props) {
+  var name = props.name,
+      displayName = props.displayName,
+      handleSubmit = props.handleSubmit,
+      error = props.error;
+
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'form',
+      { onSubmit: handleSubmit, name: name },
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'email' },
+          _react2.default.createElement(
+            'small',
+            null,
+            'Email'
+          )
+        ),
+        _react2.default.createElement('input', { name: 'email', type: 'text' })
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'label',
+          { htmlFor: 'password' },
+          _react2.default.createElement(
+            'small',
+            null,
+            'Password'
+          )
+        ),
+        _react2.default.createElement('input', { name: 'password', type: 'password' })
+      ),
+      _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'button',
+          { type: 'submit' },
+          displayName
+        )
+      ),
+      error && error.response && _react2.default.createElement(
+        'div',
+        null,
+        ' ',
+        error.response.data,
+        ' '
+      )
+    ),
+    _react2.default.createElement(
+      'a',
+      { href: '/auth/google' },
+      displayName,
+      ' with Google'
+    )
+  );
+};
+
+/**
+ * CONTAINER
+ *   Note that we have two different sets of 'mapStateToProps' functions -
+ *   one for Login, and one for Signup. However, they share the same 'mapDispatchToProps'
+ *   function, and share the same Component. This is a good example of how we
+ *   can stay DRY with interfaces that are very similar to each other!
+ */
+var mapLogin = function mapLogin(state) {
+  return {
+    name: 'login',
+    displayName: 'Login',
+    error: state.user.error
+  };
+};
+
+var mapSignup = function mapSignup(state) {
+  return {
+    name: 'signup',
+    displayName: 'Sign Up',
+    error: state.user.error
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    handleSubmit: function handleSubmit(evt) {
+      evt.preventDefault();
+      var formName = evt.target.name;
+      var email = evt.target.email.value;
+      var password = evt.target.password.value;
+      dispatch((0, _store.auth)(email, password, formName));
+    }
+  };
+};
+
+var Login = exports.Login = (0, _reactRedux.connect)(mapLogin, mapDispatch)(AuthForm);
+var Signup = exports.Signup = (0, _reactRedux.connect)(mapSignup, mapDispatch)(AuthForm);
+
+/**
+ * PROP TYPES
+ */
+AuthForm.propTypes = {
+  name: _propTypes2.default.string.isRequired,
+  displayName: _propTypes2.default.string.isRequired,
+  handleSubmit: _propTypes2.default.func.isRequired,
+  error: _propTypes2.default.object
+};
+
+/***/ }),
+/* 1046 */,
+/* 1047 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _store = __webpack_require__(86);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * COMPONENT
+ *  The Main component is our 'picture frame' - it displays the navbar and anything
+ *  else common to our entire app. The 'picture' inside the frame is the space
+ *  rendered out by the component's `children`.
+ */
+var Main = function Main(props) {
+  var children = props.children,
+      handleClick = props.handleClick,
+      isLoggedIn = props.isLoggedIn;
+
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    children
+  );
+};
+
+/**
+ * CONTAINER
+ */
+var mapState = function mapState(state) {
+  return {
+    isLoggedIn: !!state.user.id
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch) {
+  return {
+    handleClick: function handleClick() {
+      dispatch((0, _store.logout)());
+    }
+  };
+};
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+exports.default = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapState, mapDispatch)(Main));
+
+/**
+ * PROP TYPES
+ */
+
+Main.propTypes = {
+  children: _propTypes2.default.object,
+  handleClick: _propTypes2.default.func.isRequired,
+  isLoggedIn: _propTypes2.default.bool.isRequired
+  // <hr />
+  // <nav>
+  //   {
+  //     isLoggedIn
+  //       ? <div>
+  //         {/* The navbar will show these links after you log in */}
+  //         <Link to='/home'>Home</Link>
+  //         <a href='#' onClick={handleClick}>Logout</a>
+  //       </div>
+  //       : <div>
+  //         {/* The navbar will show these links before you log in */}
+  //         <Link to='/login'>Login</Link>
+  //         <Link to='/signup'>Sign Up</Link>
+  //       </div>
+  //   }
+  // </nav>
+
+};
+
+/***/ }),
+/* 1048 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(167);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _semanticUiReact = __webpack_require__(249);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Navbar = function (_Component) {
+  _inherits(Navbar, _Component);
+
+  function Navbar() {
+    _classCallCheck(this, Navbar);
+
+    return _possibleConstructorReturn(this, (Navbar.__proto__ || Object.getPrototypeOf(Navbar)).apply(this, arguments));
+  }
+
+  _createClass(Navbar, [{
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        _semanticUiReact.Menu,
+        { color: 'grey', size: 'large', inverted: true, secondary: true, className: 'nav-bar' },
+        _react2.default.createElement(
+          _semanticUiReact.Menu.Item,
+          null,
+          _react2.default.createElement('img', { src: 'http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' }),
+          _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { to: '/' },
+            'FeedMe'
+          )
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Menu.Item,
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { to: '/signup' },
+            'Sign Up'
+          )
+        ),
+        _react2.default.createElement(
+          _semanticUiReact.Menu.Item,
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.NavLink,
+            { to: '/login' },
+            'Log In'
+          )
+        )
+      );
+    }
+  }]);
+
+  return Navbar;
+}(_react.Component);
+
+exports.default = Navbar;
+
+/***/ }),
+/* 1049 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouter = __webpack_require__(237);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _semanticUiReact = __webpack_require__(249);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ReceiptUpload = function (_React$Component) {
+  _inherits(ReceiptUpload, _React$Component);
+
+  function ReceiptUpload(props) {
+    _classCallCheck(this, ReceiptUpload);
+
+    var _this = _possibleConstructorReturn(this, (ReceiptUpload.__proto__ || Object.getPrototypeOf(ReceiptUpload)).call(this, props));
+
+    _this.state = { file: '', imagePreviewUrl: '' };
+    return _this;
+  }
+
+  _createClass(ReceiptUpload, [{
+    key: '_handleSubmit',
+    value: function _handleSubmit(e) {
+      e.preventDefault();
+      // TODO: do something with -> this.state.file
+      console.log('handle uploading-', this.state.file);
+    }
+  }, {
+    key: '_handleImageChange',
+    value: function _handleImageChange(e) {
+      var _this2 = this;
+
+      e.preventDefault();
+
+      var reader = new FileReader();
+      var file = e.target.files[0];
+
+      reader.onloadend = function () {
+        _this2.setState({
+          file: file,
+          imagePreviewUrl: reader.result
+        });
+      };
+
+      reader.readAsDataURL(file);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this3 = this;
+
+      var imagePreviewUrl = this.state.imagePreviewUrl;
+
+      var $imagePreview = null;
+      if (imagePreviewUrl) {
+        $imagePreview = _react2.default.createElement('img', { style: { maxHeight: "300px", maxWidth: "300px" }, src: imagePreviewUrl });
+      } else {
+        $imagePreview = _react2.default.createElement(
+          'div',
+          { className: 'previewText' },
+          'Please select an Image for Preview'
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        { className: 'previewComponent' },
+        _react2.default.createElement(
+          'form',
+          { onSubmit: function onSubmit(e) {
+              return _this3._handleSubmit(e);
+            } },
+          _react2.default.createElement('input', { className: 'fileInput',
+            type: 'file',
+            onChange: function onChange(e) {
+              return _this3._handleImageChange(e);
+            } }),
+          _react2.default.createElement(
+            'button',
+            { className: 'submitButton',
+              type: 'submit',
+              onClick: function onClick(e) {
+                return _this3._handleSubmit(e);
+              } },
+            'Upload Image'
+          )
+        ),
+        _react2.default.createElement(
+          'div',
+          null,
+          $imagePreview
+        )
+      );
+    }
+  }]);
+
+  return ReceiptUpload;
+}(_react2.default.Component);
+
+exports.default = ReceiptUpload;
+
+/***/ }),
+/* 1050 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UserHome = undefined;
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(2);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _reactRedux = __webpack_require__(50);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * COMPONENT
+ */
+var UserHome = exports.UserHome = function UserHome(props) {
+  var email = props.email;
+
+
+  return _react2.default.createElement(
+    'div',
+    null,
+    _react2.default.createElement(
+      'h3',
+      null,
+      'Welcome, ',
+      email
+    )
+  );
+};
+
+/**
+ * CONTAINER
+ */
+var mapState = function mapState(state) {
+  return {
+    email: state.user.email
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapState)(UserHome);
+
+/**
+ * PROP TYPES
+ */
+
+UserHome.propTypes = {
+  email: _propTypes2.default.string
+};
+
+/***/ }),
+/* 1051 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(50);
+
+var _reactRouter = __webpack_require__(237);
+
+var _reactRouterDom = __webpack_require__(102);
+
+var _semanticUiReact = __webpack_require__(249);
+
+var _RecipeCard = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./RecipeCard\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+
+var _RecipeCard2 = _interopRequireDefault(_RecipeCard);
+
+var _store = __webpack_require__(86);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var FindRecipes = function (_Component) {
+  _inherits(FindRecipes, _Component);
+
+  function FindRecipes(props) {
+    _classCallCheck(this, FindRecipes);
+
+    var _this = _possibleConstructorReturn(this, (FindRecipes.__proto__ || Object.getPrototypeOf(FindRecipes)).call(this, props));
+
+    _this.state = {
+      mainIngredient: ''
+    };
+    return _this;
+  }
+
+  _createClass(FindRecipes, [{
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      var getRecipes = this.props.getRecipes;
+
+      var options = [{ key: 'chn', text: 'Chinese', value: 'chinese' }, { key: 'krn', text: 'Korean', value: 'korean' }, { key: 'ity', text: 'Italian', value: 'italian' }];
+      console.log(getRecipes);
+
+      return _react2.default.createElement(
+        _semanticUiReact.Container,
+        { fluid: true, style: { padding: '1em 2em' } },
+        _react2.default.createElement(
+          _semanticUiReact.Form,
+          { onSubmit: function onSubmit(evt) {
+              return _this2.props.handleSubmit(evt, _this2.state.mainIngredient);
+            } },
+          _react2.default.createElement(
+            _semanticUiReact.Form.Group,
+            { widths: 'equal' },
+            _react2.default.createElement(_semanticUiReact.Form.Input, {
+              label: 'Main ingredient',
+              placeholder: 'what do you want to eat today?',
+              onChange: function onChange(evt) {
+                return _this2.setState({ mainIngredient: evt.target.value });
+              }
+            }),
+            _react2.default.createElement(_semanticUiReact.Form.Select, { label: 'Cuisine', options: options, placeholder: 'Anything' })
+          ),
+          _react2.default.createElement(
+            _semanticUiReact.Form.Button,
+            null,
+            'Submit'
+          )
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          _semanticUiReact.Card.Group,
+          { itemsPerRow: '3' },
+          getRecipes && getRecipes.map(function (recipe) {
+            return _react2.default.createElement(_RecipeCard2.default, { recipe: recipe });
+          })
+        )
+      );
+    }
+  }]);
+
+  return FindRecipes;
+}(_react.Component);
+
+var mapProps = function mapProps(state) {
+  return {
+    getRecipes: state.getRecipes
+  };
+};
+
+var mapDispatch = function mapDispatch(dispatch, ownProps) {
+  return {
+    handleSubmit: function handleSubmit(evt, ingred) {
+      dispatch((0, _store.getRecipesByIngredient)(ingred));
+      evt.preventDefault();
+    }
+  };
+};
+
+exports.default = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapProps, mapDispatch)(FindRecipes));
 
 /***/ })
 /******/ ]);

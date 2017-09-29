@@ -1,7 +1,14 @@
 node_modules
+<<<<<<< HEAD
 
 secrets.js
 
 public/bundle.js
 public/bundle.map.js
 
+=======
+secrets.js
+public/bundle.js
+public/bundle.js.map
+.DS_Store
+>>>>>>> master
