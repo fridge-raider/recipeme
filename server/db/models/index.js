@@ -5,6 +5,7 @@ const ReceiptRepresentation = require('./receiptRepresentations')
 const OrderHistory = require('./orderHistory')
 const Recipe = require('./recipes')
 
+
 User.belongsToMany(OrderHistory, {through: 'userOrders'})
 OrderHistory.belongsTo(User)
 OrderHistory.belongsTo(Ingredient)

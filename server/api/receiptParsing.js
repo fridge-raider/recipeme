@@ -10,6 +10,7 @@ function returnCleanReceipt(imageName) {
                 if (err) {
                     reject(err);
                 } else {
+                    console.log('text',text)
                     // write the file image to a text file
                     fs.writeFileSync('receipt.txt', text, err => {
                         if (err) reject(err)
@@ -22,6 +23,7 @@ function returnCleanReceipt(imageName) {
                             reject(err)
                         }
                         const lines = text.split('\n');
+                        console.log('lines', lines)
                         const cleanLines = [];
                         const priceRegex = /\d+\s*[\.\,\-]\s*\d+\s*\w*$/;
                         for (let i = 0; i < lines.length; i++) {
@@ -39,6 +41,7 @@ function returnCleanReceipt(imageName) {
                                 cleanLines.push(item);
                             }
                         }
+                        console.log('clean', cleanLines)
                         resolve(cleanLines)
                     })
                 }
