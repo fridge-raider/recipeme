@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './RecipeCard'
+import RecipeCard from './RecipeCard.jsx'
 import { getRecipesByIngredient } from '../store'
 
 class FindRecipes extends Component {
@@ -23,6 +23,7 @@ class FindRecipes extends Component {
       { key: 'ity', text: 'Italian', value: 'italian'}
     ]
     console.log(getRecipes)
+    let counter = 0;
 
     return (
       <Container fluid style={{padding: '1em 2em'}}>
@@ -40,7 +41,7 @@ class FindRecipes extends Component {
         <br />
         <Card.Group itemsPerRow='3'>
           { getRecipes && getRecipes.map(recipe => {
-            return <RecipeCard recipe={recipe} /> })
+            return <RecipeCard key={recipe.id} recipe={recipe} /> })
           }
         </Card.Group>
       </Container>

@@ -12,7 +12,7 @@ export default class RecipeCard extends Component {
     const { recipe } = this.props
     return (
       <Card>
-        <Image src={recipe.smallImageUrls} />
+        <Image src={recipe.smallImageUrls[0]} />
         <Card.Content>
           <Card.Header>
             {recipe.recipeName}
