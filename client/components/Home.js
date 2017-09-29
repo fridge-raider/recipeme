@@ -25,7 +25,7 @@ class Home extends Component {
 
     return (
       <div>
-        <Form onSubmit={this.props.handleSubmit(this.state.mainIngredient)}>
+        <Form onSubmit={(evt) => this.props.handleSubmit(evt, this.state.mainIngredient)}>
           <Form.Group widths='equal'>
             <Form.Input 
               label='Main ingredient' 
@@ -36,6 +36,8 @@ class Home extends Component {
           </Form.Group>
           <Form.Button>Submit</Form.Button>
         </Form>
+        <tr />
+        <RecipeCard />
       </div>
     )
   }
@@ -49,8 +51,9 @@ const mapProps = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    handleSubmit: (ingred) => {
+    handleSubmit: (evt, ingred) => {
       dispatch(getRecipesByIngredient(ingred))
+      evt.preventDefault()
     }
   }
 }

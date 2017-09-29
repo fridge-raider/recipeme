@@ -19,11 +19,11 @@ const getRecipesReducer = (state=[], action) => {
 export default getRecipesReducer
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
-  console.log(app_id, app_key, 'hi)')
-  // return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10;`)
-  //   .then(res => res.data)
-  //   .then(recipes => {
-  //     dispatch(getRecipes(recipes))
-  //   })
-  //   .catch(console.log)
+  // return console.log(ingredient,'inreducer')
+  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10`)
+    .then(res => res.data)
+    .then(recipes => {
+      dispatch(getRecipes(recipes.match))
+    })
+    .catch(console.log)
 }
