@@ -39,13 +39,9 @@
     "fs": "0.0.1-security",
     "fs-extra": "^4.0.2",
     "history": "^4.6.3",
-<<<<<<< HEAD
-    "lodash": "^4.17.4",
-=======
     "material-ui": "^0.19.2",
     "material-ui-table-edit": "^3.0.3",
     "keen-tracking": "^1.2.1",
->>>>>>> master
     "morgan": "^1.8.1",
     "needle": "^2.0.1",
     "passport": "^0.3.2",
@@ -53,12 +49,7 @@
     "pg": "^6.1.2",
     "pg-hstore": "^2.3.2",
     "prop-types": "^15.5.8",
-<<<<<<< HEAD
-    "q": "^1.5.0",
-    "react": "^15.4.2",
-=======
     "react": "^15.6.2",
->>>>>>> master
     "react-dom": "^15.4.2",
     "react-faux-dom": "^4.0.3",
     "react-images-upload": "^1.1.1",
