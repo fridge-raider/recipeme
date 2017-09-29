@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { Container, Form, Grid } from 'semantic-ui-react'
+import { Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeCard'
 import { getRecipesByIngredient } from '../store'
 
@@ -16,12 +16,13 @@ class Home extends Component {
   }
 
   render() {
+    const { getRecipes } = this.props
     const options = [
       { key: 'chn', text: 'Chinese', value: 'chinese' },
       { key: 'krn', text: 'Korean', value: 'korean'},
       { key: 'ity', text: 'Italian', value: 'italian'}
     ]
-    console.log(this.props.getRecipes)
+    console.log(getRecipes)
 
     return (
       <div>
@@ -36,8 +37,13 @@ class Home extends Component {
           </Form.Group>
           <Form.Button>Submit</Form.Button>
         </Form>
-        <tr />
-        <RecipeCard />
+        <br />
+        <Card.Group itemsPerRow='3'>
+          { getRecipes && getRecipes.map(recipe => {
+            return <RecipeCard recipe={recipe} /> })
+          }
+        </Card.Group>
+        
       </div>
     )
   }
