@@ -9,8 +9,10 @@ const db = require('./db')
 const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
-const fs = require('fs'); 
+const fs = require('fs');
 const socketio = require('socket.io')
+const cors = require('cors')
+
 module.exports = app
 
 /**
@@ -38,6 +40,26 @@ const createApp = () => {
   // body parsing middleware
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
+
+  // cors middleware
+  const corsOptions = {
+    origin: "http://s3.amazonaws.com/doc/2006-03-01/",
+    methods: "GET, HEAD, PUT, DELETE, POST",
+    allowedHeaders: ['Content-Type', 'Authorization', 'Origin'],
+    preflightContinue: false
+  }
+
+
+  app.use(cors(corsOptions))
+
+  app.use('/s3', require('react-s3-uploader/s3router')({
+    bucket: process.env.BUCKET_NAME,
+    region: 'us-east-1', //optional,
+    cors: true,
+    headers: {'Access-Control-Allow-Origin': '*'}, // optional
+    ACL: 'private', // this is default
+    uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
+}));
 
   // session middleware with passport
   app.use(session({
