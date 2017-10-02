@@ -24,6 +24,23 @@ export function addReceipt(ingredientsList) {
     }
   }
 
+export function setReceiptToOrderHistory(currentReceipt) {
+  return function thunk(dispatch) {
+    return axios.post(`/api/receipts/add`, {currentReceipt})
+      .then(res => res.data)
+      .then(succ => {
+        dispatch(setReceipt({})); 
+      })
+  }
+}
+
+
+export function setFrequencyForItem(receiptItem) {
+  return function thunk(dispatch) {
+    return axios.post(`/api/receipts/frequency`, {receiptItem})
+  }
+}
+
 /**
  * REDUCER
  */

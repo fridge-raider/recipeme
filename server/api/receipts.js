@@ -1,5 +1,6 @@
 const router = require('express').Router()
-const {Ingredient} = require('../db/models')
+const db = require('../db'); 
+const {OrderHistory, Ingredient, Frequency} = require('../db/models')
 const returnCleanReceipt = require('./receiptParsing')
 const Promise = require('bluebird')
 
@@ -56,5 +57,12 @@ router.get('/clean', (req, res, next) => {
   })
 })
 
-
+router.post('/add', (req, res, next) => {
+  const orders = req.body.currentReceipt; 
+  Promise.map(orders, order => {
+     OrderHistory.create(order)
+  }).then(succ => {
+    res.json(succ) ; 
+  })
+})
 

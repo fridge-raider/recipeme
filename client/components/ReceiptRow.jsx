@@ -31,7 +31,8 @@ export class ReceiptRow extends Component {
   }
 
   handleUnitChange(evt, value) {
-    this.setState({unit: value}, () => {
+    const unit = (value === 0) ? 'unit' : ((value === 1) ? 'oz' : ((value === 2) ? 'gal' : 'lbs')); 
+    this.setState({unit: unit}, () => {
       this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
     })
 
@@ -81,10 +82,10 @@ export class ReceiptRow extends Component {
         value={this.state.unit}
         onChange={(evt, value) => this.handleUnitChange(evt, value)}
       >
-        <MenuItem value='unit' primaryText="unit" />
-        <MenuItem value='oz' primaryText="oz" />
-        <MenuItem value='gal' primaryText="gal" />
-        <MenuItem value='lbs' primaryText="lbs" />
+        <MenuItem value='unit' label='unit' primaryText="unit" />
+        <MenuItem value='oz' label='oz' primaryText="oz" />
+        <MenuItem value='gal' label='gal' primaryText="gal" />
+        <MenuItem value='lbs' label='lbs' primaryText="lbs" />
       </SelectField>
     </TableRowColumn>
 
