@@ -2,6 +2,12 @@ const passport = require('passport')
 const router = require('express').Router()
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy
 const {User} = require('../db/models')
+
+// import individual AWS service
+const AWS = require('aws-sdk');
+const ReactS3Uploader = require('react-s3-uploader');
+
+
 module.exports = router
 
 /**
@@ -25,9 +31,42 @@ const googleConfig = {
 }
 
 const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile, done) => {
+  console.log('token', token, 'profile', profile)
+
   const googleId = profile.id
   const name = profile.displayName
   const email = profile.emails[0].value
+
+  // Add the Google access token to the Cognito credentials login map.
+  AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+    IdentityPoolId: process.env.IDENTITY_POOL_ID,
+    Logins: {
+       'accounts.google.com': token
+    }
+ });
+
+ const s3 = new AWS.S3({
+  apiVersion: '2006-03-01',
+  params: {Bucket: process.env.BUCKET_NAME}
+  });
+
+ // Obtain AWS credentials
+//  AWS.config.credentials.get(function(){
+//     // Access AWS resources here.
+//  });
+// const data = {Key: "Receipt", Body: './Receipt1.jpg'};
+// s3.putObject(data, function(err, data){
+//   if (err)
+//     { console.log('Error uploading data: ', data);
+//     } else {
+//       console.log('succesfully uploaded the image!');
+//     }
+// });
+
+// const urlParams = {Bucket: process.env.BUCKET_NAME, Key: 'Receipt'};
+// s3.getSignedUrl('getObject', urlParams, function(err, url){
+//   console.log('the url of the image is', url);
+// })
 
   User.find({where: {googleId}})
     .then(user => user
@@ -40,7 +79,7 @@ const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile,
 
 passport.use(strategy)
 
-router.get('/', passport.authenticate('google', {scope: 'email'}))
+router.get('/', passport.authenticate('google', {scope: 'email https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.me'}))
 
 router.get('/callback', passport.authenticate('google', {
   successRedirect: '/home',
