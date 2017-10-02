@@ -6,55 +6,89 @@ import { Container, Form, Grid } from 'semantic-ui-react'
 import { addReceipt } from '../store'
 import CheckReceiptIng from './CheckReceiptIngv2.jsx'
 import ReactS3Uploader from 'react-s3-uploader'
+import FineUploaderS3 from 'fine-uploader-wrappers/s3'
+import Gallery from 'react-fine-uploader'
+import RaisedButton from 'material-ui/RaisedButton';
 
+import 'react-fine-uploader/gallery/gallery.css'
+
+const uploader = new FineUploaderS3({
+  options: {
+      request: {
+          endpoint: `${process.env.BUCKET_NAME}.s3.amazonaws.com`,
+          accessKey: process.env.CLIENT_ACCESS_KEY,
+      },
+      template: 'qq-template-s3',
+      cors: {
+        expected: true
+    },
+    chunking: {
+        enabled: true
+    },
+    resume: {
+        enabled: true
+    },
+      signature: {
+          endpoint: "/api/s3/signatureHandler"
+      },
+      uploadSuccess: {
+        endpoint: "/api/s3/uploadSuccessful"
+    },
+    iframeSupport: {
+        localBlankPagePath: "success.html"
+    },
+      thumbnails: {
+        placeholders: {
+            notAvailablePath: "../../public/not_available-generic.png",
+            waitingPath: "../../public/waiting-generic.png"
+        }
+    }
+  }
+})
 
 export class ReceiptUpload extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {file: '',imagePreviewUrl: ''};
-    this._handleImageChange = this._handleImageChange.bind(this)
-    this.onUploadFinish = this.onUploadFinish.bind(this)
-  }
 
-  _handleImageChange(e) {
-    e.preventDefault();
-
-    let reader = new FileReader();
-    let file = e.target.files[0];
-
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
+    this.state = {
+      submittedFiles: []
     }
 
-    reader.readAsDataURL(file)
+    this.isFileGone = this.isFileGone.bind(this)
   }
 
-  onUploadFinish(e) {
-    console.log('finished uploading', e)
-    let reader = new FileReader();
-    let file = e.signedUrl;
 
-    reader.onloadend = () => {
-      this.setState({
-        file: file,
-        imagePreviewUrl: reader.result
-      });
-    }
+  componentDidMount() {
+    uploader.on('complete', (id, name, res) => {
+        if (newStatus === 'submitted') {
+            const submittedFiles = this.state.submittedFiles
 
-    reader.readAsDataURL(file)
-  }
+            submittedFiles.push(id)
+            this.setState({ submittedFiles })
+        }
+        else if (this.isFileGone(newStatus)) {
+            const submittedFiles = this.state.submittedFiles
+            const indexToRemove = submittedFiles.indexOf(id)
+
+            submittedFiles.splice(indexToRemove, 1)
+            this.setState({ submittedFiles })
+        }
+    })
+}
+
+isFileGone() {
+  return [
+      'canceled',
+      'deleted',
+  ].indexOf(status) >= 0
+}
+
 
   render() {
-    let {imagePreviewUrl} = this.state;
-    let $imagePreview = null;
-    if (imagePreviewUrl) {
-      $imagePreview = (<img style={{maxHeight: "300px", maxWidth: "300px"}} src={imagePreviewUrl} />);
-    } else {
-      $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
-    }
+
+
+    console.log('this.state', this.state)
+   const fileInputChildren = <span>Choose file</span>
     // <input className="fileInput"
     // type="file"
     // onChange={(e)=>this._handleImageChange(e)} />
@@ -62,34 +96,17 @@ export class ReceiptUpload extends React.Component {
     return (
 
 
-
       <Container fluid>
       {!!Object.keys(this.props.currentReceipt).length ?
         <CheckReceiptIng receipt={this.props.currentReceipt}/> :
         ''
       }
-        <div className="previewComponent">
-          <form onSubmit={(e)=>this.props.handleSubmit(e, this.state.file)}>
-          <ReactS3Uploader
-            signingUrl="/s3/sign"
-            signingUrlMethod="GET"
-            accept="image/*"
-            s3path="/uploads/"
-            onFinish={this.onUploadFinish}
-            signingUrlWithCredentials={ true }      // in case when need to pass authentication credentials via CORS
-            uploadRequestHeaders={{ 'x-amz-acl': 'public-read' }}  // this is the default
-            contentDisposition="auto"
-            scrubFilename={(filename) => filename.replace(/[^\w\d_\-.]+/ig, '')}
-          />
 
-            <button className="submitButton"
-              type="submit"
-              onClick={(e)=>this.props.handleSubmit(e, this.state.file)}>Upload Image</button>
-          </form>
-          <div>
-            {$imagePreview}
-          </div>
-        </div>
+      <Gallery fileInput-children={ fileInputChildren } uploader={ uploader } />
+      <RaisedButton
+      onClick={this.props.handleSubmit}
+      >
+      Parse Purchases</RaisedButton>
       </Container>
 
 
@@ -105,9 +122,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    handleSubmit(evt, file) {
+    handleSubmit(evt) {
       evt.preventDefault();
-      dispatch(addReceipt(file))
+      // dispatach to update ingredients based on state
+      dispatch(addReceipt())
     }
   }
 }

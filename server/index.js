@@ -41,6 +41,7 @@ const createApp = () => {
   app.use(bodyParser.json())
   app.use(bodyParser.urlencoded({ extended: true }))
 
+
   // cors middleware
   const corsOptions = {
     origin: "http://s3.amazonaws.com/doc/2006-03-01/",
@@ -52,14 +53,14 @@ const createApp = () => {
 
   app.use(cors(corsOptions))
 
-  app.use('/s3', require('react-s3-uploader/s3router')({
-    bucket: process.env.BUCKET_NAME,
-    region: 'us-east-1', //optional,
-    cors: true,
-    headers: {'Access-Control-Allow-Origin': '*'}, // optional
-    ACL: 'private', // this is default
-    uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
-}));
+//   app.use('/s3', require('react-s3-uploader/s3router')({
+//     bucket: process.env.BUCKET_NAME,
+//     region: 'us-east-1', //optional,
+//     cors: true,
+//     headers: {'Access-Control-Allow-Origin': '*'}, // optional
+//     ACL: 'private', // this is default
+//     uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
+// }));
 
   // session middleware with passport
   app.use(session({
