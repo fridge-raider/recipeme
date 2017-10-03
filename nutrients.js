@@ -17,35 +17,29 @@ fileName.map(recipe => {
 })
 
 ingredients.forEach(ingredient => {
-	const instance = { name: ''};
-	instance.name = ingredient;
-	rows.push(ingredient);
+	// const instance = { name: ''};
+  // instance.name = ingredient;
+	rows.push('1 serving of ' + ingredient);
 })
 
-let trialRows = rows.splice(0,50)
-const rowString = trialRows.join(', ')
+// console.log(rows.length)
+
+let newRow = rows.slice(6000)
+const rowString = newRow.join(', ')
+console.log(newRow)
 
 var instance = axios.create({
   baseURL: "https://trackapi.nutritionix.com/v2/natural/nutrients",
-  timeout: 10000,
+  timeout: 100000000,
   headers: {
  "x-app-id": process.env.NUTRITIONIX_ID,
  "x-app-key":process.env.NUTRITIONIX_KEY,
   }
 });
 
-console.log(instance, 'plsssss')
-
-let dataFoods = [];
 
 instance.post('/',  {"query": rowString})
-  // .then(res => {
-  //   dataFoods.push(res.data)
-  // })
-  // .then(() => fs.writeFile('./nutrientfifty.json', dataFoods, (err) => {
-  //   if (err) console.log(err)
-  // }))
-  .then(res => fs.writeFile('./nutrientfifty.json', JSON.stringify(res.data), (err) => {
+  .then(res => fs.writeFile('./nutrientAllIngredientsattempt5.json', JSON.stringify(res.data.foods), (err) => {
     if (err) console.log(err)
   }))
   .catch(console.error)
