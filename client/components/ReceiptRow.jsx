@@ -19,21 +19,29 @@ export class ReceiptRow extends Component {
     // maintain local state for input while updating receipt
     this.state = {
       ing: this.props.ingredient.ing,
-      qty: 1,
-      unit: 'unit',
+      servings: 1,
+      category: 0,
       price: this.props.ingredient.price
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleQtyChange = this.handleQtyChange.bind(this)
-    this.handleUnitChange = this.handleUnitChange.bind(this)
+    this.handleCategoryChange = this.handleCategoryChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
   }
 
-  handleUnitChange(evt, value) {
-    const unit = (value === 0) ? 'unit' : ((value === 1) ? 'oz' : ((value === 2) ? 'gal' : 'lbs')); 
-    this.setState({unit: unit}, () => {
-      this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
+  handleCategoryChange(evt, value) {
+    let category = ''; 
+    if(value === 0) category = 'Grains'; 
+    else if(value === 1) category = 'Fruits'; 
+    else if(value === 2) category = 'Vegtables'; 
+    else if(value === 3) category = 'Dairy'; 
+    else if(value === 4) category = 'Meat'; 
+    else if(value === 5) category = 'Nuts and Legumes'; 
+    else if(value === 6) category = 'Fats'; 
+    else if(value === 7) category = 'Added Sugars'; 
+    this.setState({ category : value }, () => {
+      //this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
     })
 
   }
@@ -45,14 +53,12 @@ export class ReceiptRow extends Component {
   }
 
   handleQtyChange(evt, value) {
-    this.setState({qty: +value}, () => {
+    this.setState({servings: +value}, () => {
       this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
     })
   }
 
   handlePriceChange(evt, value) {
-    console.log('this.state before setting', this.state)
-    console.log('value', value)
     this.setState({price: value.substring(1)}, () => {
       console.log('this.state after setting', this.state)
       this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
@@ -78,15 +84,16 @@ export class ReceiptRow extends Component {
     />
     </TableRowColumn>
     <TableRowColumn>
-      <SelectField
-        value={this.state.unit}
-        onChange={(evt, value) => this.handleUnitChange(evt, value)}
-      >
-        <MenuItem value='unit' label='unit' primaryText="unit" />
-        <MenuItem value='oz' label='oz' primaryText="oz" />
-        <MenuItem value='gal' label='gal' primaryText="gal" />
-        <MenuItem value='lbs' label='lbs' primaryText="lbs" />
-      </SelectField>
+      <DropDownMenu value={this.state.category} onChange ={(evt, value) => this.handleCategoryChange(evt, value)}>
+        <MenuItem value={0} primaryText="Grains" />
+        <MenuItem value={1} primaryText="Fruits" />
+        <MenuItem value={2} primaryText="Vegtables" />
+        <MenuItem value={3} primaryText="Dairy" />
+        <MenuItem value={4} primaryText="Meat" />
+        <MenuItem value={5} primaryText="Nuts and Legumes" />
+        <MenuItem value={6} primaryText="Fats" />
+        <MenuItem value={7} primaryText="Added Sugars" />
+      </DropDownMenu> 
     </TableRowColumn>
 
     <TableRowColumn>
@@ -111,9 +118,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     updateReceipt(state, row, receipt) {
-      receipt[row] = state
-      console.log('receipt', receipt)
-      console.log('state', state)
+      let item = {ing: state.ing, servings: state.servings, price: state.price}; 
+      receipt[row] = item; 
       dispatch(setReceipt(receipt))
     }
   }

@@ -91,26 +91,27 @@ function findByLongestMatch(longestWord) {
 function getReceiptIngredients(parsedReceipt) {
 
   return Promise.mapSeries(parsedReceipt, item => {
-    const words = item.name.split(' '); 
-    let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b}); 
-    let Promise1 = findByReceiptRep(item); 
-    let Promise2 = findByPerfectMatch(item); 
-    let Promise3 = findByLongestMatch(longestWord); 
     let Promise4 = setReceiptRep(item); 
-    return Promise.all([Promise1, Promise2, Promise3, Promise4])
+    return Promise4.then(() => {
+      const words = item.name.split(' '); 
+      let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b}); 
+      let Promise1 = findByReceiptRep(item); 
+      let Promise2 = findByPerfectMatch(item); 
+      let Promise3 = findByLongestMatch(longestWord); 
+      return Promise.all([Promise1, Promise2, Promise3])
       .then(results => {
+        console.log("inside promise all", results); 
         let ingredientName = "unknown"; 
-        //loop only goes up to Promise3 because Promise4 is used to set the ReceiptRepresentation Table
-        for(i=0; i<results.length-1; i++) {
-          if(results[i] !== null) {
-            ingredientName = results[i].name; 
-            break; 
-          }
-        }
+        //check promise 3 then promise 2 then promise 1 for increasing accuracy
+        if(results[2] !== null) ingredientName = results[2].name; 
+        else if(results[1] !== null) ingredientName = results[1].name; 
+        else if(results[0] !== null && results[0].ingredientName !== null) ingredientName = results[0].ingredientName; 
         return {ing: ingredientName, qty: 1, unit: 'unit', price: item.price}; 
       })
+    })
   })
   .then(receiptIngArr => {
+    console.log(receiptIngArr); 
     return receiptIngArr
 })
 }

@@ -35,8 +35,8 @@ class CheckReceiptIng extends Component {
         enableSelectAll={false}>
       <TableRow>
         <TableHeaderColumn><h3>Item</h3></TableHeaderColumn>
-        <TableHeaderColumn><h3>Quantity</h3></TableHeaderColumn>
-        <TableHeaderColumn><h3>Measure</h3></TableHeaderColumn>
+        <TableHeaderColumn><h3>Servings</h3></TableHeaderColumn>
+        <TableHeaderColumn><h3>Category</h3></TableHeaderColumn>
         <TableHeaderColumn><h3>Price</h3></TableHeaderColumn>
       </TableRow>
       </TableHeader>
@@ -71,7 +71,7 @@ class CheckReceiptIng extends Component {
     const orders = []; 
     //re-naming keys and adding userId for easy mapping to OrderHistory table 
     this.props.currentReceipt.forEach(order => {
-      let temp = { ingredientName: order.ing , userId: this.props.user.id, quantity: order.qty, units: order.unit, price: order.price }
+      let temp = { ingredientName: order.ing , userId: this.props.user.id, servings: order.qty, units: order.unit, price: order.price }
       orders.push(temp); 
     })
     this.props.confirmReceipt(orders); 
