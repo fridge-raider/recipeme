@@ -12,7 +12,7 @@ export default class Navbar extends Component {
       <Menu color='grey' size='large' inverted secondary className='nav-bar'>
         <Menu.Item>
           <img src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' />
-          <NavLink to='/'>RecipeMe</NavLink>
+          <NavLink to='/home'>RecipeMe</NavLink>
         </Menu.Item>
         <Menu.Item>
           <NavLink to='/findrecipes'>Find Recipes</NavLink>

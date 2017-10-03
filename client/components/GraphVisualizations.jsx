@@ -103,7 +103,7 @@ class GraphVisualizations extends Component {
       div.setAttribute('id', 'chart');
       return (
         <Container fluid>
-        <Header as='h2' textAlign='center'>All Upcoming Runs</Header>
+        <Header as='h2' textAlign='center'>Purchasing History</Header>
         {div.toReact()}
         </Container>
       )
