@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const {OrderHistory, Ingredient} = require('../db/models')
 const categoryCalculations = require('./categoryCalculations')
+const Sequelize = require('sequelize')
 const _ = require('lodash')
 
 module.exports = router
@@ -9,14 +10,14 @@ module.exports = router
 router.get('/nutrients', (req, res, next) => {
   OrderHistory.findAll({
     where: {
-      userId: 1,
+      userId: req.user.id,
       createdAt: { // change this to date
         $gt: new Date(new Date(Date.now()).getTime() - 60*24*60*60*1000) // in last 60 days
       }
     },
       // change this to date not createdAt
       group: ['orderHistory.createdAt'],
-      attributes: ['orderHistory.createdAt',[Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_calories*servings')),'nf_calories'],
+      attributes: ['createdAt',[Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_calories*servings')),'nf_calories'],
       [Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_total_fat*servings')),'nf_total_fat'],
       [Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_saturated_fat*servings')),'nf_saturated_fat'],
       [Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_sodium*servings')),'nf_sodium'],
@@ -40,28 +41,34 @@ router.put('/nutrients/deficient', (req, res, next) => {
   }
 
   nutrientHistory.map(nutrientDate => {
-    nutrients.map(nutrient => {
+    Object.keys(nutrients).map(nutrient => {
       nutrients[nutrient] = nutrients[nutrient] + nutrientDate[nutrient]
     })
   })
 
-  return getDeficientNutrients(nutrients)
+  res.json(getDeficientNutrients(nutrients))
 })
 
 
 function getDeficientNutrients(nutrientTotals) {
   const nutrients = ['nf_calories','nf_total_fat', 'nf_saturated_fat', 'nf_sodium', 'nf_total_carbohydrate', 'nf_dietary_fiber', 'nf_sugars', 'nf_protein','nf_potassium','nf_p']
   const deficits = {}
+  let defNutrient = ''
+  let maxDef = 0
+
   nutrients.map(nutrient => {
     deficits[nutrient] = +recDailyIntakeByNutrient[nutrient] - +nutrientTotals[nutrient]/60
+
+      // adjust to send back more than one nutrient
+    if (+deficits[nutrient] > maxDef) {
+      maxDef = +deficits[nutrient]
+      defNutrient = nutrient
+    }
+
   })
 
-  // adjust to send back more than one nutrient
-  const defNutrient = _.max(Object.keys(deficits), function (o) { return obj[o]})
-  const maxDef = deficits[defNutrient]
-
   return {
-    defCategory,
+    defNutrient,
     maxDef
   }
 }
@@ -69,7 +76,7 @@ function getDeficientNutrients(nutrientTotals) {
 router.get('/categories', (req, res, next) => {
   OrderHistory.findAll({
     where: {
-      userId: 1,
+      userId: req.user.id,
       createdAt: { // change this to date
         $gt: new Date(new Date(Date.now()).getTime() - 60*24*60*60*1000) // in last 60 days
       }
@@ -87,26 +94,30 @@ router.get('/categories', (req, res, next) => {
 
 router.put('/categories/deficient', (req, res, next) => {
   const categoryHistory = req.body.categoryHistory
-  const categories = {grains: 0, vegetables: 0, fruits: 0, dairy: 0, meat: 0, fat: 0, nutsAndLegumes: 0, sugars: 0}
+  const categories = {grains: 0, Vegetables: 0, fruits: 0, dairy: 0, meat: 0, Fat: 0, nutsAndLegumes: 0, sugars: 0}
 
     categoryHistory.map(categoryDate => {
-        categories[categoryDate.ingredient.category] = categories[categoryDate.ingredient.category] + categoryDate.servingCount
+        categories[categoryDate["ingredient.category"]] = +categories[categoryDate["ingredient.category"]] + +categoryDate.servingCount
     })
 
-  return getDeficientCategories(categories)
+  res.json(getDeficientCategories(categories))
 })
 
 
 function getDeficientCategories(categoryTotals) {
-  const categories = ['grains','vegetables', 'fruits', 'dairy', 'meat', 'fat', 'nutsAndLegumes', 'sugars']
+  const categories = ['grains','Vegetables', 'fruits', 'dairy', 'meat', 'Fat', 'nutsAndLegumes', 'sugars']
   const deficits = {}
+  let defCategory = ''
+  let maxDef = 0
+
   categories.map(category => {
     deficits[category] = +recDailyIntakeByCategory[category] - +categoryTotals[category]/60
-  })
 
-    // adjust to send back more than one nutrient
-  const defCategory = _.max(Object.keys(deficits), function (o) { return obj[o]})
-  const maxDef = deficits[defCategory]
+    if (+deficits[category] > maxDef) {
+      maxDef = +deficits[category]
+      defCategory = category
+    }
+  })
 
   return {
     defCategory,
@@ -115,7 +126,7 @@ function getDeficientCategories(categoryTotals) {
 }
 
 const recDailyIntakeByCategory = {
-  grains: 7, vegetables: 5, fruits: 5, dairy: 3, meat: 2, fat: 3, nutsAndLegumes: 0.7, sugars: 0.7
+  grains: 7, Vegetables: 5, fruits: 5, dairy: 3, meat: 2, Fat: 3, nutsAndLegumes: 0.7, sugars: 0.7
 }
 
 const recDailyIntakeByNutrient = {

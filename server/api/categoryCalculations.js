@@ -12,20 +12,6 @@ function categoryCalculations(orders) {
     return categories
 }
 
-OrderHistory.findAll({
-  where: {
-    userId: 1,
-    createdAt: { // change this to date
-      $gt: new Date(new Date(Date.now()).getTime() - 60*24*60*60*1000) // in last 60 days
-    }
-  },
-    // change this to date not createdAt
-    group: ['orderHistory.createdAt', 'ingredient.category'],
-    attributes: ['orderHistory.createdAt',[Sequelize.fn('SUM',Sequelize.col('orderHistory.servings')),'servingCount']],
-    include: [{model: Ingredient,attributes:['category']}],
-    raw: true
-})
-.then(orders => console.log(orders))
 
 //module.exports = categoryCalculations
 
