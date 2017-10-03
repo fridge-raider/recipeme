@@ -14,11 +14,12 @@ export const setReceipt = receipt => ({type: SET_RECEIPT, receipt})
  * THUNK CREATORS
  */
 
-export function addReceipt(ingredientsList) {
+export function addReceipt(receiptImg) {
   return function thunk(dispatch) {
-    return axios.get(`/api/receipts/clean`,{ingredientsList})
+    return axios.get(`/api/s3/clean`,{receiptImg})
       .then(res => res.data)
       .then(receipt => {
+        console.log('here is parsed receipt', receipt)
         dispatch(setReceipt(receipt));
       })
     }

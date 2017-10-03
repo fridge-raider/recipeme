@@ -23,10 +23,17 @@ module.exports = {
           'sass-loader'
         ]
       },
+
+    {
+      test: /\.css$/,
+      use: [
+        'style-loader',
+        'css-loader'      ]
+    },
       {
         test: /\.svg$|\.ttf?|\.woff$|\.woff2|\.eof|\.eot/,
         loader: 'file-loader'
       }
     ]
-  }, 
+  },
 }

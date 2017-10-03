@@ -1,12 +1,16 @@
 const fs = require('fs')
+const request = require('request')
 const tesseract = require('node-tesseract');
+const {Ingredient} = require('../db/models')
+const Promise = require('bluebird')
 
 function returnCleanReceipt(imageName) {
 
     return new Promise(function (resolve, reject) {
-
+            console.log('imageName', imageName)
             // Use tesseract to process a file image
             tesseract.process(__dirname + '/' + imageName, function (err, text) {
+                console.log('text', text)
                 if (err) {
                     reject(err);
                 } else {
@@ -24,7 +28,7 @@ function returnCleanReceipt(imageName) {
                         }
                         const lines = text.split('\n');
                         const cleanLines = [];
-                        const priceRegex = /\d+\s*[\.\,\-]\s*\d+\s*\w*$/;
+                        const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
                         for (let i = 0; i < lines.length; i++) {
                             const item = {};
                             if (lines[i].match(priceRegex)) {
@@ -48,5 +52,46 @@ function returnCleanReceipt(imageName) {
     });
 }
 
+function getReceiptIngredients(parsedReceipt) {
 
-module.exports = returnCleanReceipt
+          return Promise.map(parsedReceipt, item => {
+            return Ingredient.findOne({
+              where: {
+                name: {
+                  $like: `%${item.name}%`
+                }
+              }
+            })
+            .then(potentialMatches => {
+              console.log('potentialMatches', potentialMatches)
+              if (!potentialMatches) {
+                console.log('try again with longest word for item ', item.name)
+                const words = item.name.split(' ');
+                let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b});                
+                return Ingredient.findOne({
+                  where: {
+                    name: {
+                      $like: `%${longestWord}%`
+                    }
+                  }
+                })
+                .then(newMatches => {
+                  if (!newMatches) return `unknown ingredient: ${item.name}`
+                  else return {ing: newMatches.name, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
+                })
+              }
+            else {
+              return {ing: potentialMatches.name, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
+            }
+            })
+          })
+          .then(receiptIngArr => {
+            return receiptIngArr
+        })
+}
+
+
+module.exports = {
+    returnCleanReceipt: returnCleanReceipt,
+    getReceiptIngredients: getReceiptIngredients
+}

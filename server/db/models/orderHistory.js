@@ -1,20 +1,22 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 const Frequency = require('./frequency'); 
+const Ingredient = require('./ingredients')
 
 // how much of each ingredient each user has
 const OrderHistory = db.define('orderHistory', {
-  quantity: {
-    type: Sequelize.INTEGER
-  },
-  units: {
-    type: Sequelize.STRING
+  servings: {
+    type: Sequelize.FLOAT
   },
   price: {
     type: Sequelize.FLOAT
   },
   orderId: {
     type: Sequelize.INTEGER
+  }
+}, {
+  defaultScope: {
+    include: [{model: Ingredient}]
   }
 })
 
