@@ -18,7 +18,7 @@ export function fetchCategoryOrderHistory() {
   return function thunk(dispatch) {
     return axios.get(`/api/orders/categories`)
       .then(res => res.data)
-      .then(orders => {
+      .then(categories => {
         dispatch(setCategoryHistory(categories));
       })
     }
