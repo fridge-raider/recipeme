@@ -36,20 +36,6 @@ OrderHistory.hook('beforeCreate', (order, options) => {
           item.update({ freq }) 
         }
       })
-
-      // return Frequency.find({
-      //   where: {
-      //     userId: order.userId, 
-      //     ingredientName: order.ingredientName
-      //   }
-      // }).then(item => {
-      //   console.log(item, "hellloooooo"); 
-      //   if(!item) {
-      //     return Frequency.create({userId: order.userId, ingredientName: order.ingredientName, freq: order.quantity})
-      //         .then(freq => console.log(freq.dataValues)); 
-      //   }
-      // })
-    
 })
 
 module.exports = OrderHistory

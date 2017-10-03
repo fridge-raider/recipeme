@@ -1,6 +1,6 @@
 const router = require('express').Router()
 const db = require('../db'); 
-const {OrderHistory, Ingredient, Frequency} = require('../db/models')
+const {OrderHistory, Ingredient, Frequency, ReceiptRepresentation} = require('../db/models')
 const returnCleanReceipt = require('./receiptParsing')
 const Promise = require('bluebird')
 
@@ -18,19 +18,11 @@ router.get('/clean', (req, res, next) => {
           }
         }
       })
-      .then(potentialMatches => {
-        console.log('potentialMatches', potentialMatches)
-        if (!potentialMatches) {
-          console.log('try again with longest word for item ', item.name)
+      .then(potentialMatch => {
+        if (!potentialMatch) {         
           const words = item.name.split(' ');
-          let longestWord = ''
-          let longest = 0
-          for (let i = 0; i < words.length; i++) {
-            if (words[i].length > longest) {
-              longest = words[i].length
-              longestWord = words[i]
-            }
-          }
+          let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b}); 
+          console.log('try again with longest word for item ', item.name, "ok", longestWord); 
           return Ingredient.findOne({
             where: {
               name: {
@@ -38,14 +30,42 @@ router.get('/clean', (req, res, next) => {
               }
             }
           })
-          .then(newMatches => {
-            if (!newMatches) return `unknown ingredient: ${item.name}`
-            else return {ing: newMatches, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
+          .then(longestMatch => {
+            if (!longestMatch) return `unknown ingredient: ${item.name}`
+            else {
+              let receiptRow = {ing: longestMatch, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
+              Ingredient.findOrCreate({
+                where: {
+                  name: receiptRow.ing.name
+                }
+              }).spread((ingredient, wasCreated) => {
+                return ReceiptRepresentation.findOrCreate({
+                  where: {
+                    rep: item.name, 
+                    ingredientName: ingredient.name
+                  }
+                })
+              })
+
+              return receiptRow; 
+            }
           })
+        } else {
+          let receiptRow = {ing: potentialMatch, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
+          Ingredient.findOrCreate({
+            where: {
+              name: receiptRow.ing.name
+            }
+          }).spread((ingredient, wasCreated) => {
+            return ReceiptRepresentation.findOrCreate({
+              where: {
+                rep: item.name, 
+                ingredientName: ingredient.name
+              }
+            })
+          })
+          return receiptRow; 
         }
-      else {
-        return {ing: potentialMatches, qty: 1, unit: 'unit', price: item.price} // add get most frequent function here
-      }
       })
     })
     .then(receiptIngArr => {
