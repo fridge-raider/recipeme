@@ -21,7 +21,7 @@ export class UserHome extends Component {
       <Container fluid>
       <Grid columns={2} divided padded='horizontally' relaxed className='main-grid'>
       <Grid.Column width={5} className='patient-column'>
-        <div>hello</div>
+        <div>Favorited Recipes</div>
       </Grid.Column>
       <Grid.Column width={11} className='nurse-column'>
       {!!this.props.categoryHistory.length &&

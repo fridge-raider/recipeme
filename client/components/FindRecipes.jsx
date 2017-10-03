@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './RecipeCard.jsx'
+import RecipeCard from './Tile.jsx'
 import { getRecipesByIngredient } from '../store'
 
 class FindRecipes extends Component {
@@ -29,9 +29,9 @@ class FindRecipes extends Component {
       <Container fluid style={{padding: '1em 2em'}}>
         <Form onSubmit={(evt) => this.props.handleSubmit(evt, this.state.mainIngredient)}>
           <Form.Group widths='equal'>
-            <Form.Input 
-              label='Main ingredient' 
-              placeholder='what do you want to eat today?' 
+            <Form.Input
+              label='Main ingredient'
+              placeholder='what do you want to eat today?'
               onChange={evt => this.setState({ mainIngredient: evt.target.value })}
             />
             <Form.Select label='Cuisine' options={options} placeholder='Anything' />
