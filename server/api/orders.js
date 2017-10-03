@@ -1,12 +1,15 @@
 const router = require('express').Router()
 const {OrderHistory, Ingredient} = require('../db/models')
 const categoryCalculations = require('./categoryCalculations')
+// KM/CP take out ^^^
 const Sequelize = require('sequelize')
-const _ = require('lodash')
+const _ = require('lodash') // KM/CP take out
 
 module.exports = router
 
 // gets last 60 days of orders, groups by date, sums nutrients - for graph
+
+// KM/CP check out sequelize.query
 router.get('/nutrients', (req, res, next) => {
   OrderHistory.findAll({
     where: {
@@ -36,12 +39,12 @@ router.get('/nutrients', (req, res, next) => {
 
 router.put('/nutrients/deficient', (req, res, next) => {
   const nutrientHistory = req.body.nutrientHistory
-  const nutrients = {
+  const nutrients = { // KM/CP reformat object
     nf_calories: 0, nf_total_fat: 0, nf_saturated_fat: 0, nf_sodium: 0, nf_total_carbohydrate: 0, nf_dietary_fiber: 0, nf_sugars: 0, nf_protein: 0, nf_potassium: 0, nf_p: 0
   }
 
-  nutrientHistory.map(nutrientDate => {
-    Object.keys(nutrients).map(nutrient => {
+  nutrientHistory.forEach(nutrientDate => {
+    Object.keys(nutrients).forEach(nutrient => {
       nutrients[nutrient] = nutrients[nutrient] + nutrientDate[nutrient]
     })
   })
@@ -51,12 +54,14 @@ router.put('/nutrients/deficient', (req, res, next) => {
 
 
 function getDeficientNutrients(nutrientTotals) {
+  // KM/CP below info is the keys of argument, redundant
   const nutrients = ['nf_calories','nf_total_fat', 'nf_saturated_fat', 'nf_sodium', 'nf_total_carbohydrate', 'nf_dietary_fiber', 'nf_sugars', 'nf_protein','nf_potassium','nf_p']
   const deficits = {}
   let defNutrient = ''
   let maxDef = 0
 
-  nutrients.map(nutrient => {
+  // KM/CP could be a reduce
+  nutrients.forEach(nutrient => {
     deficits[nutrient] = +recDailyIntakeByNutrient[nutrient] - +nutrientTotals[nutrient]/60
 
       // adjust to send back more than one nutrient
@@ -74,6 +79,7 @@ function getDeficientNutrients(nutrientTotals) {
 }
 
 router.get('/categories', (req, res, next) => {
+  // KM/CP make into a scope on OrderHistory
   OrderHistory.findAll({
     where: {
       userId: req.user.id,
@@ -81,11 +87,11 @@ router.get('/categories', (req, res, next) => {
         $gt: new Date(new Date(Date.now()).getTime() - 60*24*60*60*1000) // in last 60 days
       }
     },
-      // change this to date not createdAt
-      group: ['orderHistory.createdAt', 'ingredient.category'],
-      attributes: ['orderHistory.createdAt',[Sequelize.fn('SUM',Sequelize.col('orderHistory.servings')),'servingCount']],
-      include: [{model: Ingredient,attributes:['category']}],
-      raw: true
+    // change this to date not createdAt
+    group: ['orderHistory.createdAt', 'ingredient.category'],
+    attributes: ['orderHistory.createdAt',[Sequelize.fn('SUM',Sequelize.col('orderHistory.servings')),'servingCount']],
+    include: [{model: Ingredient,attributes:['category']}],
+    raw: true
   })
   .then(orders => res.json(orders))
   .catch(next)
@@ -93,6 +99,7 @@ router.get('/categories', (req, res, next) => {
 
 
 router.put('/categories/deficient', (req, res, next) => {
+  // KM/CP look at it, all same issues
   const categoryHistory = req.body.categoryHistory
   const categories = {Grains: 0, Vegetables: 0, Fruits: 0, Dairy: 0, Meat: 0, Fat: 0, NutsAndLegumes: 0, Sugars: 0}
 

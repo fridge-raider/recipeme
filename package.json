@@ -49,7 +49,6 @@
     "morgan": "^1.8.1",
     "node-tesseract": "^0.2.7",
     "needle": "^2.0.1",
-    "node-tesseract": "^0.2.7",
     "passport": "^0.3.2",
     "passport-google-oauth": "^1.0.0",
     "pg": "^6.1.2",
