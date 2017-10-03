@@ -4,22 +4,22 @@ import history from '../history'
 /**
  * ACTION TYPES
  */
-const SET_HISTORY = 'SET_HISTORY'
+const SET_CATEGORY_HISTORY = 'SET_CATEGORY_HISTORY'
 
 /**
  * ACTION CREATORS
  */
-export const setHistory = orders => ({type: SET_HISTORY, orders})
+export const setCategoryHistory = categories => ({type: SET_CATEGORY_HISTORY, categories})
 /**
  * THUNK CREATORS
  */
 
-export function fetchOrderHistory() {
+export function fetchCategoryOrderHistory() {
   return function thunk(dispatch) {
-    return axios.get(`/api/orders`)
+    return axios.get(`/api/orders/categories`)
       .then(res => res.data)
       .then(orders => {
-        dispatch(setHistory(orders));
+        dispatch(setCategoryHistory(categories));
       })
     }
   }
@@ -29,8 +29,8 @@ export function fetchOrderHistory() {
  */
 export default function (state = [], action) {
   switch (action.type) {
-    case SET_HISTORY:
-      return action.orders
+    case SET_CATEGORY_HISTORY:
+      return action.categories
     default:
       return state
   }
