@@ -94,7 +94,7 @@ router.get('/categories', (req, res, next) => {
 
 router.put('/categories/deficient', (req, res, next) => {
   const categoryHistory = req.body.categoryHistory
-  const categories = {grains: 0, Vegetables: 0, fruits: 0, dairy: 0, meat: 0, Fat: 0, nutsAndLegumes: 0, sugars: 0}
+  const categories = {Grains: 0, Vegetables: 0, Fruits: 0, Dairy: 0, Meat: 0, Fat: 0, NutsAndLegumes: 0, Sugars: 0}
 
     categoryHistory.map(categoryDate => {
         categories[categoryDate["ingredient.category"]] = +categories[categoryDate["ingredient.category"]] + +categoryDate.servingCount
@@ -105,7 +105,7 @@ router.put('/categories/deficient', (req, res, next) => {
 
 
 function getDeficientCategories(categoryTotals) {
-  const categories = ['grains','Vegetables', 'fruits', 'dairy', 'meat', 'Fat', 'nutsAndLegumes', 'sugars']
+  const categories = ['Grains','Vegetables', 'Fruits', 'Dairy', 'Meat', 'Fat', 'NutsAndLegumes', 'Sugars']
   const deficits = {}
   let defCategory = ''
   let maxDef = 0
@@ -126,7 +126,7 @@ function getDeficientCategories(categoryTotals) {
 }
 
 const recDailyIntakeByCategory = {
-  grains: 7, Vegetables: 5, fruits: 5, dairy: 3, meat: 2, Fat: 3, nutsAndLegumes: 0.7, sugars: 0.7
+  Grains: 7, Vegetables: 5, Fruits: 5, Dairy: 3, Meat: 2, Fat: 3, NutsAndLegumes: 0.7, Sugars: 0.7
 }
 
 const recDailyIntakeByNutrient = {
