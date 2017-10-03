@@ -17,6 +17,9 @@ export default class Navbar extends Component {
         <Menu.Item>
           <NavLink to='/findrecipes'>Find Recipes</NavLink>
         </Menu.Item>
+        <Menu.Item>
+          <NavLink to='/receipt'>Upload Receipt</NavLink>
+        </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
               <NavLink to='/signup'>Sign Up</NavLink>
