@@ -1,5 +1,4 @@
-{
-  "foods": [
+  [
     {
       "food_name": "chicken",
       "brand_name": null,
@@ -775,4 +774,3 @@
       "sub_recipe": null
     }
   ]
-}
