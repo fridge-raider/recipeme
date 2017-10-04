@@ -22,7 +22,6 @@ class FindRecipes extends Component {
       { key: 'krn', text: 'Korean', value: 'korean'},
       { key: 'ity', text: 'Italian', value: 'italian'}
     ]
-    console.log(getRecipes)
     let counter = 0;
 
     return (

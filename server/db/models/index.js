@@ -11,8 +11,8 @@ const NutrientsAPIID = require('./nutrientsAPIID')
 User.belongsToMany(OrderHistory, {through: 'userOrders'})
 OrderHistory.belongsTo(User)
 OrderHistory.belongsTo(Ingredient)
-Frequency.belongsTo(User); 
-ReceiptRepresentation.belongsTo(Ingredient); 
+Ingredient.belongsToMany(User, {through: Frequency});
+ReceiptRepresentation.belongsTo(Ingredient);
 Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
 Receipt.belongsTo(User)
 
@@ -20,7 +20,7 @@ module.exports = {
   User,
   Category,
   OrderHistory,
-  Frequency, 
+  Frequency,
   Ingredient,
   Recipe,
   ReceiptRepresentation,

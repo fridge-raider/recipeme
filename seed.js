@@ -60,11 +60,11 @@ fileNutrientsIng.forEach(ingredient => {
 	rows.push(instance)
 })
 
-// ingredients.forEach(ingredient => {
-// 	const instance = { name: ''};
-// 	instance.name = ingredient;
-// 	rows.push(instance);
-// })
+ingredients.forEach(ingredient => {
+	const instance = { name: ''};
+	instance.name = ingredient;
+	rows.push(instance);
+})
 
 const seed = () => {
 	const allIngredients = rows.map(row => {
