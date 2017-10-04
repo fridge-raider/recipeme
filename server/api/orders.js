@@ -57,11 +57,11 @@ function getDeficientNutrients(nutrientTotals) {
   let maxDef = 0
 
   nutrients.map(nutrient => {
-    deficits[nutrient] = +recDailyIntakeByNutrient[nutrient] - +nutrientTotals[nutrient]/60
+    deficits[nutrient] = [+nutrientTotals[nutrient]/60, +recDailyIntakeByNutrient[nutrient], +recDailyIntakeByNutrient[nutrient] - +nutrientTotals[nutrient]/60]
 
       // adjust to send back more than one nutrient
-    if (+deficits[nutrient] > maxDef) {
-      maxDef = +deficits[nutrient]
+    if (+deficits[nutrient][2] > maxDef) {
+      maxDef = +deficits[nutrient][2]
       defNutrient = nutrient
     }
 
@@ -69,7 +69,8 @@ function getDeficientNutrients(nutrientTotals) {
 
   return {
     defNutrient,
-    maxDef
+    maxDef,
+    deficits
   }
 }
 
@@ -111,17 +112,18 @@ function getDeficientCategories(categoryTotals) {
   let maxDef = 0
 
   categories.map(category => {
-    deficits[category] = +recDailyIntakeByCategory[category] - +categoryTotals[category]/60
+    deficits[category] = [+categoryTotals[category]/60, +recDailyIntakeByCategory[category], +recDailyIntakeByCategory[category] - +categoryTotals[category]/60]
 
-    if (+deficits[category] > maxDef) {
-      maxDef = +deficits[category]
+    if (+deficits[category][2] > maxDef) {
+      maxDef = +deficits[category][2]
       defCategory = category
     }
   })
 
   return {
     defCategory,
-    maxDef
+    maxDef,
+    deficits
   }
 }
 

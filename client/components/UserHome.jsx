@@ -17,8 +17,7 @@ export class UserHome extends Component {
 
 
   render() {
-    console.log('cathist', this.props.categoryHistory)
-    console.log('nutrienthist', this.props.nutrientHistory)
+
     return (
       <Container fluid>
       <Grid columns={2} divided padded='horizontally' relaxed className='main-grid'>
