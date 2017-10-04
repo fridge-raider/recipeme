@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory} from '../store'
+import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient} from '../store'
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import GraphVisualizations from './GraphVisualizations.jsx'
 
@@ -55,6 +55,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
+      dispatch(getRecipesByIngredient('chicken'))
     }
   }
 }
