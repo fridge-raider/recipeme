@@ -1,14 +1,15 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db');
-const {Ingredient} = require('./server/db/models')
+const {Ingredient, NutrientsAPIID} = require('./server/db/models')
 
 var fileName = require('./trainCategories.json');
 var ingredients = new Set();
 
 var fileNutrientsIng = require('./nutrientsIngredients.json');
-var file = require('./try.json')
+var fileNutID = require('./nutritionID.json')
 
 const rows = [];
+const rowsNut = [];
 
 // fileName.map(recipe => {
 // 	var ing = recipe.ingredients;
@@ -17,9 +18,18 @@ const rows = [];
 // 	}
 // })
 
+fileNutID.forEach(nutrient => {
+	const instance = {
+		name: '',
+		apiId: 0
+	}
+	instance.name = nutrient.name
+	instance.apiId = nutrient.apiId
 
+	rowsNut.push(instance)
+})
 
-fileNutrientsIng.map(ingredient => {
+fileNutrientsIng.forEach(ingredient => {
 	const instance = { 
 		name: '', 
 		servingQty: 0, 
@@ -34,7 +44,6 @@ fileNutrientsIng.map(ingredient => {
   	nf_potassium: 0.0,
   	nf_p: 0.0,
 	}
-	console.log('chicken', ingredient.food_name)
 	instance.name = ingredient.food_name
 	instance.servingQty = ingredient.serving_qty
 	instance.nf_calories = ingredient.nf_calories
@@ -59,10 +68,22 @@ fileNutrientsIng.map(ingredient => {
 
 const seed = () => {
 	const allIngredients = rows.map(row => {
-		Ingredient.create(row);
+		return Ingredient.create(row);
 	})
-	return Promise.all(allIngredients)
+	console.log('hi', rowsNut)
+	const allNutID = rowsNut.map(row => {
+		// console.log(row)
+		return NutrientsAPIID.create(row);
+	})
+
+	const totalArrPromise = allNutID.concat(allIngredients)
+	console.log(totalArrPromise); 
+	return Promise.all(totalArrPromise)
 }
+
+// seed()
+// 	.then(() => console.log("hi"))
+
 
 const main = () => {
 	console.log('Syncing db...');

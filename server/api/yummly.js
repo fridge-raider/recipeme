@@ -5,8 +5,14 @@ var secrets = require('../../secrets');
 // 	app_id : process.env.YUMMLY_ID,
 // 	app_key : process.env.YUMMLY_KEY,
 // });
-const app_id = process.env.YUMMLY_ID
-const app_key = process.env.YUMMLY_KEY
+const Yapp_id = process.env.YUMMLY_ID
+const Yapp_key = process.env.YUMMLY_KEY
+
+const NBDapp_key = process.env.NBD_KEY
+
+export const getFoodsbyNut = (nut) => {
+  
+}
 
 
 // const getByIngredient = (ingredient) => {
