@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data} from './components'
+import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, RecRecipesNutr} from './components'
 import {me} from './store'
 
 /**
@@ -30,6 +30,7 @@ class Routes extends Component {
               <Route path='/receipt' component={ReceiptUpload} />
               <Route path='/data' component={Data} />
               <Route path='/home' component={UserHome} />
+              <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
               <Route path='/' component={Login} />
 
             </Switch>

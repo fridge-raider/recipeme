@@ -72,18 +72,12 @@ const seed = () => {
 	})
 	console.log('hi', rowsNut)
 	const allNutID = rowsNut.map(row => {
-		// console.log(row)
 		return NutrientsAPIID.create(row);
 	})
 
 	const totalArrPromise = allNutID.concat(allIngredients)
-	console.log(totalArrPromise); 
 	return Promise.all(totalArrPromise)
 }
-
-// seed()
-// 	.then(() => console.log("hi"))
-
 
 const main = () => {
 	console.log('Syncing db...');

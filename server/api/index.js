@@ -6,9 +6,11 @@ router.use('/receipts', require('./receipts'))
 router.use('/orders', require('./orders'))
 router.use('/s3', require('./upload'))
 router.use('/recipes', require('./recipes'))
+router.use('/nutrients', require('./nutrientsfindID'))
 
 router.use((req, res, next) => {
   const error = new Error('Not Found')
   error.status = 404
   next(error)
 })
+

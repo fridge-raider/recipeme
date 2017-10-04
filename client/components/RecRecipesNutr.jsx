@@ -4,17 +4,22 @@ import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './Tile.jsx'
-import { getRecipesByIngredient } from '../store'
+import { fetchIDofDefNutrient, getRecipesByDefNutr } from '../store'
 
-class RecRecipesNut extends Component {
+class RecRecipesNutr extends Component {
   constructor(props) {
     super(props)
+  }
 
+  componentDidMount() {
+    this.props.handleFoods("nf_protein")
   }
 
   render() {
+    console.log('in comp', this.props.getRecipes)
     return (
       <div>hi</div>
+
     )
   }
 }
@@ -23,17 +28,16 @@ class RecRecipesNut extends Component {
 const mapProps = (state) => {
   return {
     getRecipes: state.getRecipes,
-    deficientNutrients: state.deficientNutrients
+    foods: state.foods
   }
 }
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    handleSubmit: (evt, ingred) => {
-      dispatch(getRecipesByIngredient(ingred))
-      evt.preventDefault()
+    handleFoods: (nutrient) => {
+      dispatch(fetchIDofDefNutrient(nutrient))
     }
   }
 }
 
-export default withRouter(connect(mapProps)(FindRecipes));
+export default withRouter(connect(mapProps, mapDispatch)(RecRecipesNutr));

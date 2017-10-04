@@ -44,6 +44,34 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
     .catch(console.log)
 }
 
+export const getRecipesByDefNutr = (deficientNutrientFoods) => dispatch => {
+  const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[0]}&maxResult=10`)
+  const food2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[1]}&maxResult=10`)
+  const food3 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[2]}&maxResult=10`)
+
+  // let total = food1.concat(food2)
+  console.log('in the thunkkkk', food1)
+  return Promise.all([].concat(food1).concat(food2).concat(food3))
+    .then(promises => {
+      console.log(promises); 
+      return promises.map(promise => promise.data)
+    })
+    .then(recipes => {
+      dispatch(getRecipes(recipes))
+    })
+    .catch(console.log)
+}
+
+// export const getRecipesByDefNutr = (deficientNutrient) => dispatch => {
+//   return axios.get(`/api/nutrients/${deficientNutrient}`)
+//     .then(res => res.data)
+//     .then(nut => {
+//       const nutID = nut.apiId
+//       return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&nutrition.${nutID}.min=0&nutrition.${nutID}.max=50`)
+//         .then(recipes => console.log('pls', recipes))
+//     })
+// }
+
 const getRecipesReducer = (state=[], action) => {
   switch(action.type) {
     case GET_RECIPES:

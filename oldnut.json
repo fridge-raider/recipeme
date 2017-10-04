@@ -1,39 +1,43 @@
 
-[
+[ 
+  {
+    "name": "nf_calories",
+    "apiId": "ENERC_KCAL"
+  },
   {
     "name": "nf_total_fat",
-    "apiId": "204"
+    "apiId": "FAT"
   },
   {
     "name": "nf_saturated_fat",
-    "apiId": "606"
+    "apiId": "FASAT"
   },
   {
     "name": "nf_sodium",
-    "apiId": "307"
+    "apiId": "NA"
   },
   {
     "name": "nf_total_carbohydrate",
-    "apiId": "205"
+    "apiId": "CHOCDF"
   },
   {
     "name": "nf_dietary_fiber",
-    "apiId": "291"
+    "apiId": "FIBTG"
   },
   {
     "name": "nf_sugars", 
-    "apiId": "269"
+    "apiId": "SUGAR"
   },
   {
     "name": "nf_protein",
-    "apiId": "203"
+    "apiId": "PROCNT"
   },
   {
     "name": "nf_potassium",
-    "apiId": "306"
+    "apiId": "K"
   },
   {
-    "name": "nf_p",
-    "apiId": "305"
+    "name": "nf_calcium",
+    "apiId": "CA"
   }
 ]
