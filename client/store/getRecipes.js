@@ -10,17 +10,11 @@ const GET_RECIPES = 'GET_RECIPES'
 const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
-  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10`)
+  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10&requirePictures=true`)
     .then(res => res.data)
     .then(recipes => {
-      Promise.map(recipes.matches, recipe => {
-        return axios.get(`https://api.yummly.com/v1/api/recipe/${recipe.id}?_app_id=${app_id}&_app_key=${app_key}`)
+      dispatch(getRecipes(recipes.matches))
       })
-      .then(fullRecipes => {
-        const finalRecipes = fullRecipes.map(recipe => recipe.data)
-        dispatch(getRecipes(finalRecipes))
-      })
-    })
     .catch(console.log)
 }
 
@@ -30,16 +24,21 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
     .then(ingredients => {
-      const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&allowedIngredient=${ingredients[0].name}&maxResult=100`)
-      const ing2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&allowedIngredient=${ingredients[1].name}&maxResult=100`)
+      const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].name}&maxResult=10`)
+      const ing2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[1].name}&maxResult=10`)
 
-      Promise.all(ing1.concat(ing2))
+      Promise.all([ing1, ing2])
         .then(promises => {
-          return promises.map(promise => promise.data)
+          let recipes = []
+          promises.forEach(promise => {
+            recipes = recipes.concat(promise.data.matches)
+          })
+          return recipes
         })
         .then(recipes => {
           dispatch(getRecipes(recipes))
-        })
+
+      })
     })
     .catch(console.log)
 }
