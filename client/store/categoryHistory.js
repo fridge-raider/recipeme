@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchDeficientCategories} from './deficientCategories'
 
 /**
  * ACTION TYPES
@@ -20,6 +21,7 @@ export function fetchCategoryOrderHistory() {
       .then(res => res.data)
       .then(categories => {
         dispatch(setCategoryHistory(categories));
+        dispatch(fetchDeficientCategories(categories))
       })
     }
   }

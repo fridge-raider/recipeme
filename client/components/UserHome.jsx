@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients} from '../store'
+import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient} from '../store'
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import GraphVisualizations from './GraphVisualizations.jsx'
 
@@ -45,8 +45,8 @@ const mapState = (state) => {
     email: state.user.email,
     categoryHistory: state.categoryHistory,
     nutrientHistory: state.nutrientHistory,
-    // deficientNutrients: state.deficientNutrients,
-    // deficientCategories: state.deficientCategories
+    deficientNutrients: state.deficientNutrients,
+    deficientCategories: state.deficientCategories
   }
 }
 
@@ -55,13 +55,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      // dispatch(fetchDeficientCategories())
-      // dispatch(fetchDeficientNutrients())
-    },
-    handleSubmit(evt) {
-      evt.preventDefault();
-      // dispatach to update ingredients based on state
-      dispatch(addReceipt())
+      dispatch(getRecipesByIngredient('chicken'))
     }
   }
 }

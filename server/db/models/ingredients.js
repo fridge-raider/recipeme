@@ -42,6 +42,10 @@ const Ingredient = db.define('ingredient', {
   },
   nf_p: {
     type: Sequelize.FLOAT
+  },
+  freq: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 
