@@ -5,106 +5,87 @@ import ReactFauxDOM from 'react-faux-dom';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Card, Container, Form, Grid, Header } from 'semantic-ui-react'
+import {Tabs, Tab} from 'material-ui/Tabs'
+import getCategoryChart from './getCategoryChart.jsx'
+import getNutrientChart from './getNutrientChart.jsx'
 
 const categories = ["Grains","Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
 
+const styles = {
+  headline: {
+    fontSize: 24,
+    paddingTop: 16,
+    marginBottom: 12,
+    fontWeight: 400,
+  },
+};
+
+
 class GraphVisualizations extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 'categories',
+    };
+    this.handleChange = this.handleChange.bind(this)
+  }
+
+  handleChange(value) {
+    this.setState({
+      value: value,
+    });
+  };
+
    componentDidMount() {
-     console.log('histories', this.props.categoryHistory, this.props.nutrientHistory)
+      const categoryChartInfo = getCategoryChart(this.props.categoryHistory)
+      var categoryChart = c3.generate({
+        bindto: '#category_chart',
+        data: categoryChartInfo.data,
+        axis: categoryChartInfo.axis
+      })
 
-     // get date row
-     const dateRow = []
-     this.props.categoryHistory.map(categoryDate => {
-       const date = new Date(categoryDate.createdAt).toISOString().split('T')[0]
-       if (!dateRow.includes(date)) dateRow.push(date)
-     })
-     dateRow.sort()
-
-     // get category rows
-     const grainRow = new Array(dateRow.length).fill(0)
-     const veggieRow = new Array(dateRow.length).fill(0)
-     const fruitRow = new Array(dateRow.length).fill(0)
-     const dairyRow = new Array(dateRow.length).fill(0)
-     const meatRow = new Array(dateRow.length).fill(0)
-     const fatRow = new Array(dateRow.length).fill(0)
-     const nutsRow = new Array(dateRow.length).fill(0)
-     const sugarRow = new Array(dateRow.length).fill(0)
-
-     // for every item, find the category and date to add servings
-    this.props.categoryHistory.map(item => {
-      const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
-
-      if (item['ingredient.category'] === 'Grains') grainRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Vegetables') veggieRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Fruits') fruitRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Dairy') dairyRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Meat') meatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Fat') fatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'NutsAndLegumes') nutsRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Sugars') sugarRow[index] = item.servingCount
-
-    })
-
-     dateRow.unshift('x')
-     grainRow.unshift('Grains')
-     veggieRow.unshift('Vegetables')
-     fruitRow.unshift('Fruits')
-     dairyRow.unshift('Dairy')
-     meatRow.unshift('Meat')
-     fatRow.unshift('Fat')
-     nutsRow.unshift('Nuts And Legumes')
-     sugarRow.unshift('Added Sugars')
-
-     console.log('dateRow', dateRow)
-     console.log('grainRow', grainRow)
-     console.log('veggieRow', veggieRow)
-
-
-      var chart = c3.generate({
-
-         data: {
-            x: 'x',
-            columns: [
-               dateRow,
-               grainRow,
-               veggieRow,
-               fruitRow,
-               dairyRow,
-               meatRow,
-               fatRow,
-               nutsRow,
-               sugarRow
-            ]
-         },
-         axis: {
-            x: {
-               type: 'timeseries',
-               tick: {
-                  format: '%m-%d-%Y'
-               }
-            },
-            y: {
-              min: 0,
-              padding : {
-                bottom : 0
-              }
-            }
-         }
-      });
-
-      console.log(chart);
-   }
+      const nutrientChartInfo = getNutrientChart(this.props.nutrientHistory)
+      var nutrientChart = c3.generate({
+        bindto: '#nutrient_chart',
+        data: nutrientChartInfo.data,
+        axis: nutrientChartInfo.axis
+      })
+  }
 
 
 
    render() {
-      let div = ReactFauxDOM.createElement('div');
-      div.setAttribute('id', 'chart');
+      let categoryDiv = ReactFauxDOM.createElement('div');
+      categoryDiv.setAttribute('id', 'category_chart');
+
+      let nutrientDiv = ReactFauxDOM.createElement('div');
+      nutrientDiv.setAttribute('id', 'nutrient_chart');
+
       return (
-        <Container fluid>
+        <Container >
         <Header as='h2' textAlign='center'>Purchasing History</Header>
-        {div.toReact()}
+          <Tabs
+          value={this.state.value}
+          onChange={this.handleChange}
+        >
+        <Tab label="By Category" value="categories">
+        <div>
+          <h2 style={styles.headline}>Categories</h2>
+          {categoryDiv.toReact()}
+        </div>
+      </Tab>
+      <Tab label="By Nutrient" value="nutrients">
+      <div>
+        <h2 style={styles.headline}>Nutrients</h2>
+        {nutrientDiv.toReact()}
+      </div>
+    </Tab>
+
+
+      </Tabs>
+
+
         </Container>
       )
   }
