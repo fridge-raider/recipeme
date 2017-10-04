@@ -40,7 +40,7 @@ router.put('/nutrients/deficient', (req, res, next) => {
     nf_calories: 0, nf_total_fat: 0, nf_saturated_fat: 0, nf_sodium: 0, nf_total_carbohydrate: 0, nf_dietary_fiber: 0, nf_sugars: 0, nf_protein: 0, nf_potassium: 0, nf_p: 0
   }
 
-  nutrientHistory.map(nutrientDate => {
+  nutrientHistory.forEach(nutrientDate => {
     Object.keys(nutrients).map(nutrient => {
       nutrients[nutrient] = nutrients[nutrient] + nutrientDate[nutrient]
     })
@@ -96,7 +96,7 @@ router.put('/categories/deficient', (req, res, next) => {
   const categoryHistory = req.body.categoryHistory
   const categories = {Grains: 0, Vegetables: 0, Fruits: 0, Dairy: 0, Meat: 0, Fat: 0, NutsAndLegumes: 0, Sugars: 0}
 
-    categoryHistory.map(categoryDate => {
+    categoryHistory.forEach(categoryDate => {
         categories[categoryDate["ingredient.category"]] = +categories[categoryDate["ingredient.category"]] + +categoryDate.servingCount
     })
 
