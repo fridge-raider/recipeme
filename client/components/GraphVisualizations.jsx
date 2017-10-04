@@ -10,7 +10,7 @@ import getCategoryChart from './getCategoryChart.jsx'
 import getNutrientChart from './getNutrientChart.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import history from '../history'
-import {getRecipesByDefCategory} from '../store'
+import {getRecipesByDefCategory, fetchIDofDefNutrient} from '../store'
 
 const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
 
@@ -132,7 +132,7 @@ const mapDispatch = (dispatch, ownProps) => {
       history.push('/recipes/deficiencies')
     },
     handleNutrientClick: (evt, state) => {
-      //dispatch(getRecipesByDefNutrient(state.deficientNutrients.defNutrient))
+      dispatch(fetchIDofDefNutrient(state.deficientNutrients.defNutrient))
       history.push('/recipes/deficiencies')
     }
   }
