@@ -17,6 +17,8 @@ export class UserHome extends Component {
 
 
   render() {
+    console.log('cathist', this.props.categoryHistory)
+    console.log('nutrienthist', this.props.nutrientHistory)
     return (
       <Container fluid>
       <Grid columns={2} divided padded='horizontally' relaxed className='main-grid'>
@@ -25,6 +27,7 @@ export class UserHome extends Component {
       </Grid.Column>
       <Grid.Column width={11} className='nurse-column'>
       {!!this.props.categoryHistory.length &&
+        !!this.props.nutrientHistory.length &&
         <GraphVisualizations />
       }
       </Grid.Column>
