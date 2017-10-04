@@ -55,7 +55,6 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      dispatch(getRecipesByDefCategory('Vegetables'))
     }
   }
 }
