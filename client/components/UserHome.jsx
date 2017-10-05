@@ -23,6 +23,10 @@ export class UserHome extends Component {
       <Container fluid>
 
       <Grid.Column width={11} className='nurse-column'>
+      { !this.props.categoryHistory.length &&
+        <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
+      }
+
       {!!this.props.categoryHistory.length &&
         !!this.props.nutrientHistory.length &&
         <GraphVisualizations />
@@ -43,7 +47,7 @@ const mapState = (state) => {
   return {
     email: state.user.email,
     categoryHistory: state.categoryHistory,
-    nutrientHistory: state.nutrientHistory, 
+    nutrientHistory: state.nutrientHistory,
     deficientNutrients: state.deficientNutrients,
     deficientCategories: state.deficientCategories
   }

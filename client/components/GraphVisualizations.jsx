@@ -41,7 +41,7 @@ class GraphVisualizations extends Component {
       value: value,
     });
   };
-  
+
    componentDidUpdate() {
      console.log('this.props', this.props)
       const categoryChartInfo = getCategoryChart(this.props.categoryHistory)
@@ -77,10 +77,7 @@ class GraphVisualizations extends Component {
 
 
   render() {
-    let categoryDiv = ReactFauxDOM.createElement('div');
-    categoryDiv.setAttribute('id', 'category_chart');
 
-   render() {
      console.log('re-rendering')
       let categoryDiv = ReactFauxDOM.createElement('div');
       categoryDiv.setAttribute('id', 'category_chart');
@@ -121,7 +118,7 @@ class GraphVisualizations extends Component {
       <div>
         <h2 style={styles.headline}>Nutrients</h2>
       <div>
-        <Container> 
+        <Container>
           {nutrientDiv.toReact()}
         </Container>
         <Container>
