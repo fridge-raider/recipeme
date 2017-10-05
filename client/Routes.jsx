@@ -4,11 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-<<<<<<< HEAD
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, RecRecipesNutr} from './components'
-=======
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes} from './components'
->>>>>>> master
+import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr} from './components'
 import {me} from './store'
 
 /**
