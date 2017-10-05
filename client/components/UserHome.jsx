@@ -4,6 +4,7 @@ import {connect} from 'react-redux'
 import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient} from '../store'
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import GraphVisualizations from './GraphVisualizations.jsx'
+import { Carousel } from 'react-responsive-carousel'
 
 
 /**
@@ -17,19 +18,20 @@ export class UserHome extends Component {
 
 
   render() {
+
     return (
       <Container fluid>
-      <Grid columns={2} divided padded='horizontally' relaxed className='main-grid'>
-      <Grid.Column width={5} className='patient-column'>
-        <div>Favorited Recipes</div>
-      </Grid.Column>
+
       <Grid.Column width={11} className='nurse-column'>
+      { !this.props.categoryHistory.length &&
+        <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
+      }
+
       {!!this.props.categoryHistory.length &&
         !!this.props.nutrientHistory.length &&
         <GraphVisualizations />
       }
       </Grid.Column>
-    </Grid>
       </Container>
     )
   }
