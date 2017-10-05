@@ -2,21 +2,12 @@ const Sequelize = require('sequelize')
 const db = require('./server/db');
 const {Ingredient, NutrientsAPIID} = require('./server/db/models')
 
-var fileName = require('./trainCategories.json');
-var ingredients = new Set();
-
-var fileNutrientsIng = require('./nutrientsIngredients.json');
+let setIngredients = new Set(); 
+var fileNutrientsIng = require('./nutrientsAll.json')
 var fileNutID = require('./nutritionID.json')
 
 const rows = [];
 const rowsNut = [];
-
-// fileName.map(recipe => {
-// 	var ing = recipe.ingredients;
-// 	for(var i=0; i<ing.length; i++) {
-// 		ingredients.add(ing[i]);
-// 	}
-// })
 
 fileNutID.forEach(nutrient => {
 	const instance = {
@@ -25,7 +16,6 @@ fileNutID.forEach(nutrient => {
 	}
 	instance.name = nutrient.name
 	instance.apiId = nutrient.apiId
-
 	rowsNut.push(instance)
 })
 
@@ -58,22 +48,19 @@ fileNutrientsIng.forEach(ingredient => {
 	instance.nf_potassium = ingredient.nf_potassium
 	instance.nf_p = ingredient.nf_p
 
-	rows.push(instance)
-})
-
-ingredients.forEach(ingredient => {
-	const instance = { name: ''};
-	instance.name = ingredient;
-	rows.push(instance);
+	if(!setIngredients.has(instance.name)) {
+		setIngredients.add(instance.name); 
+		rows.push(instance); 
+	}
 })
 
 const seed = () => {
 	const allIngredients = rows.map(row => {
-		return Ingredient.create(row);
+		return Ingredient.create(row)
 	})
-	console.log('hi', rowsNut)
+
 	const allNutID = rowsNut.map(row => {
-		return NutrientsAPIID.create(row);
+		return NutrientsAPIID.create(row)
 	})
 
 	const totalArrPromise = allNutID.concat(allIngredients)
@@ -84,13 +71,13 @@ const main = () => {
 	console.log('Syncing db...');
 	db.sync({ force: true })
 		.then(() => {
-			console.log('Seeding database...');
+			console.log('Seeding database...')
 			return seed();
 		}).catch(err => {
-			console.log('Error while seeding');
+			console.log('Error while seeding')
 			console.log(err.stack);
 		}).then(() => {
-			console.log("Done seeding");
+			console.log("Done seeding")
 			db.close();
 			return null;
 		});
