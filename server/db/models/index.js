@@ -11,6 +11,8 @@ User.belongsToMany(OrderHistory, {through: 'userOrders'})
 OrderHistory.belongsTo(User)
 OrderHistory.belongsTo(Ingredient)
 Ingredient.belongsToMany(User, {through: Frequency});
+//Frequency.belongsTo(User)
+Frequency.belongsTo(Ingredient)
 ReceiptRepresentation.belongsTo(Ingredient);
 Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
 Receipt.belongsTo(User)
