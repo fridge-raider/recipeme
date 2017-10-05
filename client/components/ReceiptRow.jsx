@@ -20,8 +20,10 @@ export class ReceiptRow extends Component {
     this.state = {
       ing: this.props.ingredient.ing,
       servings: 1,
-      category: 0,
-      price: this.props.ingredient.price
+      category: 8,
+      category_str: this.props.ingredient.category,
+      price: this.props.ingredient.price, 
+      rep: this.props.ingredient.rep
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this)
@@ -30,18 +32,34 @@ export class ReceiptRow extends Component {
     this.handleNameChange = this.handleNameChange.bind(this)
   }
 
+  componentWillMount() {
+    let category = 8; 
+    if(this.props.ingredient.category === 'Grains') category = 0;
+    else if(this.props.ingredient.category === 'Fruits') category = 1;
+    else if(this.props.ingredient.category === 'Vegtables') category = 2;
+    else if(this.props.ingredient.category === 'Dairy') category = 3;
+    else if(this.props.ingredient.category === 'Meat') category = 4;
+    else if(this.props.ingredient.category === 'Nuts and Legumes') category = 5;
+    else if(this.props.ingredient.category === 'Fats') category = 6;
+    else if(this.props.ingredient.category === 'Added Sugars') category = 7;
+    else if(this.props.ingredient.category === 'Unsure') category = 8;
+    this.setState({ category }); 
+
+  }
+
   handleCategoryChange(evt, value) {
-    let category = ''; 
-    if(value === 0) category = 'Grains'; 
-    else if(value === 1) category = 'Fruits'; 
-    else if(value === 2) category = 'Vegtables'; 
-    else if(value === 3) category = 'Dairy'; 
-    else if(value === 4) category = 'Meat'; 
-    else if(value === 5) category = 'Nuts and Legumes'; 
-    else if(value === 6) category = 'Fats'; 
-    else if(value === 7) category = 'Added Sugars'; 
-    this.setState({ category : value }, () => {
-      //this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
+    let category_str = ''; 
+    if(value === 0) category_str = 'Grains'; 
+    else if(value === 1) category_str = 'Fruits'; 
+    else if(value === 2) category_str = 'Vegtables'; 
+    else if(value === 3) category_str = 'Dairy'; 
+    else if(value === 4) category_str = 'Meat'; 
+    else if(value === 5) category_str = 'Nuts and Legumes'; 
+    else if(value === 6) category_str = 'Fats'; 
+    else if(value === 7) category_str = 'Added Sugars'; 
+    else if(value === 8) category_str = 'Unsure'; 
+    this.setState({ category : value, category_str : category_str }, () => {
+      this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
     })
 
   }
@@ -71,6 +89,9 @@ export class ReceiptRow extends Component {
 
   <TableRow>
     <TableRowColumn>
+      {this.props.ingredient.rep}
+    </TableRowColumn>
+    <TableRowColumn>
       <TextField
       defaultValue={this.props.ingredient.ing}
       onChange={(evt, value) => this.handleNameChange(evt, value)}
@@ -93,6 +114,7 @@ export class ReceiptRow extends Component {
         <MenuItem value={5} primaryText="Nuts and Legumes" />
         <MenuItem value={6} primaryText="Fats" />
         <MenuItem value={7} primaryText="Added Sugars" />
+        <MenuItem value={8} primaryText="Unsure" />
       </DropDownMenu> 
     </TableRowColumn>
 
@@ -118,7 +140,8 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     updateReceipt(state, row, receipt) {
-      let item = {ing: state.ing, servings: state.servings, price: state.price}; 
+      let item = {ing: state.ing, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep}; 
+      console.log(item); 
       receipt[row] = item; 
       dispatch(setReceipt(receipt))
     }
