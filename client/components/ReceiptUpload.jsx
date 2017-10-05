@@ -8,7 +8,9 @@ import CheckReceiptIng from './CheckReceiptIngv2.jsx'
 import ReactS3Uploader from 'react-s3-uploader'
 import FineUploaderS3 from 'fine-uploader-wrappers/s3'
 import Gallery from 'react-fine-uploader'
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from 'material-ui/RaisedButton'
+// import CircularProgress from 'material-ui/CircularProgress'
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 
 import 'react-fine-uploader/gallery/gallery.css'
 
@@ -51,10 +53,12 @@ export class ReceiptUpload extends React.Component {
     super(props);
 
     this.state = {
-      submittedFiles: []
+      submittedFiles: [],
+      isLoading: false
     }
 
     this.isFileGone = this.isFileGone.bind(this)
+    this.loading = this.loading.bind(this)
   }
 
 
@@ -74,21 +78,32 @@ export class ReceiptUpload extends React.Component {
             this.setState({ submittedFiles })
         }
     })
-}
+  }
 
-isFileGone() {
-  return [
-      'canceled',
-      'deleted',
-  ].indexOf(status) >= 0
-}
+  isFileGone() {
+    return [
+        'canceled',
+        'deleted',
+    ].indexOf(status) >= 0
+  }
 
+  loading() {
+    // console.log('are ou working')
+    // return (
+    // (this.state.isloading && <CircularProgress size={60} thickness={7} />
+    // ))
+    return (
+      <Dimmer active>
+        { console.log('IN HERE')}
+        <Loader indeterminate>Preparing Files</Loader>
+      </Dimmer>
+    )
+  }
 
   render() {
 
-
     console.log('this.state', this.state)
-   const fileInputChildren = <span>Choose file</span>
+    const fileInputChildren = <span>Choose file</span>
     // <input className="fileInput"
     // type="file"
     // onChange={(e)=>this._handleImageChange(e)} />
@@ -104,9 +119,15 @@ isFileGone() {
 
       <Gallery fileInput-children={ fileInputChildren } uploader={ uploader } />
       <RaisedButton
-      onClick={this.props.handleSubmit}
+      onClick={(evt) => {
+        this.setState({isLoading: true})
+        this.props.handleSubmit(evt)
+        console.log(this.state.isLoading, 'false PLS')
+        {/* this.loading() */}
+        }}
       >
       Parse Purchases</RaisedButton>
+      {/* { this.state.isLoading && this.loading() } */}
       </Container>
 
 
@@ -124,6 +145,7 @@ const mapDispatch = (dispatch) => {
   return {
     handleSubmit(evt) {
       evt.preventDefault();
+      // func()
       // dispatach to update ingredients based on state
       dispatch(addReceipt())
     }
