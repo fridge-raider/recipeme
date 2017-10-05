@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { withRouter, Link, NavLink } from 'react-router-dom'
 import { Container, Menu, Grid } from 'semantic-ui-react'
+import {getRecipes} from '../store'
 
 
 export default class Navbar extends Component {
@@ -22,7 +23,7 @@ export default class Navbar extends Component {
         </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-              <NavLink to='/signup'>Sign Up</NavLink>
+              <NavLink to='/signup' onClick={(e)=>getRecipes([])}>Sign Up</NavLink>
           </Menu.Item>
           <Menu.Item>
             <NavLink to='/login'>Log In</NavLink>

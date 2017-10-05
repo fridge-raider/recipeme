@@ -44,6 +44,7 @@ fileNutrientsIng.forEach(ingredient => {
   	nf_potassium: 0.0,
   	nf_p: 0.0,
 	}
+
 	instance.name = ingredient.food_name
 	instance.servingQty = ingredient.serving_qty
 	instance.nf_calories = ingredient.nf_calories

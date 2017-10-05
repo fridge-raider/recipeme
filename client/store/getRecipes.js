@@ -7,7 +7,7 @@ const app_key = process.env.YUMMLY_KEY
 
 const GET_RECIPES = 'GET_RECIPES'
 
-const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
+export const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
   return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10&requirePictures=true`)
@@ -24,14 +24,18 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
     .then(ingredients => {
-      const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].name}&maxResult=10`)
-      const ing2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[1].name}&maxResult=10`)
+      console.log('ingredients', ingredients)
+      const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].ingredientName}&maxResult=75`)
+      let ing2 = ''
+      if (ingredients[1]) {
+        ing2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[1].ingredientName}&maxResult=75`)
+      }
 
       Promise.all([ing1, ing2])
         .then(promises => {
           let recipes = []
           promises.forEach(promise => {
-            recipes = recipes.concat(promise.data.matches)
+            if (promise) recipes = recipes.concat(promise.data.matches)
           })
           return recipes
         })
@@ -44,12 +48,9 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
 }
 
 export const getRecipesByDefNutr = (deficientNutrientFoods) => dispatch => {
-  const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[0]}&maxResult=10`)
-  const food2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[1]}&maxResult=10`)
-  const food3 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[2]}&maxResult=10`)
-
-  // let total = food1.concat(food2)
-  console.log('in the thunkkkk', food1)
+  const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[0]}&maxResult=50`)
+  const food2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[1]}&maxResult=50`)
+  const food3 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[2]}&maxResult=50`)
 
   Promise.all([food1, food2, food3])
   .then(promises => {

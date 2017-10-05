@@ -7,15 +7,30 @@ module.exports = router
 
 // update so specific to user
 router.get('/:categoryName', (req, res, next) => {
-  console.log('category', req.params.categoryName)
   const userId = 1;
-  Ingredient.findAll({
+  Frequency.findAll({
     where: {
-      category: req.params.categoryName
+      userId: req.user.id,
+      //'ingredient.category': req.params.categoryName
     },
+    include: [{model: Ingredient, where: {category: req.params.categoryName}}],
     order: Sequelize.literal('freq DESC')
   })
-  .then(ingredients => {
-    res.json(ingredients)
+  .then(frequencies => {
+    console.log(frequencies[0].ingredient.category)
+    console.log('frequencies', frequencies)
+    frequencies.forEach(frequency => console.log(frequency.ingredient))
+    if (!frequencies) {
+      Ingredient.findAll({
+        where: {
+          categoryName: req.params.categoryName
+        },
+        order: Sequelize.literal('freq DESC')
+      })
+      .then(ingredients => {
+        res.json(ingredients)
+      })
+    }
+    else res.json(frequencies)
   })
 })
