@@ -50,26 +50,22 @@ export const getRecipesByDefNutr = (deficientNutrientFoods) => dispatch => {
 
   // let total = food1.concat(food2)
   console.log('in the thunkkkk', food1)
-  return Promise.all([].concat(food1).concat(food2).concat(food3))
-    .then(promises => {
-      console.log(promises); 
-      return promises.map(promise => promise.data)
-    })
-    .then(recipes => {
-      dispatch(getRecipes(recipes))
-    })
-    .catch(console.log)
-}
 
-// export const getRecipesByDefNutr = (deficientNutrient) => dispatch => {
-//   return axios.get(`/api/nutrients/${deficientNutrient}`)
-//     .then(res => res.data)
-//     .then(nut => {
-//       const nutID = nut.apiId
-//       return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&nutrition.${nutID}.min=0&nutrition.${nutID}.max=50`)
-//         .then(recipes => console.log('pls', recipes))
-//     })
-// }
+  Promise.all([food1, food2, food3])
+  .then(promises => {
+    let recipes = []
+    promises.forEach(promise => {
+      recipes = recipes.concat(promise.data.matches)
+    })
+    return recipes
+  })
+  .then(recipes => {
+    dispatch(getRecipes(recipes))
+
+  })
+  .catch(console.log)
+
+}
 
 const getRecipesReducer = (state=[], action) => {
   switch(action.type) {

@@ -30,9 +30,9 @@ fileNutID.forEach(nutrient => {
 })
 
 fileNutrientsIng.forEach(ingredient => {
-	const instance = { 
-		name: '', 
-		servingQty: 0, 
+	const instance = {
+		name: '',
+		servingQty: 0,
 		nf_calories: 0.0,
 		nf_total_fat: 0.0,
 		nf_saturated_fat: 0.0,

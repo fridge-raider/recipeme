@@ -128,7 +128,7 @@ class GraphVisualizations extends Component {
               <div>
               <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
               <RaisedButton
-              onClick={(evt)=>this.props.handleNutrientClick(evt, this.state)}
+              onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
               >Get Recipes with {this.props.deficientNutrients.defNutrient}
               </RaisedButton>
               </h2>
@@ -168,6 +168,7 @@ const mapDispatch = (dispatch, ownProps) => {
       history.push('/recipes/deficiencies')
     },
     handleNutrientClick: (evt, state) => {
+      dispatch(getRecipes([]))
       dispatch(fetchIDofDefNutrient(state.deficientNutrients.defNutrient))
       history.push('/recipes/deficiencies')
     }
