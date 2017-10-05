@@ -31,6 +31,7 @@ export function fetchIDofDefNutrient(nutrient) {
         return axios.get(`https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=${NDBapp_key}&nutrients=${nutID}&fg=1300&fg=2000&fg=0100&fg=1500&fg=0900&fg=1700&fg=1200&fg=1000&fg=0500&fg=1100&max=100&sort=c`)
           .then(res => res.data.report.foods)
           .then(foodArr => {
+            // check these foods compared to user foods frequencies to get the foods that users actually like <- FUNCTIONALITY TO ADD
             let uniqueFood = new Set()
             for (let i=0; i<foodArr.length || i<100; i++) {
               uniqueFood.add(foodArr[i].name.split(', ')[0])
@@ -42,7 +43,7 @@ export function fetchIDofDefNutrient(nutrient) {
           })
           .catch(console.error)
       })
-    
+
   }
 }
 

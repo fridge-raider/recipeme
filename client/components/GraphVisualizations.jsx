@@ -12,7 +12,7 @@ import getCategoryDeficientChart from './getCategoryDeficientChart.jsx'
 import getNutrientDeficientChart from './getNutrientDeficientChart.jsx'
 import RaisedButton from 'material-ui/RaisedButton'
 import history from '../history'
-import {getRecipesByDefCategory, fetchIDofDefNutrient} from '../store'
+import {getRecipesByDefCategory, fetchIDofDefNutrient, getRecipes} from '../store'
 
 const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
 
@@ -65,8 +65,6 @@ class GraphVisualizations extends Component {
         bar: categoryDeficientInfo.bar
       })
 
-      console.log('categroy def chart', categoryDeficitChart)
-
       const nutrientDeficientInfo = getNutrientDeficientChart(this.props.deficientNutrients.deficits)
       var nutrientDeficitChart = c3.generate({
         bindto: '#nutrient_def_chart',
@@ -78,7 +76,6 @@ class GraphVisualizations extends Component {
 
   render() {
 
-     console.log('re-rendering')
       let categoryDiv = ReactFauxDOM.createElement('div');
       categoryDiv.setAttribute('id', 'category_chart');
 
@@ -102,14 +99,21 @@ class GraphVisualizations extends Component {
         <Tab label="By Category" value="categories">
         <div>
           <h2 style={styles.headline}>Categories</h2>
+          <Container>
           {categoryDiv.toReact()}
+        </Container>
+        <Container>
+          {categoryDefDiv.toReact()}
+        </Container>
            {!!Object.keys(this.props.deficientCategories).length &&
-              <div>You could use some more {this.props.deficientCategories.defCategory}!
+              <div>
+              <h2>You could use some more {this.props.deficientCategories.defCategory}!
               <br/>
               <RaisedButton color="blue"
               onClick={(evt)=>this.props.handleCategoryClick(evt, this.props)}
               >Get Recipes
               </RaisedButton>
+              </h2>
               </div>
             }
         </div>
@@ -128,8 +132,8 @@ class GraphVisualizations extends Component {
               <div>
               <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
               <RaisedButton
-              onClick={(evt)=>this.props.handleNutrientClick(evt, this.state)}
-              >Get Recipes with {this.props.deficientNutrients.defNutrient}
+              onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
+              >Get Recipes
               </RaisedButton>
               </h2>
               </div>
@@ -164,10 +168,12 @@ const mapDispatch = (dispatch, ownProps) => {
       evt.preventDefault()
     },
     handleCategoryClick: (evt, state) => {
+      dispatch(getRecipes([]))
       dispatch(getRecipesByDefCategory(state.deficientCategories.defCategory))
       history.push('/recipes/deficiencies')
     },
     handleNutrientClick: (evt, state) => {
+      dispatch(getRecipes([]))
       dispatch(fetchIDofDefNutrient(state.deficientNutrients.defNutrient))
       history.push('/recipes/deficiencies')
     }
