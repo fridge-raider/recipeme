@@ -10,6 +10,9 @@ const OrderHistory = db.define('orderHistory', {
   },
   price: {
     type: Sequelize.FLOAT
+  },
+  weekDate: {
+    type: Sequelize.DATE
   }
 }, {
   defaultScope: {
@@ -52,25 +55,5 @@ const OrderHistory = db.define('orderHistory', {
     }
   }
 })
-
-// OrderHistory.hook('beforeCreate', (order, options) => {
-//   console.log("hi");
-//       return Frequency.findOrCreate({
-//         where: {
-//           userId: order.userId,
-//           ingredientName: order.ingredientName
-//         }
-//       }).spread((item, created) => {
-//         if(created) {
-//           console.log("ok created");
-//           let freq = 1;
-//           item.update({ freq });
-//         } else {
-//           console.log("hiiiii found", order.servings);
-//           let freq = item.freq+1;
-//           item.update({ freq })
-//         }
-//       })
-// })
 
 module.exports = OrderHistory

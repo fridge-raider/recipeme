@@ -22,11 +22,15 @@ ingredients.forEach(ingredient => {
 	rows.push('1 serving of ' + ingredient);
 })
 
-// console.log(rows.length)
+console.log(rows.length)
 
-let newRow = rows.slice(6000)
-const rowString = newRow.join(', ')
-console.log(newRow)
+let firstRows = rows.slice(0, 1000).join(', ')
+let secondRows = rows.slice(1000, 2000).join(', ')
+let thirdRows = rows.slice(2000, 3000).join(', ')
+let fourthRows = rows.slice(3000, 3700).join(', ') + rows.slice(3720, 4000).join(', ') 
+let fifthRows = rows.slice(4000, 4650).join(', ') + rows.slice(4670, 5000).join(', ') 
+let sixthRows = rows.slice(5000, 6000).join(', ')
+let seventhRows = rows.slice(6000).join(', ')
 
 var instance = axios.create({
   baseURL: "https://trackapi.nutritionix.com/v2/natural/nutrients",
@@ -38,11 +42,49 @@ var instance = axios.create({
 });
 
 
-instance.post('/',  {"query": rowString})
-  .then(res => fs.writeFile('./nutrientAllIngredientsattempt5.json', JSON.stringify(res.data.foods), (err) => {
+const Promise1 = instance.post('/',  {"query": firstRows})
+  .then(res => fs.writeFile('./nutrients1000.json', JSON.stringify(res.data.foods), (err) => {
     if (err) console.log(err)
   }))
   .catch(console.error)
+
+const Promise2 = instance.post('/',  {"query": secondRows})
+  .then(res => fs.writeFile('./nutrients2000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+const Promise3 = instance.post('/',  {"query": thirdRows})
+  .then(res => fs.writeFile('./nutrients3000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+const Promise4 = instance.post('/',  {"query": fourthRows})
+  .then(res => fs.writeFile('./nutrients4000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+const Promise5 = instance.post('/',  {"query": fifthRows})
+  .then(res => fs.writeFile('./nutrients5000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+const Promise6 = instance.post('/',  {"query": sixthRows})
+  .then(res => fs.writeFile('./nutrients6000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+const Promise7 = instance.post('/',  {"query": seventhRows})
+  .then(res => fs.writeFile('./nutrients7000.json', JSON.stringify(res.data.foods), (err) => {
+    if (err) console.log(err)
+  }))
+  .catch(console.error)
+
+//const all = [].concat(Promise1).concat(Promise2).concat(Promise3).concat(Promise4).concat(Promise5).concat(Promise6).concat(Promise7)
 
 // function ingredientToNutrient() {
 //   axios.post('https://trackapi.nutritionix.com/v2/natural/nutrients')
