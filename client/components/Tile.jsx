@@ -67,23 +67,25 @@ export default class Tile extends React.Component {
   }
 
   render() {
+    console.log('this.props.receipe', this.props.recipe)
+    let imageUrl = this.props.recipe.imageUrlsBySize["90"].split('=')[0]
+    imageUrl = imageUrl + "=s1600-c"
     return (
       <div>
         {this.props.isWelcome ?
           <div
             style={this.welcomeStyle()}>
-            <h1> HI </h1>
-            <TileTitle style={{ color: "#db3434", fontFamily: "'Bad Script', cursive" }}>{this.props.recipe.name}</TileTitle>
+            <TileTitle style={{ color: "#db3434", fontFamily: "'Bad Script', cursive" }}>{this.props.recipe.recipeName}</TileTitle>
           </div> :
           this.state.hover ?
             <div
-              style={this.renderHoverStyle(this.props.recipe.images[0].hostedLargeUrl)}
+              style={this.renderHoverStyle(imageUrl)}
               onMouseLeave={this.handleMouseLeave}>
-              <TileTitle>{this.props.recipe.name}</TileTitle>
+              <TileTitle>{this.props.recipe.recipeName}</TileTitle>
             </div>
             :
             <div
-              style={this.renderStyle(this.props.recipe.images[0].hostedLargeUrl)}
+              style={this.renderStyle(imageUrl)}
               onMouseEnter={this.handleMouseEnter}>
             </div>
         }

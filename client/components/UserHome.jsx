@@ -54,7 +54,6 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      dispatch(getRecipesByIngredient('chicken'))
     }
   }
 }
