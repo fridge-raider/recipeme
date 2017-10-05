@@ -1,19 +1,19 @@
-import React, { Component } from 'react'; 
-import BarChart from './barchart.jsx'; 
+import React, { Component } from 'react';
+import BarChart from './GraphVisualizations.jsx';
 
 export class MainData extends Component {
-	
+
 
 	render() {
-		console.log("HELLOOOO"); 
+		console.log("HELLOOOO");
 		return (
-			<div> 
-				<h1>Hello</h1> 
+			<div>
+				<h1>Hello</h1>
 				<BarChart />
 			</div>
 		)
-		
+
 	}
 }
 
-export default MainData; 
+export default MainData;

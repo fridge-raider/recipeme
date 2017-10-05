@@ -1,30 +1,66 @@
-import React from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient} from '../store'
+import {Grid, Container, Menu} from 'semantic-ui-react'
+import GraphVisualizations from './GraphVisualizations.jsx'
+
 
 /**
  * COMPONENT
  */
-export const UserHome = (props) => {
-  const {email} = props
+export class UserHome extends Component {
 
-  return (
-    <div>
-      <h3>Welcome, {email}</h3>
-    </div>
-  )
+  componentWillMount() {
+    this.props.initialData()
+  }
+
+
+  render() {
+    return (
+      <Container fluid>
+      <Grid columns={2} divided padded='horizontally' relaxed className='main-grid'>
+      <Grid.Column width={5} className='patient-column'>
+        <div>Favorited Recipes</div>
+      </Grid.Column>
+      <Grid.Column width={11} className='nurse-column'>
+      {!!this.props.categoryHistory.length &&
+        !!this.props.nutrientHistory.length &&
+        <GraphVisualizations />
+      }
+      </Grid.Column>
+    </Grid>
+      </Container>
+    )
+  }
+
 }
-
 /**
  * CONTAINER
  */
+
+
+
 const mapState = (state) => {
   return {
-    email: state.user.email
+    email: state.user.email,
+    categoryHistory: state.categoryHistory,
+    nutrientHistory: state.nutrientHistory,
+    deficientNutrients: state.deficientNutrients,
+    deficientCategories: state.deficientCategories
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapDispatch = (dispatch) => {
+  return {
+    initialData() {
+      dispatch(fetchCategoryOrderHistory())
+      dispatch(fetchNutrientOrderHistory())
+    }
+  }
+}
+
+export default connect(mapState, mapDispatch)(UserHome)
 
 /**
  * PROP TYPES

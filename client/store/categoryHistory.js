@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchDeficientCategories} from './deficientCategories'
 
 /**
  * ACTION TYPES
@@ -18,8 +19,9 @@ export function fetchCategoryOrderHistory() {
   return function thunk(dispatch) {
     return axios.get(`/api/orders/categories`)
       .then(res => res.data)
-      .then(orders => {
+      .then(categories => {
         dispatch(setCategoryHistory(categories));
+        dispatch(fetchDeficientCategories(categories))
       })
     }
   }

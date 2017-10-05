@@ -10,6 +10,9 @@ const Ingredient = db.define('ingredient', {
   category: {
     type: Sequelize.STRING
   },
+  servingQty: {
+    type: Sequelize.INTEGER
+  },
   nf_calories: {
     type: Sequelize.FLOAT
   },
@@ -39,6 +42,10 @@ const Ingredient = db.define('ingredient', {
   },
   nf_p: {
     type: Sequelize.FLOAT
+  },
+  freq: {
+    type: Sequelize.INTEGER,
+    defaultValue: 0
   }
 })
 

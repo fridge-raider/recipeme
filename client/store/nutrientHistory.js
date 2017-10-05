@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {fetchDeficientNutrients} from './deficientNutrients'
 
 /**
  * ACTION TYPES
@@ -19,7 +20,9 @@ export function fetchNutrientOrderHistory() {
     return axios.get(`/api/orders/nutrients`)
       .then(res => res.data)
       .then(nutrients => {
-        dispatch(setNutrientHistory(nutrients));
+        console.log('nutrient history', nutrients)
+        dispatch(setNutrientHistory(nutrients))
+        dispatch(fetchDeficientNutrients(nutrients))
       })
     }
   }
