@@ -13,4 +13,6 @@ export {default as FindRecipes} from './FindRecipes.jsx'
 export {default as RecipeCard} from './RecipeCard.jsx'
 export {default as ReceiptUpload} from './ReceiptUpload.jsx'
 export {default as Login} from './Login.jsx'
+export {default as RecRecipesNutr} from './RecRecipesNutr.jsx'
 export {default as Recipes} from './Recipes.jsx'
+

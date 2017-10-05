@@ -1,0 +1,39 @@
+
+[
+  {
+    "name": "nf_total_fat",
+    "apiId": "204"
+  },
+  {
+    "name": "nf_saturated_fat",
+    "apiId": "606"
+  },
+  {
+    "name": "nf_sodium",
+    "apiId": "307"
+  },
+  {
+    "name": "nf_total_carbohydrate",
+    "apiId": "205"
+  },
+  {
+    "name": "nf_dietary_fiber",
+    "apiId": "291"
+  },
+  {
+    "name": "nf_sugars", 
+    "apiId": "269"
+  },
+  {
+    "name": "nf_protein",
+    "apiId": "203"
+  },
+  {
+    "name": "nf_potassium",
+    "apiId": "306"
+  },
+  {
+    "name": "nf_p",
+    "apiId": "305"
+  }
+]

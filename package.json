@@ -72,6 +72,7 @@
     "sequelize": "^4.3.1",
     "socket.io": "^2.0.3",
     "styled-components": "^2.2.0",
+    "tesseract.js": "^1.0.10",
     "webpack": "^2.7.0",
     "ws-yummly": "^1.0.24",
     "yummly": "^0.2.4"

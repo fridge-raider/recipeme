@@ -6,11 +6,14 @@ const Frequency = require('./frequency')
 const OrderHistory = require('./orderHistory')
 const Recipe = require('./recipes')
 const Receipt = require('./receipts')
+const NutrientsAPIID = require('./nutrientsAPIID')
 
 User.belongsToMany(OrderHistory, {through: 'userOrders'})
 OrderHistory.belongsTo(User)
 OrderHistory.belongsTo(Ingredient)
 Ingredient.belongsToMany(User, {through: Frequency});
+//Frequency.belongsTo(User)
+Frequency.belongsTo(Ingredient)
 ReceiptRepresentation.belongsTo(Ingredient);
 Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
 Receipt.belongsTo(User)
@@ -23,5 +26,6 @@ module.exports = {
   Ingredient,
   Recipe,
   ReceiptRepresentation,
-  Receipt
+  Receipt,
+  NutrientsAPIID
 }

@@ -3,18 +3,16 @@ const request = require('request')
 const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
+const path = require('path')
 
 function returnCleanReceipt(imageName) {
 
     return new Promise(function (resolve, reject) {
-      console.log('imageName', imageName)
       // Use tesseract to process a file image
       tesseract.process(__dirname + '/' + imageName, function (err, text) {
-          console.log('text', text)
           if (err) {
               reject(err);
           } else {
-              console.log('text',text)
               // write the file image to a text file
               fs.writeFileSync('receipt.txt', text, err => {
                   if (err) reject(err)
@@ -54,7 +52,7 @@ function returnCleanReceipt(imageName) {
 function setReceiptRep(item) {
   return ReceiptRepresentation.findOrCreate({
     where: {
-      rep: item.name 
+      rep: item.name
     }
   })
 }
@@ -66,7 +64,7 @@ function findByReceiptRep(item) {
     }
   })
 }
-    
+
 function findByPerfectMatch(item) {
   return Ingredient.findOne({
     where: {
@@ -90,31 +88,31 @@ function findByLongestMatch(longestWord) {
 function getReceiptIngredients(parsedReceipt) {
 
   return Promise.mapSeries(parsedReceipt, item => {
-    let Promise4 = setReceiptRep(item); 
+    let Promise4 = setReceiptRep(item);
     return Promise4.then(() => {
-      const words = item.name.split(' '); 
-      let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b}); 
-      let Promise1 = findByReceiptRep(item); 
-      let Promise2 = findByPerfectMatch(item); 
-      let Promise3 = findByLongestMatch(longestWord); 
+      const words = item.name.split(' ');
+      let longestWord = words.reduce((a, b) => {return (a.length > b.length)? a : b});
+      let Promise1 = findByReceiptRep(item);
+      let Promise2 = findByPerfectMatch(item);
+      let Promise3 = findByLongestMatch(longestWord);
       return Promise.all([Promise1, Promise2, Promise3])
       .then(results => {
-        let ingredientName = "unknown"; 
-        let category = "Unsure"; 
+        let ingredientName = "unknown";
+        let category = "Unsure";
         //check representation first, then perfect matching, and finally longest match
         if(results[0] !== null && results[0].ingredientName !== null) {
-          ingredientName = results[0].ingredientName; 
-          category = results[0].ingredient.category; 
+          ingredientName = results[0].ingredientName;
+          category = results[0].ingredient.category;
         }
         else if(results[1] !== null) {
-          ingredientName = results[1].name; 
-          category = results[1].category; 
+          ingredientName = results[1].name;
+          category = results[1].category;
         }
         else if(results[2] !== null) {
-          ingredientName = results[2].name; 
-          category = results[2].category; 
+          ingredientName = results[2].name;
+          category = results[2].category;
         }
-        return {ing: ingredientName, servings: 1, price: item.price, category: category, rep: item.name}; 
+        return {ing: ingredientName, servings: 1, price: item.price, category: category, rep: item.name};
       })
     })
   })

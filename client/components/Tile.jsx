@@ -67,7 +67,6 @@ export default class Tile extends React.Component {
   }
 
   render() {
-    console.log('this.props.receipe', this.props.recipe)
     let imageUrl = this.props.recipe.imageUrlsBySize["90"].split('=')[0]
     imageUrl = imageUrl + "=s1600-c"
     return (
