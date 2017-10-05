@@ -8,7 +8,7 @@ import ReceiptRow from './ReceiptRow.jsx'
 import Dialog from 'material-ui/Dialog';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton'
-import { setReceiptToOrderHistory, setFrequencyForItem } from '../store'; 
+import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations} from '../store'; 
 
 /**
  * COMPONENT
@@ -25,15 +25,15 @@ class CheckReceiptIng extends Component {
   }
 
   render() {
-    console.log('receipt yayyy', this.props.receipt)
     return (
-      <Dialog modal={true} open={this.state.open} onClick={this.handleClose} >
+      <Dialog modal={true} open={this.state.open} onClick={this.handleClose} autoScrollBodyContent={true}>
       <Table>
       <TableHeader
         displaySelectAll={false}
         adjustForCheckbox={false}
         enableSelectAll={false}>
       <TableRow>
+        <TableHeaderColumn><h3>Representation</h3></TableHeaderColumn>
         <TableHeaderColumn><h3>Item</h3></TableHeaderColumn>
         <TableHeaderColumn><h3>Servings</h3></TableHeaderColumn>
         <TableHeaderColumn><h3>Category</h3></TableHeaderColumn>
@@ -69,12 +69,19 @@ class CheckReceiptIng extends Component {
     e.preventDefault(); 
     this.handleClose(); 
     const orders = []; 
+    const ingredients = []; 
+    const reps = []; 
     //re-naming keys and adding userId for easy mapping to OrderHistory table 
     this.props.currentReceipt.forEach(order => {
-      let temp = { ingredientName: order.ing , userId: this.props.user.id, servings: order.qty, units: order.unit, price: order.price }
-      orders.push(temp); 
+      console.log(order); 
+      let orderHistoryInstance = { ingredientName: order.ing , userId: this.props.user.id, servings: order.servings, price: order.price }
+      let ingredientsInstance = {name: order.ing, category: order.category}
+      let repInstance = {name: order.rep, ingredientName: order.ing}; 
+      orders.push(orderHistoryInstance); 
+      ingredients.push(ingredientsInstance); 
+      reps.push(repInstance); 
     })
-    this.props.confirmReceipt(orders); 
+    this.props.confirmReceipt(orders, ingredients, reps); 
   }
 }
 
@@ -87,8 +94,10 @@ const mapState = (state) => {
 
 const mapDispatch = (dispatch) => {
   return {
-    confirmReceipt(receipt) {
-      dispatch(setReceiptToOrderHistory(receipt)); 
+    confirmReceipt(orders, ingredients, reps) {
+      dispatch(setReceiptToIngredients(ingredients))
+      dispatch(setReceiptToRepresentations(reps)); 
+      dispatch(setReceiptToOrderHistory(orders)); 
     }
   }
 }

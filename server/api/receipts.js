@@ -20,9 +20,45 @@ router.get('/parse', (req, res, next) => {
 
 router.post('/add', (req, res, next) => {
   const orders = req.body.currentReceipt; 
-  Promise.map(orders, order => {
-     OrderHistory.create(order)
+  Promise.mapSeries(orders, order => {
+     return OrderHistory.create(order)
   }).then(succ => {
     res.json(succ) ; 
   })
 })
+
+router.put('/categories', (req, res, next) => {
+  const ingredients = req.body.currentIngredients; 
+  Promise.mapSeries(ingredients, ingredient => {
+    Ingredient.findOne({
+      where: {
+        name: ingredient.name
+      }
+    }).then(foundIngred => {
+      foundIngred.update({
+        category: ingredient.category
+      })
+    })
+  }).then((succ) => {
+    res.json(succ); 
+  })
+})
+
+router.put('/representations', (req, res, next) => {
+  const reps = req.body.currentRepresentations; 
+  console.log(reps); 
+  Promise.mapSeries(reps, rep => {
+    ReceiptRepresentation.findOne({
+      where: { rep : rep.name }
+    }).then(foundRep => {
+      foundRep.update({
+        ingredientName: rep.ingredientName
+      })
+    })
+  }).then((succ) => {
+    res.json(succ); 
+  })
+})
+
+
+
