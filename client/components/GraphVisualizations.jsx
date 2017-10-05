@@ -103,8 +103,14 @@ class GraphVisualizations extends Component {
       <Tab label="By Nutrient" value="nutrients">
       <div>
         <h2 style={styles.headline}>Nutrients</h2>
-        {nutrientDiv.toReact()}
-        {nutrientDefDiv.toReact()}
+      <div>
+        <Container> 
+          {nutrientDiv.toReact()}
+        </Container>
+        <Container>
+          {nutrientDefDiv.toReact()}
+        </Container>
+      </div>
       </div>
     </Tab>
 
