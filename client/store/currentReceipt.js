@@ -35,6 +35,19 @@ export function setReceiptToOrderHistory(currentReceipt) {
   }
 }
 
+export function setReceiptToIngredients(currentIngredients) {
+  return function thunk(dispatch) {
+    return axios.put(`/api/receipts/categories`, {currentIngredients}); 
+  }
+}
+
+export function setReceiptToRepresentations(currentRepresentations) {
+  return function thunk(dispatch) {
+    console.log(currentRepresentations); 
+    return axios.put(`/api/receipts/representations`, {currentRepresentations}); 
+  }
+}
+
 
 export function setFrequencyForItem(receiptItem) {
   return function thunk(dispatch) {
