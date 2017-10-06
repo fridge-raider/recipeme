@@ -3,6 +3,7 @@ const fs = require('fs')
 const CryptoJS = require("crypto-js")
 const aws = require("aws-sdk")
 const { Receipt } = require('../db/models')
+const request = require('request')
 const {returnCleanReceipt, getReceiptIngredients} = require('./receiptParsing')
 
 clientSecretKey = process.env.CLIENT_SECRET_KEY,

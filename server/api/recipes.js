@@ -7,7 +7,7 @@ module.exports = router
 
 // update so specific to user
 router.get('/:categoryName', (req, res, next) => {
-  const userId = 1;
+  const userId = req.user.id;
   Frequency.findAll({
     where: {
       userId: req.user.id,
@@ -34,3 +34,4 @@ router.get('/:categoryName', (req, res, next) => {
     else res.json(frequencies)
   })
 })
+
