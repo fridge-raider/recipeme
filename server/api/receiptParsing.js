@@ -1,5 +1,4 @@
 const fs = require('fs')
-const request = require('request')
 const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')

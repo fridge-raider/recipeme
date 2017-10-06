@@ -1,6 +1,7 @@
 import axios from 'axios'
 import secrets from '../../secrets'
 import Promise from 'bluebird'
+import history from '../history'
 
 const app_id = process.env.YUMMLY_ID
 const app_key = process.env.YUMMLY_KEY
@@ -67,6 +68,16 @@ export const getRecipesByDefNutr = (deficientNutrientFoods) => dispatch => {
   .catch(console.log)
 
 }
+
+export const getRecipeDetails = (recipeId) => dispatch => {
+  return axios.get(`http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=${app_id}&_app_key=${app_key}`)
+    .then(res => res.data)
+    .then(recipe => {
+      window.location = recipe.source.sourceRecipeUrl
+    })
+    .catch(console.log)
+}
+
 
 const getRecipesReducer = (state=[], action) => {
   switch(action.type) {

@@ -6,7 +6,7 @@ import { Container, Menu, Grid } from 'semantic-ui-react'
 import {getRecipes} from '../store'
 
 
-export default class Navbar extends Component {
+export class Navbar extends Component {
 
   render() {
     return (
@@ -16,14 +16,14 @@ export default class Navbar extends Component {
           <NavLink to='/home'>RecipeMe</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink to='/findrecipes'>Find Recipes</NavLink>
+          <NavLink to='/findrecipes' onClick={this.props.handleClick}>Find Recipes</NavLink>
         </Menu.Item>
         <Menu.Item>
           <NavLink to='/receipt'>Upload Receipt</NavLink>
         </Menu.Item>
         <Menu.Menu position='right'>
           <Menu.Item>
-              <NavLink to='/signup' onClick={(e)=>getRecipes([])}>Sign Up</NavLink>
+              <NavLink to='/signup' >Sign Up</NavLink>
           </Menu.Item>
           <Menu.Item>
             <NavLink to='/login'>Log In</NavLink>
@@ -34,4 +34,16 @@ export default class Navbar extends Component {
   }
 }
 
+
+const mapDispatch = (dispatch) => {
+  return {
+    handleClick () {
+      dispatch(getRecipes([]))
+    }
+  }
+}
+
+// The `withRouter` wrapper makes sure that updates are not blocked
+// when the url changes
+export default withRouter(connect(null, mapDispatch)(Navbar))
 
