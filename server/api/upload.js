@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const fs = require('fs')
-const request = require('request')
 const CryptoJS = require("crypto-js")
 const aws = require("aws-sdk")
 const { Receipt } = require('../db/models')
