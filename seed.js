@@ -2,10 +2,10 @@ const Sequelize = require('sequelize')
 const db = require('./server/db');
 const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
 
-var fileName = require('./trainCategories.json');
+//var fileName = require('./trainCategories.json');
 var ingredients = new Set();
 
-var fileNutrientsIng = require('./nutrientsAll.json');
+var fileNutrientsIng = require('./allIngredients.json');
 var fileNutID = require('./nutritionID.json')
 
 //setting up orderhistory promises 
