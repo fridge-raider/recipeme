@@ -1,13 +1,22 @@
 const Sequelize = require('sequelize')
 const db = require('./server/db');
-const {Ingredient, NutrientsAPIID} = require('./server/db/models')
+const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
 
-let setIngredients = new Set(); 
-var fileNutrientsIng = require('./nutrientsAll.json')
+var fileName = require('./trainCategories.json');
+var ingredients = new Set();
+
+var fileNutrientsIng = require('./nutrientsAll.json');
 var fileNutID = require('./nutritionID.json')
 
-const rows = [];
-const rowsNut = [];
+//setting up orderhistory promises 
+const order_histories = require('./order_history_seed.js'); 
+const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
+
+
+
+const temp = new Set(); 
+const rows = new Set();
+const rowsNut = new Set();
 
 fileNutID.forEach(nutrient => {
 	const instance = {
@@ -16,13 +25,15 @@ fileNutID.forEach(nutrient => {
 	}
 	instance.name = nutrient.name
 	instance.apiId = nutrient.apiId
-	rowsNut.push(instance)
+
+	rowsNut.add(instance)
 })
 
 fileNutrientsIng.forEach(ingredient => {
-	const instance = {
-		name: '',
-		servingQty: 0,
+
+	const instance = { 
+		name: '', 
+		servingQty: 0, 
 		nf_calories: 0.0,
 		nf_total_fat: 0.0,
 		nf_saturated_fat: 0.0,
@@ -34,7 +45,6 @@ fileNutrientsIng.forEach(ingredient => {
   	nf_potassium: 0.0,
   	nf_p: 0.0,
 	}
-
 	instance.name = ingredient.food_name
 	instance.servingQty = ingredient.serving_qty
 	instance.nf_calories = ingredient.nf_calories
@@ -48,36 +58,45 @@ fileNutrientsIng.forEach(ingredient => {
 	instance.nf_potassium = ingredient.nf_potassium
 	instance.nf_p = ingredient.nf_p
 
-	if(!setIngredients.has(instance.name)) {
-		setIngredients.add(instance.name); 
-		rows.push(instance); 
+	if(!temp.has(instance.name)) {
+		temp.add(instance.name); 
+		rows.add(instance); 
 	}
+
 })
 
 const seed = () => {
-	const allIngredients = rows.map(row => {
-		return Ingredient.create(row)
-	})
+	const allIngredients = []; 
 
-	const allNutID = rowsNut.map(row => {
-		return NutrientsAPIID.create(row)
+	rows.forEach(row => {
+		allIngredients.push(Ingredient.create(row));
+	})
+	const allNutID = []; 
+
+	rowsNut.forEach(row => {
+		allNutID.push(NutrientsAPIID.create(row));
 	})
 
 	const totalArrPromise = allNutID.concat(allIngredients)
 	return Promise.all(totalArrPromise)
+					.then(() => {
+						return OrderHistory.bulkCreate(all_order_histories)
+					})
+
+
 }
 
 const main = () => {
 	console.log('Syncing db...');
-	db.sync({ force: true })
+	db.sync({ force: false })
 		.then(() => {
-			console.log('Seeding database...')
+			console.log('Seeding database...');
 			return seed();
 		}).catch(err => {
-			console.log('Error while seeding')
+			console.log('Error while seeding');
 			console.log(err.stack);
 		}).then(() => {
-			console.log("Done seeding")
+			console.log("Done seeding");
 			db.close();
 			return null;
 		});

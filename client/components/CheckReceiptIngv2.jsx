@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton'
 import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations} from '../store'; 
+import * as moment from 'moment'; 
 
 /**
  * COMPONENT
@@ -74,7 +75,7 @@ class CheckReceiptIng extends Component {
     //re-naming keys and adding userId for easy mapping to OrderHistory table 
     this.props.currentReceipt.forEach(order => {
       console.log(order); 
-      let orderHistoryInstance = { ingredientName: order.ing , userId: this.props.user.id, servings: order.servings, price: order.price }
+      let orderHistoryInstance = { ingredientName: order.ing , userId: this.props.user.id, servings: order.servings, price: order.price, week: Date.now() }
       let ingredientsInstance = {name: order.ing, category: order.category}
       let repInstance = {name: order.rep, ingredientName: order.ing}; 
       orders.push(orderHistoryInstance); 
