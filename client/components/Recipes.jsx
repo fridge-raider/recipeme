@@ -32,7 +32,7 @@ class Recipes extends Component {
 
   renderSearch() {
     return (
-      <Search 
+      <Search
         onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
         onResultSelect={this.renderResultSearch} 
         />
@@ -43,7 +43,6 @@ class Recipes extends Component {
     // add filtering and searching functionality !!!
     // figure out how to send in what is deficient (cateogry or nutrient) so we can say recipes with x - add something to state
     const { getRecipes } = this.props
-    console.log('hi', getRecipes)
     const search = getRecipes.filter((recipe) => {
       return recipe.ingredients.includes(this.state.search)
     })
@@ -51,8 +50,7 @@ class Recipes extends Component {
     return (
       <Container fluid style={{padding: '1em 2em'}}>
 
-        <h2>Recipes</h2>
-        <br />
+        <h2>Recipes</h2> 
         { this.renderSearch() }
         <br />
         <Card.Group itemsPerRow='3'>
