@@ -29,9 +29,6 @@ class Login extends Component {
     return (
       <Container fluid className='login-container'>
         <Grid centered columns={4}>
-        <div>Hello</div>
-
-        <img src='../../public/cookies_recipe_img.jpg'/>
         </Grid>
         <Grid centered columns={2}>
           <Grid.Column>

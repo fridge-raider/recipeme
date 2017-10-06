@@ -1,8 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux'
-import { withRouter, Link } from 'react-router-dom'
+import { withRouter, Link, NavLink } from 'react-router-dom'
 import * as action from '../store'
 import styled from 'styled-components';
+import {getRecipeDetails} from '../store'
 
 export const TileTitle = styled.h2`
   font-size: 30px;
@@ -12,7 +13,7 @@ export const TileTitle = styled.h2`
   font-family: 'Playfair Display', serif;
 `
 
-export default class Tile extends React.Component {
+export class Tile extends React.Component {
   constructor(props) {
     super(props);
 
@@ -66,11 +67,12 @@ export default class Tile extends React.Component {
     this.setState({ hover: false })
   }
 
+
   render() {
     let imageUrl = this.props.recipe.imageUrlsBySize["90"].split('=')[0]
     imageUrl = imageUrl + "=s1600-c"
     return (
-      <div>
+      <div onClick={(evt)=>this.props.handleClick(evt, this.props.recipe.id)}>
         {this.props.isWelcome ?
           <div
             style={this.welcomeStyle()}>
@@ -92,3 +94,13 @@ export default class Tile extends React.Component {
     )
   }
 }
+
+const mapDispatch = (dispatch) => {
+  return {
+    handleClick(evt, recipeId) {
+      dispatch(getRecipeDetails(recipeId))
+    }
+  }
+}
+
+export default connect(null, mapDispatch)(Tile)
