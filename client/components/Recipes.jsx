@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { Card, Container, Form, Grid } from 'semantic-ui-react'
+import { Search, Gride, Header, Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './Tile.jsx'
 import { getRecipesByIngredient } from '../store'
 
@@ -11,7 +11,18 @@ class Recipes extends Component {
     super(props)
 
     this.state = {
+      search: '',
+      searchRecipes: [],
+      value: ''
     }
+    
+    this.renderSearch = this.renderSearch.bind(this)
+  }
+
+  renderSearch() {
+    return (
+      <Search onSearchChange={(evt) => this.setState({search: evt.target.value})}/>
+    )
   }
 
   render() {
@@ -29,7 +40,7 @@ class Recipes extends Component {
             return <RecipeCard key={recipe.id} recipe={recipe} /> })
           }
         </Card.Group>
-      </Container>
+      </Container> //
     )
   }
 }
