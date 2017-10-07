@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { Search, Card, Container, Form, Grid } from 'semantic-ui-react'
+import { Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './Tile.jsx'
 import { getRecipesByIngredient } from '../store'
 import { GridList } from 'material-ui/GridList'
@@ -22,7 +22,6 @@ class FindRecipes extends Component {
       <SearchBar 
         style={{borderRadius:25, maxWidth:1000}}
         onChange={(value) => {
-          console.log(value, 'hi')
           this.setState({mainIngredient: value})
           }}
         onRequestSearch={(evt) => this.props.handleSubmit(evt, this.state.mainIngredient)} 

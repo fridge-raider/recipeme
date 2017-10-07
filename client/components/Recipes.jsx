@@ -5,6 +5,7 @@ import { NavLink } from 'react-router-dom'
 import { Search, Gride, Header, Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './Tile.jsx'
 import { getRecipesByIngredient } from '../store'
+import SearchBar from 'material-ui-search-bar'
 import _ from 'lodash'
 
 class Recipes extends Component {
@@ -19,25 +20,34 @@ class Recipes extends Component {
     }
     
     this.renderSearch = this.renderSearch.bind(this)
-    this.renderResultSearch = this.renderResultSearch.bind(this)
+    // this.renderResultSearch = this.renderResultSearch.bind(this)
   }
 
-  renderResultSearch() {
-    this.setState({value: this.state.search, isLoading: false})
-    let searchArr = this.props.getRecipes.filter((recipe) => {
-      recipe.ingredients.includes(this.state.search)
-    })
-    this.setState({searchRecipes: searchArr})
-  }
+  // renderResultSearch() {
+  //   this.setState({value: this.state.search, isLoading: false})
+  //   let searchArr = this.props.getRecipes.filter((recipe) => {
+  //     recipe.ingredients.includes(this.state.search)
+  //   })
+  //   this.setState({searchRecipes: searchArr})
+  // }
 
   renderSearch() {
+    // return (
+    //   <Search
+    //     onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
+    //     onResultSelect={this.renderResultSearch} 
+    //     />
+    // )
     return (
-      <Search
-        onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
-        onResultSelect={this.renderResultSearch} 
+      <SearchBar 
+        style={{borderRadius:25, maxWidth:1000}}
+        onChange={(value) => this.setState({search: value})}
+        onRequestSearch={() => console.log('hi')}
+        hintText="Search by ingredient"
         />
     )
   }
+
 
   render() {
     // add filtering and searching functionality !!!
@@ -50,7 +60,7 @@ class Recipes extends Component {
     return (
       <Container fluid style={{padding: '1em 2em'}}>
 
-        <h2>Recipes</h2> 
+        <h2>Recommended Recipes</h2> 
         { this.renderSearch() }
         <br />
         <Card.Group itemsPerRow='3'>
