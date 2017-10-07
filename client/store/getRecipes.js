@@ -48,6 +48,23 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
     .catch(console.log)
 }
 
+export function fetchIDofDefNutrient(nutrient) {
+  return function thunk(dispatch) {
+    return axios.get(`/api/nutrients/${nutrient}`)
+      .then(res => res.data)
+      .then(defNutId => {
+        const nutID = defNutId.apiId
+        return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=salt&nutrition.${nutID}.min=1&nutrition.${nutID}.max=100&maxResult=75`)
+          .then(res => res.data)
+          .then(recipes =>{
+            dispatch(getRecipes(recipes.matches))
+          })
+          .catch(console.error)
+      })
+
+  }
+}
+
 export const getRecipesByDefNutr = (deficientNutrientFoods) => dispatch => {
   const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[0]}&maxResult=50`)
   const food2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${deficientNutrientFoods[1]}&maxResult=50`)

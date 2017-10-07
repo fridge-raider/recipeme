@@ -17,8 +17,8 @@ router.get('/:categoryName', (req, res, next) => {
     order: Sequelize.literal('freq DESC')
   })
   .then(frequencies => {
-    console.log(frequencies[0].ingredient.category)
-    console.log('frequencies', frequencies)
+    // console.log(frequencies[0].ingredient.category)
+    // console.log('frequencies', frequencies)
     frequencies.forEach(frequency => console.log(frequency.ingredient))
     if (!frequencies) {
       Ingredient.findAll({

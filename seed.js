@@ -5,7 +5,7 @@ const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
 //var fileName = require('./trainCategories.json');
 var ingredients = new Set();
 
-var fileNutrientsIng = require('./allIngredients.json');
+var fileNutrientsIng = require('./nutrientsAll.json');
 var fileNutID = require('./nutritionID.json')
 
 //setting up orderhistory promises 
@@ -21,10 +21,12 @@ const rowsNut = new Set();
 fileNutID.forEach(nutrient => {
 	const instance = {
 		name: '',
-		apiId: 0
+		apiId: 0,
+		suggested: 0
 	}
 	instance.name = nutrient.name
 	instance.apiId = nutrient.apiId
+	instance.suggested = nutrient.suggested
 
 	rowsNut.add(instance)
 })
@@ -78,6 +80,8 @@ const seed = () => {
 	})
 
 	const totalArrPromise = allNutID.concat(allIngredients)
+
+	// console.log(allIngredients, 'hi')
 	return Promise.all(totalArrPromise)
 					.then(() => {
 						return OrderHistory.bulkCreate(all_order_histories)
