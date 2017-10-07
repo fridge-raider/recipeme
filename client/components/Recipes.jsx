@@ -20,24 +20,9 @@ class Recipes extends Component {
     }
     
     this.renderSearch = this.renderSearch.bind(this)
-    // this.renderResultSearch = this.renderResultSearch.bind(this)
   }
 
-  // renderResultSearch() {
-  //   this.setState({value: this.state.search, isLoading: false})
-  //   let searchArr = this.props.getRecipes.filter((recipe) => {
-  //     recipe.ingredients.includes(this.state.search)
-  //   })
-  //   this.setState({searchRecipes: searchArr})
-  // }
-
   renderSearch() {
-    // return (
-    //   <Search
-    //     onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
-    //     onResultSelect={this.renderResultSearch} 
-    //     />
-    // )
     return (
       <SearchBar 
         style={{borderRadius:25, maxWidth:1000}}
@@ -62,7 +47,7 @@ class Recipes extends Component {
 
         <h2>Recommended Recipes</h2> 
         { this.renderSearch() }
-        <br />
+        <br /><br />
         <Card.Group itemsPerRow='3'>
           { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
