@@ -4,7 +4,9 @@ import React, { Component } from 'react';
 import ReactFauxDOM from 'react-faux-dom';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { Card, Container, Form, Grid, Header } from 'semantic-ui-react'
+import { Container, Header } from 'semantic-ui-react'
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
 import getNutrientChart from './getNutrientChart.jsx'
@@ -43,7 +45,7 @@ class GraphVisualizations extends Component {
   };
 
    componentDidUpdate() {
-     console.log('this.props', this.props)
+     console.log('props', this.props)
       const categoryChartInfo = getCategoryChart(this.props.categoryHistory)
       var categoryChart = c3.generate({
         bindto: '#category_chart',
@@ -51,6 +53,8 @@ class GraphVisualizations extends Component {
         axis: categoryChartInfo.axis
       })
 
+
+      console.log('categorydiv', categoryChart)
       const nutrientChartInfo = getNutrientChart(this.props.nutrientHistory)
       var nutrientChart = c3.generate({
         bindto: '#nutrient_chart',
@@ -59,25 +63,40 @@ class GraphVisualizations extends Component {
       })
 
       const categoryDeficientInfo = getCategoryDeficientChart(this.props.deficientCategories.deficits)
+
       var categoryDeficitChart = c3.generate({
         bindto: '#category_def_chart',
         data: categoryDeficientInfo.data,
-        bar: categoryDeficientInfo.bar
+        bar: categoryDeficientInfo.bar,
+        axis: categoryDeficientInfo.axis,
+        tooltip: categoryDeficientInfo.tooltip
       })
 
       const nutrientDeficientInfo = getNutrientDeficientChart(this.props.deficientNutrients.deficits)
       var nutrientDeficitChart = c3.generate({
         bindto: '#nutrient_def_chart',
         data: nutrientDeficientInfo.data,
-        bar: nutrientDeficientInfo.bar
+        bar: nutrientDeficientInfo.bar,
+        axis: nutrientDeficientInfo.axis
       })
+
+      let ticks = d3.selectAll('.tick')
+
+      ticks.on('click', function(value,index){
+        console.log('this', this.props)
+        console.dir(this);
+        console.dir([value, index]);
+      });
+
   }
 
 
   render() {
 
+
       let categoryDiv = ReactFauxDOM.createElement('div');
       categoryDiv.setAttribute('id', 'category_chart');
+
 
       let nutrientDiv = ReactFauxDOM.createElement('div');
       nutrientDiv.setAttribute('id', 'nutrient_chart');
@@ -89,7 +108,7 @@ class GraphVisualizations extends Component {
       nutrientDefDiv.setAttribute('id', 'nutrient_def_chart');
 
       return (
-        <Container >
+        <Container>
 
         <Header as='h2' textAlign='center'>Purchasing History</Header>
         <Tabs
@@ -98,13 +117,20 @@ class GraphVisualizations extends Component {
         >
         <Tab label="By Category" value="categories">
         <div>
-          <h2 style={styles.headline}>Categories</h2>
-          <Container>
-          {categoryDiv.toReact()}
-        </Container>
-        <Container>
+        <br/>
+
+          <Card>
+          <CardHeader
+          title="Purchases vs. Recommended Intake by Category"
+          subtitle="Click Bars for Category Specific Recipes"
+        />
           {categoryDefDiv.toReact()}
-        </Container>
+        </Card>
+        <br/>
+        <Card>
+        {categoryDiv.toReact()}
+        </Card>
+
            {!!Object.keys(this.props.deficientCategories).length &&
               <div>
               <h2>You could use some more {this.props.deficientCategories.defCategory}!
@@ -122,12 +148,13 @@ class GraphVisualizations extends Component {
       <div>
         <h2 style={styles.headline}>Nutrients</h2>
       <div>
-        <Container>
-          {nutrientDiv.toReact()}
-        </Container>
-        <Container>
-          {nutrientDefDiv.toReact()}
-        </Container>
+        <Card>
+        {nutrientDefDiv.toReact()}
+        </Card>
+        <br/>
+        <Card>
+        {nutrientDiv.toReact()}
+        </Card>
         {!!Object.keys(this.props.deficientNutrients).length &&
               <div>
               <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
@@ -167,9 +194,9 @@ const mapDispatch = (dispatch, ownProps) => {
       dispatch(getRecipesByIngredient(ingred))
       evt.preventDefault()
     },
-    handleCategoryClick: (evt, state) => {
+    handleCategoryClick: (category) => {
       dispatch(getRecipes([]))
-      dispatch(getRecipesByDefCategory(state.deficientCategories.defCategory))
+      dispatch(getRecipesByDefCategory(category))
       history.push('/recipes/deficiencies')
     },
     handleNutrientClick: (evt, state) => {

@@ -94,8 +94,9 @@ router.get('/categories', (req, res, next) => {
 
 
 router.put('/categories/deficient', (req, res, next) => {
+  console.log('category history in backend', req.body.categoryHistory)
   const categoryHistory = req.body.categoryHistory
-  const categories = {Grains: 0, Vegetables: 0, Fruits: 0, Dairy: 0, Meat: 0, Fat: 0, NutsAndLegumes: 0, Sugars: 0}
+  const categories = {Grains: 0, Vegetables: 0, Fruits: 0, Dairy: 0, Meat: 0, Fats: 0, ['Nuts and Legumes']: 0, ['Added Sugars']: 0}
 
     categoryHistory.forEach(categoryDate => {
         categories[categoryDate["ingredient.category"]] = +categories[categoryDate["ingredient.category"]] + +categoryDate.servingCount
@@ -106,20 +107,28 @@ router.put('/categories/deficient', (req, res, next) => {
 
 
 function getDeficientCategories(categoryTotals) {
-  const categories = ['Grains','Vegetables', 'Fruits', 'Dairy', 'Meat', 'Fat', 'NutsAndLegumes', 'Sugars']
+  console.log('categorytotals' ,categoryTotals)
+  const categories = Object.keys(categoryTotals)
+
+
   const deficits = {}
   let defCategory = ''
   let maxDef = 0
 
-  categories.map(category => {
-    deficits[category] = [+categoryTotals[category]/60, +recDailyIntakeByCategory[category], +recDailyIntakeByCategory[category] - +categoryTotals[category]/60]
+  categories.forEach(category => {
+    console.log('category', category)
+    if (category !== 'null' && category !== 'Unsure') {
+      deficits[category] = [+categoryTotals[category]/60, +recDailyIntakeByCategory[category], +recDailyIntakeByCategory[category] - +categoryTotals[category]/60]
 
-    if (+deficits[category][2] > maxDef) {
-      maxDef = +deficits[category][2]
-      defCategory = category
+      if (+deficits[category][2] > maxDef) {
+        maxDef = +deficits[category][2]
+        defCategory = category
+      }
+
     }
   })
 
+  //console.log('deficits', deficits)
   return {
     defCategory,
     maxDef,
@@ -128,7 +137,7 @@ function getDeficientCategories(categoryTotals) {
 }
 
 const recDailyIntakeByCategory = {
-  Grains: 7, Vegetables: 5, Fruits: 5, Dairy: 3, Meat: 2, Fat: 3, NutsAndLegumes: 0.7, Sugars: 0.7
+  Grains: 7, Vegetables: 5, Fruits: 5, Dairy: 3, Meat: 2, Fats: 3, ['Nuts and Legumes']: 0.7, ['Added Sugars']: 0.7
 }
 
 const recDailyIntakeByNutrient = {

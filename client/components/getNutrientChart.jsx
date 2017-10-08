@@ -1,5 +1,4 @@
 import * as d3 from 'd3';
-const categories = ["Grains","Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
 
 
 export default function getNutrientChart(nutrientHistory) {

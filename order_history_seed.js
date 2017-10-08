@@ -1,30 +1,30 @@
-const week = 7*24*60*60*1000; 
-const id = 1; 
+const week = 7*24*60*60*1000;
+const id = 1;
 
 const order_histories = [
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "alcohol"}, 
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "alcohol"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "agave"},
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "alfredo sauce"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "all purpose flour"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "almond"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "anchovies"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "barbecue sauce"}, 
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "alfredo sauce"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "all purpose flour"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "almond"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "anchovies"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "barbecue sauce"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, userId: id, ingredientName: "bean curd"},
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "beef roast"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bell pepper"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bordelaise sauce"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bran flakes"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "cane sugar"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "canned corn"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "cashew milk"}, 
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "chana dal"}, 
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "beef roast"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bell pepper"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bordelaise sauce"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "bran flakes"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "cane sugar"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "canned corn"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "cashew milk"},
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 2*week, userId: id, ingredientName: "chana dal"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chicken breast"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chicken broth"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chicken fillets"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chicken egg"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chicken pieces"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chili powder"},
-	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chipped beef"}, 
+	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "chipped beef"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "ciabatta"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, userId: id, ingredientName: "cider vinegar"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, userId: id, ingredientName: "cinnamon toast crunch cereal"},
@@ -46,4 +46,4 @@ const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 6*week, userId: id, ingredientName: "dessert wine"}
 ]
 
-module.exports = order_histories; 
+module.exports = order_histories;

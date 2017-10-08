@@ -1,6 +1,4 @@
 import * as d3 from 'd3';
-const categories = ["Grains","Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
-
 
 export default function getCategoryChart(categoryHistory) {
 
@@ -23,6 +21,7 @@ export default function getCategoryChart(categoryHistory) {
      const sugarRow = new Array(dateRow.length).fill(0)
 
      // for every item, find the category and date to add servings
+     console.log('cat hist', categoryHistory)
     categoryHistory.forEach(item => {
       const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
 
@@ -31,9 +30,9 @@ export default function getCategoryChart(categoryHistory) {
       if (item['ingredient.category'] === 'Fruits') fruitRow[index] = item.servingCount
       if (item['ingredient.category'] === 'Dairy') dairyRow[index] = item.servingCount
       if (item['ingredient.category'] === 'Meat') meatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Fat') fatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'NutsAndLegumes') nutsRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Sugars') sugarRow[index] = item.servingCount
+      if (item['ingredient.category'] === 'Fats') fatRow[index] = item.servingCount
+      if (item['ingredient.category'] === 'Nuts and Legumes') nutsRow[index] = item.servingCount
+      if (item['ingredient.category'] === 'Added Sugars') sugarRow[index] = item.servingCount
 
     })
 
@@ -43,8 +42,8 @@ export default function getCategoryChart(categoryHistory) {
      fruitRow.unshift('Fruits')
      dairyRow.unshift('Dairy')
      meatRow.unshift('Meat')
-     fatRow.unshift('Fat')
-     nutsRow.unshift('Nuts And Legumes')
+     fatRow.unshift('Fats and Oil')
+     nutsRow.unshift('Nuts and Legumes')
      sugarRow.unshift('Added Sugars')
 
      const chartObj = {}
