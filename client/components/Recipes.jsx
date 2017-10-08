@@ -48,18 +48,44 @@ class Recipes extends Component {
         <h2>Recommended Recipes</h2> 
         { this.renderSearch() }
         <br /><br />
-        <Card.Group itemsPerRow='3'>
+        {/* <Card.Group itemsPerRow='3'>
           { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
           }) : getRecipes.map(recipe => {
             // console.log('hi')
             return <RecipeCard key={recipe.id} recipe={recipe} /> })}
           
-        </Card.Group>
+        </Card.Group> */}
+
+        <GridList
+          cellHeight={180}
+          style={styles.gridList}
+          cols={3}
+        >
+        { (search.length) ? search.map(recipe => {
+            return <RecipeCard key={recipe.id} recipe={recipe} />
+          }) : getRecipes.map(recipe => {
+            // console.log('hi')
+            return <RecipeCard key={recipe.id} recipe={recipe} /> })}
+          
+        </GridList>
       </Container> /////
     )
   }
 }
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 500,
+    height: 450,
+    overflowY: 'auto',
+  },
+};
 
 const mapProps = (state) => {
   return {

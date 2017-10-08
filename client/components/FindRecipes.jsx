@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
 import { Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './Tile.jsx'
+import RecipeCard from './RecipeTiles.jsx'
 import { getRecipesByIngredient } from '../store'
 import { GridList } from 'material-ui/GridList'
 import SearchBar from 'material-ui-search-bar'
@@ -59,7 +59,7 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit: (evt, ingred) => {
       dispatch(getRecipesByIngredient(ingred))
-      evt.preventDefault()
+      // evt.preventDefault()
     }
   }
 }
