@@ -6,6 +6,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { Container, Header } from 'semantic-ui-react'
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import {GridList, GridTile} from 'material-ui/GridList';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -18,13 +19,21 @@ import {getRecipesByDefCategory, fetchIDofDefNutrient, getRecipes} from '../stor
 
 const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fat", "NutsAndLegumes", "Sugars"]
 
-
 const styles = {
   headline: {
     fontSize: 24,
     paddingTop: 16,
     marginBottom: 12,
     fontWeight: 400,
+  },
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 500,
+    height: 500,
   },
 };
 
@@ -45,16 +54,21 @@ class GraphVisualizations extends Component {
   };
 
    componentDidUpdate() {
+
+
      console.log('props', this.props)
-      const categoryChartInfo = getCategoryChart(this.props.categoryHistory)
-      var categoryChart = c3.generate({
-        bindto: '#category_chart',
-        data: categoryChartInfo.data,
-        axis: categoryChartInfo.axis
+      const {lineGraphObj, pieGraphObj} = getCategoryChart(this.props.categoryHistory)
+      var categoryLineChart = c3.generate({
+        bindto: '#category_line_chart',
+        data: lineGraphObj.data,
+        axis: lineGraphObj.axis
       })
 
+      var categoryPieChart = c3.generate({
+        bindto: '#category_pie_chart',
+        data: pieGraphObj.data
+      })
 
-      console.log('categorydiv', categoryChart)
       const nutrientChartInfo = getNutrientChart(this.props.nutrientHistory)
       var nutrientChart = c3.generate({
         bindto: '#nutrient_chart',
@@ -94,17 +108,19 @@ class GraphVisualizations extends Component {
   render() {
 
 
-      let categoryDiv = ReactFauxDOM.createElement('div');
-      categoryDiv.setAttribute('id', 'category_chart');
+      let categoryLineDiv = ReactFauxDOM.createElement('div');
+      categoryLineDiv.setAttribute('id', 'category_line_chart');
 
+      let categoryPieDiv = ReactFauxDOM.createElement('div');
+      categoryPieDiv.setAttribute('id', 'category_pie_chart');
 
       let nutrientDiv = ReactFauxDOM.createElement('div');
       nutrientDiv.setAttribute('id', 'nutrient_chart');
 
-      let categoryDefDiv = ReactFauxDOM.createElement('div', categoryDiv);
+      let categoryDefDiv = ReactFauxDOM.createElement('div');
       categoryDefDiv.setAttribute('id', 'category_def_chart');
 
-      let nutrientDefDiv = ReactFauxDOM.createElement('div', nutrientDiv);
+      let nutrientDefDiv = ReactFauxDOM.createElement('div');
       nutrientDefDiv.setAttribute('id', 'nutrient_def_chart');
 
       return (
@@ -127,9 +143,31 @@ class GraphVisualizations extends Component {
           {categoryDefDiv.toReact()}
         </Card>
         <br/>
-        <Card>
-        {categoryDiv.toReact()}
+        <div style={styles.root}>
+        <GridList
+
+        cellHeight={500}
+        padding={1}
+        style={styles.gridList}
+      >
+      <GridTile >
+        <Card >
+        <CardHeader
+        title="Purchases over Time by Category"
+      />
+        {categoryLineDiv.toReact()}
         </Card>
+    </GridTile>
+    <GridTile >
+        <Card >
+        <CardHeader
+        title="Category Distribution"
+      />
+        {categoryPieDiv.toReact()}
+        </Card>
+        </GridTile>
+        </GridList>
+        </div>
 
            {!!Object.keys(this.props.deficientCategories).length &&
               <div>

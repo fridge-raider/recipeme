@@ -25,14 +25,14 @@ export default function getCategoryChart(categoryHistory) {
     categoryHistory.forEach(item => {
       const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
 
-      if (item['ingredient.category'] === 'Grains') grainRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Vegetables') veggieRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Fruits') fruitRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Dairy') dairyRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Meat') meatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Fats') fatRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Nuts and Legumes') nutsRow[index] = item.servingCount
-      if (item['ingredient.category'] === 'Added Sugars') sugarRow[index] = item.servingCount
+      if (item['ingredient.category'] === 'Grains') grainRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Vegetables') veggieRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Fruits') fruitRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Dairy') dairyRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Meat') meatRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Fats') fatRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Nuts and Legumes') nutsRow[index] += item.servingCount
+      if (item['ingredient.category'] === 'Added Sugars') sugarRow[index] += item.servingCount
 
     })
 
@@ -46,38 +46,58 @@ export default function getCategoryChart(categoryHistory) {
      nutsRow.unshift('Nuts and Legumes')
      sugarRow.unshift('Added Sugars')
 
-     const chartObj = {}
-     chartObj.data = {
-      x: 'x',
-      columns: [
-         dateRow,
-         grainRow,
-         veggieRow,
-         fruitRow,
-         dairyRow,
-         meatRow,
-         fatRow,
-         nutsRow,
-         sugarRow
-      ]
-   }
-
-    chartObj.axis = {
-      x: {
-         type: 'timeseries',
-         tick: {
-            format: '%m-%d-%Y'
+     const lineGraphObj = {
+       data: {
+        x: 'x',
+        columns: [
+           dateRow,
+           grainRow,
+           veggieRow,
+           fruitRow,
+           dairyRow,
+           meatRow,
+           fatRow,
+           nutsRow,
+           sugarRow
+        ]
+       },
+       axis: {
+        x: {
+          type: 'timeseries',
+          tick: {
+             format: '%m-%d-%Y'
+          }
+       },
+       y: {
+         min: 0,
+         padding : {
+           bottom : 0
          }
-      },
-      y: {
-        min: 0,
-        padding : {
-          bottom : 0
-        }
-      }
-   }
+       }
+       }
+     }
 
-   return chartObj
+     const pieGraphObj = {
+      data: {
+       columns: [
+          grainRow,
+          veggieRow,
+          fruitRow,
+          dairyRow,
+          meatRow,
+          fatRow,
+          nutsRow,
+          sugarRow
+       ],
+       type: 'pie'
+      }
+    }
+
+
+   return {
+    lineGraphObj,
+    pieGraphObj
+   }
 
 
   }
