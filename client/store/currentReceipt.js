@@ -23,7 +23,7 @@ export function addReceipt(receiptImg) {
         dispatch(setReceipt(receipt));
       })
     }
-  }
+  } 
 
 export function setReceiptToOrderHistory(currentReceipt) {
   return function thunk(dispatch) {
