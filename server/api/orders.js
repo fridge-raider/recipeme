@@ -155,7 +155,7 @@ router.put('/categories/deficient', (req, res, next) => {
     if (new Date(categoryDate.createdAt) > maxDate) maxDate = new Date(categoryDate.createdAt)
   })
 
-  const numWeeks = Math.round((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7))
+  const numWeeks = ((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
 
   res.json(getDeficientCategories(categories, numWeeks))
 })
@@ -170,6 +170,7 @@ function getDeficientCategories(categoryTotals, numWeeks) {
 
   categories.forEach(category => {
     if (category !== 'null' && category !== 'Unsure') {
+
       deficits[category] = [+categoryTotals[category] / numWeeks, +recWeeklyIntakeByCategory[category], +recWeeklyIntakeByCategory[category] - +categoryTotals[category] / numWeeks]
 
       if (+deficits[category][2] > maxDef) {
