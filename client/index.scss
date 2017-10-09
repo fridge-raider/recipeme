@@ -1,27 +1,27 @@
 @import './sass/c3.css'; 
 
-body {
-  font-family: sans-serif;
+// body {
+//   font-family: sans-serif;
 
-  a {
-    text-decoration: none;
-  }
+//   a {
+//     text-decoration: none;
+//   }
 
-  label {
-    display: block;
-  }
+//   label {
+//     display: block;
+//   }
 
-  nav a {
-    display: inline-block;
-    margin: 1em;
-  }
+//   nav a {
+//     display: inline-block;
+//     margin: 1em;
+//   }
 
-  form div {
-    margin: 1em;
-    display: inline-block;
-  }
+//   form div {
+//     margin: 1em;
+//     display: inline-block;
+//   }
 
-}
+// }
 
 /*-- Chart --*/
 .c3 svg {
@@ -198,8 +198,4 @@ body {
 .c3-chart-arc.c3-target.c3-focused g path {
   opacity: 1; }
 
-.nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
-}
 

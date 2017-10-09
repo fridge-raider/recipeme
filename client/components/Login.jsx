@@ -27,48 +27,27 @@ class Login extends Component {
 
   render(){
     return (
-      <Container fluid className='login-container'>
-        <Grid centered columns={4}>
-        </Grid>
-        <Grid centered columns={2}>
-          <Grid.Column>
-            <Segment.Group>
-              <Segment textAlign='center' color='blue' inverted>
+        <div className="ui grid" style={{marginTop:0, zIndex: 1}}> 
+          <div className="row" style={{minHeight:200}}> 
+            <div className="four wide column olive"> </div> 
+            <div className="four wide column black"> </div>
+            <div className="four wide column olive"> </div> 
+            <div className="four wide column black"> </div>  
 
-                Welcome to RecipeMe!
-              </Segment>
-              <Segment>
-                <Form onSubmit={this.props.handleSubmit}>
-                  <Form.Field>
-                    <label>Email</label>
-                    <input name='email' type='text' placeholder='joesmith@gmail.com' onChange={this.handleEmail}/>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Password</label>
-                    <input name='password' type='password' placeholder='Password' onChange={this.handlePassword}/>
-                  </Form.Field>
-                  <br>
-                  </br>
-                  <Link to="/home">
-                    <Button type="submit" color='teal' onClick={(evt)=>this.props.handleSubmit(evt,this.state, 'login')}>
-                      Login
-                      <Icon name='arrow right'></Icon>
-                    </Button>
-                  </Link>
-                  <Link to="/home">
-                  <Button type="submit" color='teal' onClick={(evt)=>this.props.handleSubmit(evt,this.state,'signup')}>
-                    New User? Sign Up
-                    <Icon name='arrow right'></Icon>
-                  </Button>
-                </Link>
-                {this.props.error && this.props.error.response && <div> {this.props.error.response.data} </div>}
-                </Form>
-                or<a href='/auth/google'> Sign Up or Log in with Google+</a>
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-        </Grid>
-      </Container>
+          </div> 
+          <div className="row" style={{minHeight:200, zIndex: 1}}> 
+            <div className="four wide column black"> </div> 
+            <div className="four wide column olive"> </div> 
+            <div className="four wide column black"> </div> 
+            <div className="four wide column olive"> </div> 
+          </div> 
+          <img class="ui medium circular image" src="http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png" style={{zIndex: 3, display:"inline-block"}}></img> 
+          <div className="row" style={{minHeight:400, zIndex: 1}}> 
+            <div className="sixteen wide column grey"> </div> 
+          </div> 
+
+
+        </div> 
     )
   }
 }

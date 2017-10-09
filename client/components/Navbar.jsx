@@ -21,31 +21,11 @@ export class Navbar extends Component {
         <Menu.Item>
           <NavLink to='/receipt'>Upload Receipt</NavLink>
         </Menu.Item>
-        {
-          !!this.props.isLoggedIn &&
-          <Menu.Menu position='right'>
-
-          <Menu.Item>
-            <div onClick={this.props.logout} >Logout</div>
-          </Menu.Item>
-          </Menu.Menu>
-
-        }
-        {
-          !this.props.isLoggedIn &&
-          <Menu.Menu position='right'>
-
-
-          <Menu.Item>
-          <NavLink to='/signup' >Sign Up</NavLink>
-          </Menu.Item>
+        <Menu.Menu position='right'>
         <Menu.Item>
-           <NavLink to='/login'>Log In</NavLink>
+          <div onClick={this.props.logout}>Logout</div>
         </Menu.Item>
         </Menu.Menu>
-
-        }
-
       </Menu>
     )
   }

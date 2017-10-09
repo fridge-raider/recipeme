@@ -14,4 +14,5 @@ export {default as ReceiptUpload} from './ReceiptUpload.jsx'
 export {default as Login} from './Login.jsx'
 export {default as RecRecipesNutr} from './RecRecipesNutr.jsx'
 export {default as Recipes} from './Recipes.jsx'
+export {default as HomePage} from './HomePage.jsx'
 
