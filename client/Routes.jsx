@@ -23,7 +23,6 @@ class Routes extends Component {
       <div className ="container-fluid">
         <Main>
           <Navbar />
-          <SideBar />
             <Switch>
               {/* Routes placed here are available to all visitors */}
               <Route path='/findrecipes' component={FindRecipes} />
@@ -34,7 +33,6 @@ class Routes extends Component {
               <Route path='/home' component={UserHome} />
               <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
               <Route path='/' component={Login} />
-
             </Switch>
         </Main>
         </div>
