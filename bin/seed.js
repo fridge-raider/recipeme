@@ -6,34 +6,43 @@ const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
 
 var ingredients = new Set();
 
-var fileNutrientsIng = require('./allIngredients.json');
+var fileNutrientsIng = require('./nutrientsAll.json');
 var fileNutID = require('./nutritionID.json')
 
+//setting up orderhistory promises 
+const order_histories = require('./order_history_seed.js'); 
+const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
 
-// //setting up orderhistory promises
-const order_histories = require('./order_history_seed.js');
-const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)});
 
-const temp = new Set();
+let fileNutrientsIng = require('./nutrientsAll.json');
+let fileNutID = require('./nutritionID.json')
+
+// //setting up orderhistory promises 
+// const order_histories = require('./order_history_seed.js'); 
+// const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
+
+const temp = new Set(); 
 const uniqueIngredients = new Set();
 const rowsNut = new Set();
 
 fileNutID.forEach(nutrient => {
 	const instance = {
 		name: '',
-		apiId: 0
+		apiId: 0,
+		suggested: 0
 	}
 	instance.name = nutrient.name
 	instance.apiId = nutrient.apiId
+	instance.suggested = nutrient.suggested
 
 	rowsNut.add(instance)
 })
 
 fileNutrientsIng.forEach(ingredient => {
 
-	const instance = {
-		name: '',
-		servingQty: 0,
+	const instance = { 
+		name: '', 
+		servingQty: 0, 
 		nf_calories: 0.0,
 		nf_total_fat: 0.0,
 		nf_saturated_fat: 0.0,
@@ -59,25 +68,26 @@ fileNutrientsIng.forEach(ingredient => {
 	instance.nf_p = ingredient.nf_p
 
 	if(!temp.has(instance.name)) {
-		temp.add(instance.name);
-		uniqueIngredients.add(instance);
+		temp.add(instance.name); 
+		uniqueIngredients.add(instance); 
 	}
 
 })
 
 
 const seed = () => {
-	const ingredientPromises = [];
-	const nutIdPromises = [];
+	const ingredientPromises = []; 
+	const nutIdPromises = []; 
 
 
 	uniqueIngredients.forEach(row => {
 		ingredientPromises.push(Ingredient.create(row));
 	})
-
+	
 	rowsNut.forEach(row => {
 		nutIdPromises.push(NutrientsAPIID.create(row));
 	})
+
 
 	const totalArrPromise = nutIdPromises.concat(ingredientPromises)
 	//console.log(allIngredients.length)

@@ -9,6 +9,9 @@ const NutrientsAPIID = db.define('nutrientsAPIID', {
   },
   apiId: {
     type: Sequelize.STRING
+  },
+  suggested: {
+    type: Sequelize.INTEGER
   }
 })
 
