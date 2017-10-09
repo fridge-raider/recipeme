@@ -138,7 +138,6 @@ function getDeficientCategories(categoryTotals, numWeeks) {
     }
   })
 
-  //console.log('deficits', deficits)
   return {
     defCategory,
     maxDef,

@@ -4,7 +4,6 @@ export default function getNutrientDeficientChart(deficits) {
 
      const avgDailyConsumption = []
      const dailyRecommendations = []
-      console.log('deficits', deficits)
 
      // for every item in deficits, add to the consumption and rec arrays
      for (let nutrient in deficits) {

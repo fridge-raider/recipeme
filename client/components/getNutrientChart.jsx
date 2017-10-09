@@ -28,7 +28,6 @@ export default function getNutrientChart(nutrientHistory) {
      const pRow = new Array(dateRow.length).fill(0)
 
      // for every item, find the category and date to add servings
-     console.log('nutrient history', nutrientHistory)
      nutrientHistory.forEach(item => {
       const index = dateRow.indexOf(begOfWeekDate(item.createdAt))
 
@@ -57,7 +56,6 @@ export default function getNutrientChart(nutrientHistory) {
      potassRow.unshift('Potassium')
      pRow.unshift('Phosphorous')
 
-     console.log('calRow', calRow)
 
      const lineGraphNutObj = {
       padding: {
@@ -128,9 +126,6 @@ export default function getNutrientChart(nutrientHistory) {
       }
     }
 
-
-    console.log('linegraph', lineGraphNutObj)
-    console.log('pie', pieGraphNutObj)
    return {
     lineGraphNutObj,
     pieGraphNutObj

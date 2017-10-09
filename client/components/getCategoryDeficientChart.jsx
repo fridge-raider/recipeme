@@ -3,7 +3,6 @@ import IconButton from 'material-ui/IconButton';
 import React, { Component } from 'react';
 
 export default function getCategoryDeficientChart(deficits) {
-  console.log('deficits', deficits)
   const avgDailyConsumption = []
   const dailyRecommendations = []
 

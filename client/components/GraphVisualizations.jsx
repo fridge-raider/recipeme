@@ -98,9 +98,21 @@ class GraphVisualizations extends Component {
       })
 
       // let ticks = d3.selectAll('.tick')
+      // const test = ReactFauxDOM.createElement('div')
+      // test.innerHTML = 'hi'
+      // let tick1 = d3.select('.tick text').data([0])
+
+      // let testImg = ReactFauxDOM.createElement('div');
+      // testImg.setAttribute('id', 'test_img');
+
+      // d3.select('.tick text')
+      // .append("svg")
+      // // .attr("xlink:href", "http://placekitten.com/200/300")
+      // .attr("width", "20")
+      // .attr("height", "20");
+      // console.log('tick1', tick1)
 
       // ticks.on('click', function(value,index){
-      //   console.log('this', this.props)
       //   console.dir(this);
       //   console.dir([value, index]);
       // });
