@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const fs = require('fs')
 const CryptoJS = require('crypto-js')
-const aws = require('aws-sdk')
+let aws = require('aws-sdk')
 const { Receipt } = require('../db/models')
 const request = require('request')
 const { returnCleanReceipt, getReceiptIngredients } = require('./receiptParsing')
@@ -19,7 +19,7 @@ const clientSecretKey = process.env.CLIENT_SECRET_KEY,
     // CHANGE TO INTEGERS TO ENABLE POLICY DOCUMENT VERIFICATION ON FILE SIZE
     // (recommended)
     expectedMinSize = null,
-    expectedMaxSize = null,
+    expectedMaxSize = null
     // EXAMPLES DIRECTLY BELOW:
     //expectedMinSize = 0,
     //expectedMaxSize = 15000000,

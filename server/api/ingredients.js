@@ -23,14 +23,11 @@ router.put('/categories', (req, res, next) => {
   })
 })
 
-
 router.get('/names', (req, res, next) => {
   Ingredient.findAll({
     attributes : ['name']
   }).then(ingredients => {
-    let ingred = ingredients.map(ingredient => ingredient.name); 
-    res.json(ingred); 
+    let ingred = ingredients.map(ingredient => ingredient.name);
+    res.json(ingred);
   })
 })
-
-
