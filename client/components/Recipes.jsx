@@ -25,17 +25,13 @@ class Recipes extends Component {
 
   renderSearch() {
     return (
-<<<<<<< HEAD
+
       <SearchBar 
-        style={{borderRadius:25, maxWidth:1000}}
+        style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={() => console.log('hi')}
         hintText="Search by ingredient"
-=======
-      <Search
-        onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
-        onResultSelect={this.renderResultSearch}
->>>>>>> master
+
         />
     )
   }
@@ -50,15 +46,16 @@ class Recipes extends Component {
     })
 
     return (
-      <Container fluid 
-        style={styles.root}>
+      <Container fluid style={{padding: '1em 2em'}} >
 
         <h2>Recommended Recipes</h2> 
+        <p>(based on your past purchases)</p>
         { this.renderSearch() }
         <br /><br />
 
+
         <GridList
-          cellHeight={180}
+          cellHeight={500}
           style={styles.gridList}
           cols={3}
           padding={6}
@@ -66,12 +63,13 @@ class Recipes extends Component {
         { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
           }) : getRecipes.map(recipe => {
-            // console.log('hi')
             return <RecipeCard key={recipe.id} recipe={recipe} /> })}
           
         </GridList>
 
-      </Container> /////
+
+      </Container>
+
     )
   }
 }
@@ -81,12 +79,11 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    padding: '1em 2em'
   },
   gridList: {
-    width: 500,
-    height: 450,
-    overflowY: 'auto',
+    width: 'flex',
+    height: 'flex',
+    overflowY: 'flex',
   },
 };
 

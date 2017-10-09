@@ -55,12 +55,32 @@ export function fetchIDofDefNutrient(nutrient) {
       .then(defNutId => {
         const nutID = defNutId.apiId
         const nutSuggested = defNutId.suggested
-        return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=salt&nutrition.${nutID}.min=${nutSuggested}&maxResult=75`)
-          .then(res => res.data)
-          .then(recipes =>{
-            dispatch(getRecipes(recipes.matches))
+        return axios.get(`/api/recipes`) 
+          .then(frequencies => frequencies.data)
+          .then(ingredients => {
+            const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].ingredientName}&nutrition.${nutID}.min=${nutSuggested}&maxResult=50`)
+            const food2 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[1].ingredientName}&nutrition.${nutID}.min=${nutSuggested}&maxResult=50`)
+            return Promise.all([food1, food2])
+            .then(promises => {
+              let recipes = []
+              promises.forEach(promise => {
+                if (promise) recipes = recipes.concat(promise.data.matches)
+              })
+              return recipes
+            })
+            .then(recipes => {
+              dispatch(getRecipes(recipes))
+            })
           })
-          .catch(console.error)
+        
+      .catch(console.log)
+
+        // return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=salt&nutrition.${nutID}.min=${nutSuggested}&maxResult=75`)
+        //   .then(res => res.data)
+        //   .then(recipes =>{
+        //     dispatch(getRecipes(recipes.matches))
+        //   })
+        //   .catch(console.error)
       })
 
   }
