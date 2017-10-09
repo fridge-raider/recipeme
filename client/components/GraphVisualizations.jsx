@@ -121,6 +121,12 @@ class GraphVisualizations extends Component {
 
     // add on click handler to category def chart ticks
     var svg = d3.selectAll('#category_def_chart .tick')
+
+    // select all the items
+    // append circle
+    // gave circle attributes
+    // onmouseover <- function does d3.select('this') <- add things here
+
     var focus = svg.append("g")
     .style("display", "none");
     //d3.selectAll('#category_def_chart .tick')
