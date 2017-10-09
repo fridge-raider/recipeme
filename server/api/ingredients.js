@@ -21,5 +21,3 @@ router.put('/categories', (req, res, next) => {
     res.json(succ);
   })
 })
-
-
