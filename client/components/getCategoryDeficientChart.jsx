@@ -8,7 +8,6 @@ export default function getCategoryDeficientChart(deficits) {
 
   // for every item in deficits, add to the consumption and rec arrays
   for (let category in deficits) {
-
     avgDailyConsumption.push(deficits[category][0])
     dailyRecommendations.push(deficits[category][1])
     categories.push(category)
@@ -25,7 +24,7 @@ export default function getCategoryDeficientChart(deficits) {
       right: 50,
       bottom: 20,
       left: 50,
-  },
+    },
     data: {
       columns: [
         avgDailyConsumption,
@@ -84,8 +83,8 @@ export default function getCategoryDeficientChart(deficits) {
         </table>
         </div>`
         return tableToReturn
+      }
     }
-  }
   }
 
   return chartObj
