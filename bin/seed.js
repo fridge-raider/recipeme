@@ -29,9 +29,9 @@ fileNutID.forEach(nutrient => {
 
 fileNutrientsIng.forEach(ingredient => {
 
-	const instance = {
-		name: '',
-		servingQty: 0,
+	const instance = { 
+		name: '', 
+		servingQty: 0, 
 		nf_calories: 0.0,
 		nf_total_fat: 0.0,
 		nf_saturated_fat: 0.0,
@@ -57,32 +57,17 @@ fileNutrientsIng.forEach(ingredient => {
 	instance.nf_p = ingredient.nf_p
 
 	if(!temp.has(instance.name)) {
-<<<<<<< HEAD:bin/seed.js
 		temp.add(instance.name); 
 		uniqueIngredients.add(instance); 
-=======
-		temp.add(instance.name);
-		uniqueIngredients.add(instance);
->>>>>>> master:seed.js
 	}
 
 })
 
 
 const seed = () => {
-<<<<<<< HEAD:bin/seed.js
 	const ingredientPromises = []; 
 	const nutIdPromises = []; 
 
-=======
-	const ingredientPromises = [];
-	const nutIdPromises = [];
-
-
-	uniqueIngredients.forEach(row => {
-		ingredientPromises.push(Ingredient.create(row));
-	})
->>>>>>> master:seed.js
 
 	uniqueIngredients.forEach(row => {
 		ingredientPromises.push(Ingredient.create(row));
