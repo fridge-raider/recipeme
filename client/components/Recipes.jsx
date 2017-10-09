@@ -19,17 +19,23 @@ class Recipes extends Component {
       value: '',
       isLoading: false
     }
-    
+
     this.renderSearch = this.renderSearch.bind(this)
   }
 
   renderSearch() {
     return (
+<<<<<<< HEAD
       <SearchBar 
         style={{borderRadius:25, maxWidth:1000}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={() => console.log('hi')}
         hintText="Search by ingredient"
+=======
+      <Search
+        onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
+        onResultSelect={this.renderResultSearch}
+>>>>>>> master
         />
     )
   }
@@ -50,14 +56,6 @@ class Recipes extends Component {
         <h2>Recommended Recipes</h2> 
         { this.renderSearch() }
         <br /><br />
-        {/* <Card.Group itemsPerRow='3'>
-          { (search.length) ? search.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} />
-          }) : getRecipes.map(recipe => {
-            // console.log('hi')
-            return <RecipeCard key={recipe.id} recipe={recipe} /> })}
-          
-        </Card.Group> */}
 
         <GridList
           cellHeight={180}
@@ -72,6 +70,7 @@ class Recipes extends Component {
             return <RecipeCard key={recipe.id} recipe={recipe} /> })}
           
         </GridList>
+
       </Container> /////
     )
   }

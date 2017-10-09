@@ -3,16 +3,118 @@ const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
 const path = require('path')
+const im = require('imagemagick');
+const ed = require('edit-distance');
+const allIngredients = require('../../ingredientNames.js')
+
+var insert, remove, update;
+insert = remove = function(node) { return 1; };
+update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
+
+function receiptParsingMinDist(item) {
+  let searchArr = allIngredients[item.name.charAt(0)]; 
+  let min = item.name.length
+  let scaledMin = 10000; 
+  if(searchArr) {
+    for(let i=0; i<searchArr.length; i++) {
+      var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
+      //console.log('Levenshtein', lev.distance, lev.pairs());
+      if(lev.distance < min) {
+        min = lev.distance; 
+        //possibleWord = searchArr[i]; 
+      }
+    }
+  }
+  scaledMin = (min*min)*item.name.length
+  // console.log(item.name, item.name.length, scaledMin) 
+  return scaledMin
+}
+
+function findSimilarIngredient(item) {
+  let min = item.name.length
+  let possibleMatch = "unknown"; 
+  let words = item.name.split(" "); 
+  for(let j=0; j<words.length; j++) {
+    let searchArr = allIngredients[words[j].charAt(0)]
+    if(searchArr) {
+      for(let i=0; i<searchArr.length; i++) {
+        var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
+        if(lev.distance < min) {
+          min = lev.distance; 
+          possibleMatch = searchArr[i]; 
+        }
+      }
+    }
+  }
+  console.log(item.name, item.name.length, possibleMatch) 
+  return possibleMatch; 
+}
+
+
+
+function receiptParsingInitial(text) {
+  const lines = text.split('\n');
+  const cleanLines = [];
+  const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
+  const itemRegex = /^[A-Za-z\s]+/;
+  for (let i = 0; i < lines.length; i++) {
+      const item = {};
+      if (lines[i].match(priceRegex)) {
+          item.price = lines[i].match(priceRegex)[0];
+          item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
+          item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
+          if(parseFloat(item.price) > 15) item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          item.name = item.name.replace(/[^\w\s]/, ''); 
+          const tempName = item.name.replace(/\s/g, '');
+          if (tempName.match(/^[0-9]*$/)) item.name = null
+          if (tempName.includes('total') || tempName.includes('cash') || tempName.includes('subtotal')) item.name = null
+      } else if(lines[i].match(itemRegex)) {
+          //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
+          item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase(); 
+          item.name.replace(/[^a-zA-Z]/gi, ""); 
+          if(receiptParsingMinDist(item) > 0) item.name = null; 
+          item.price = "0.00"; 
+      }
+      if (item.name && item.price) {
+        if(item.name.replace(/[^a-zA-Z]/gi, "").length > 4) {
+          cleanLines.push(item);
+        }
+          
+      }
+  }
+  return cleanLines; 
+
+}
+
 
 function returnCleanReceipt(imageName) {
 
-    return new Promise(function (resolve, reject) {
+    const options = {
+      1: 'eng', 
+      psm: 4,
+      binary: '/usr/local/bin/tesseract', 
+      config: 'receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine 
+    }
+
+    //brew install imagemagick
+    const preprocessPromise = new Promise(function(resolve, reject) {
+      //doesn't do anything but eventually want to get imagemagick configured with textcleaner to 
+      //properly parse low quality, poorly angled, and wrinkled receipts 
+      im.readMetadata(imageName, function(err, metadata){
+        if (err) reject(err);
+        console.log('Shot at '+metadata.exif.dateTimeOriginal);
+        resolve(); 
+      })
+    })
+
+    const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
-      tesseract.process(__dirname + '/' + imageName, function (err, text) {
+      tesseract.process(__dirname + '/' + imageName, options, function (err, text) {
           if (err) {
               reject(err);
           } else {
               // write the file image to a text file
+              console.log("hullo", text); 
               fs.writeFileSync('receipt.txt', text, err => {
                   if (err) reject(err)
                   console.log('file has beed saved')
@@ -23,29 +125,18 @@ function returnCleanReceipt(imageName) {
                   if (err) {
                       reject(err)
                   }
-                  const lines = text.split('\n');
-                  const cleanLines = [];
-                  const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
-                  for (let i = 0; i < lines.length; i++) {
-                      const item = {};
-                      if (lines[i].match(priceRegex)) {
-                          item.price = lines[i].match(priceRegex)[0];
-                          item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
-                          item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
-                          item.name = item.name.replace(/[^\w\s]/, '');
-                          const tempName = item.name.replace(/\s/g, '');
-                          if (tempName.match(/^[0-9]*$/)) item.name = null
-                          if (tempName.includes('total') || tempName.includes('cash')) item.name = null
-                      }
-                      if (item.name && item.price) {
-                          cleanLines.push(item);
-                      }
-                  }
+                  cleanLines = receiptParsingInitial(text);
+                  
                   resolve(cleanLines)
               })
           }
       });
     });
+
+    return preprocessPromise
+    .then(() => {
+      return tesseractPromise
+    })
 }
 
 function setReceiptRep(item) {
@@ -110,6 +201,10 @@ function getReceiptIngredients(parsedReceipt) {
         else if(results[2] !== null) {
           ingredientName = results[2].name;
           category = results[2].category;
+        }
+
+        if(ingredientName === "unknown") {
+          ingredientName = findSimilarIngredient(item);
         }
         return {ing: ingredientName, servings: 1, price: item.price, category: category, rep: item.name};
       })

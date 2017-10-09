@@ -3,7 +3,7 @@ const db = require('../db')
 const Frequency = require('./frequency');
 const Ingredient = require('./ingredients')
 
-const moment = require('moment'); 
+const moment = require('moment');
 
 // how much of each ingredient each user has
 const OrderHistory = db.define('orderHistory', {
@@ -12,10 +12,10 @@ const OrderHistory = db.define('orderHistory', {
   },
   price: {
     type: Sequelize.FLOAT
-  }, 
+  },
   week: {
     type: Sequelize.INTEGER
-  }, 
+  }
 
 }, {
   defaultScope: {
@@ -54,12 +54,12 @@ const OrderHistory = db.define('orderHistory', {
         }
       })
     }
-  }, 
+  },
   setterMethods: {
     week: function(val) {
-      //console.log("HELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOooooo", moment(val).week(), moment(val).get('month'), moment(val).get('year')); 
+      //console.log("HELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOooooo", moment(val).week(), moment(val).get('month'), moment(val).get('year'));
       this.setDataValue('week', moment(val).week())
-    }
+    },
   }
 })
 

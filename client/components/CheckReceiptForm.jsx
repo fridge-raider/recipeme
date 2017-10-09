@@ -13,7 +13,6 @@ export class CheckReceiptForm extends Component {
   }
 
   render() {
-    console.log(this.props.receipt)
 
     this.props.receipt.forEach(item => (
       rowData.push({item: item.name, qty: 1, measure: "unit", price: item.price})
