@@ -31,18 +31,14 @@ function receiptParsingMinDist(item) {
 }
 
 function findSimilarIngredient(item) {
-  //let searchArr = allIngredients[item.name.charAt(0)]; 
   let min = item.name.length
-  let scaledMin = 1000000; 
   let possibleMatch = "unknown"; 
-  let levObj = { scaledMin, possibleMatch};
-  let word = item.name.split(" "); 
-  for(let j=0; j<word.length; j++) {
-    let searchArr = allIngredients[word[j].charAt(0)]
+  let words = item.name.split(" "); 
+  for(let j=0; j<words.length; j++) {
+    let searchArr = allIngredients[words[j].charAt(0)]
     if(searchArr) {
       for(let i=0; i<searchArr.length; i++) {
         var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
-        //console.log('Levenshtein', lev.distance, lev.pairs());
         if(lev.distance < min) {
           min = lev.distance; 
           possibleMatch = searchArr[i]; 
@@ -50,12 +46,8 @@ function findSimilarIngredient(item) {
       }
     }
   }
-  
-  scaledMin = (min*min)*item.name.length
-  console.log(item.name, item.name.length, scaledMin, possibleMatch) 
-  levObj.scaledMin = scaledMin; 
-  levObj.possibleMatch = possibleMatch
-  return levObj;
+  console.log(item.name, item.name.length, possibleMatch) 
+  return possibleMatch; 
 }
 
 
@@ -71,15 +63,15 @@ function receiptParsingInitial(text) {
           item.price = lines[i].match(priceRegex)[0];
           item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
           item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
-          if(parseFloat(item.price) > 15) item.price = null; 
-          item.name = item.name.replace(/[^\w\s]/, '');
+          if(parseFloat(item.price) > 15) item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          item.name = item.name.replace(/[^\w\s]/, ''); 
           const tempName = item.name.replace(/\s/g, '');
           if (tempName.match(/^[0-9]*$/)) item.name = null
           if (tempName.includes('total') || tempName.includes('cash') || tempName.includes('subtotal')) item.name = null
       } else if(lines[i].match(itemRegex)) {
+          //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
           item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase(); 
           item.name.replace(/[^a-zA-Z]/gi, ""); 
-          // (receiptParsingMinDist(item) > 0) ?  item.name = null : continue
           if(receiptParsingMinDist(item) > 0) item.name = null; 
           item.price = "0.00"; 
       }

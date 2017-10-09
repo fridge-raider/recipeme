@@ -25,7 +25,7 @@ export class ReceiptRow extends Component {
       category: 8,
       category_str: this.props.ingredient.category,
       price: this.props.ingredient.price, 
-      rep: this.props.ingredient.rep, 
+      rep: this.props.ingredient.rep
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this)
@@ -90,9 +90,10 @@ export class ReceiptRow extends Component {
     return (
 
   <TableRow>
-    <TableRowColumn>
-      {this.props.ingredient.rep}
-    </TableRowColumn>
+    {(this.props.isReceipt)
+      ? <TableRowColumn>{this.props.ingredient.rep}</TableRowColumn>
+      : null
+    }
     <TableRowColumn>
     <div>
       <AutoComplete
@@ -126,13 +127,9 @@ export class ReceiptRow extends Component {
         <MenuItem value={8} primaryText="Unsure" />
       </DropDownMenu> 
     </TableRowColumn>
-
-    <TableRowColumn>
-    <TextField defaultValue={`\$${this.props.ingredient.price}`}
-    onChange={(evt, value) => this.handlePriceChange(evt, value)}
-    />
+    <TableRowColumn style={{width:40}}>
+      <i class="trash outline icon"><button onClick={(row, receipt, callback) => {this.props.removeItemReceipt(this.props.row, this.props.receipt, this.props.callback)}}>&#xE872;</button></i>
     </TableRowColumn>
-
   </TableRow>
 
     )
@@ -142,7 +139,6 @@ export class ReceiptRow extends Component {
 
 const mapState = (state) => {
   return {
-    currentReceipt: state.currentReceipt, 
     ingredients: state.ingredients
   }
 }
@@ -154,6 +150,12 @@ const mapDispatch = (dispatch) => {
       console.log(item); 
       receipt[row] = item; 
       dispatch(setReceipt(receipt))
+    }, 
+    removeItemReceipt(row, receipt, callback) {
+      console.log(row, receipt)
+      receipt.splice(row, 1); 
+      dispatch(setReceipt(receipt)); 
+      callback(); 
     }
   }
 }

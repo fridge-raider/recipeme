@@ -13,6 +13,11 @@ import 'react-fine-uploader/gallery/gallery.css'
 import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 import Dialog from 'material-ui/Dialog';
 import ErrorModal from './ErrorModal.jsx'; 
+import FloatingActionButton from 'material-ui/FloatingActionButton';
+import ContentAdd from 'material-ui/svg-icons/content/add';
+import DailyRecommendedModal from './DailyRecommendedModal.jsx' 
+import { setReceipt } from '../store'
+
 
 const uploader = new FineUploaderS3({
   options: {
@@ -55,15 +60,20 @@ export class ReceiptUpload extends React.Component {
     this.state = {
       submittedFiles: [], 
       isLoading: false, 
-      openError: false
+      openError: false, 
+      openQuestion: false, 
+      isReceipt: true
     }
 
     this.isFileGone = this.isFileGone.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
     this.handleCloseModal = this.handleCloseModal.bind(this)
+    this.handleOpenQuestion = this.handleOpenQuestion.bind(this)
+    this.handleManualReceipt = this.handleManualReceipt.bind(this)
   }
 
   componentWillReceiveProps(nextProps) {
+    console.log("inside receipt upload", nextProps.currentReceipt); 
     if(this.props !== nextProps) {
       //checking product has been set from state to props -- error with .length off of null
       if(Array.isArray(nextProps.currentReceipt)) {
@@ -91,6 +101,7 @@ export class ReceiptUpload extends React.Component {
         this.setState({ submittedFiles })
       }
     })
+
   }
 
   handleCloseModal() {
@@ -103,6 +114,21 @@ export class ReceiptUpload extends React.Component {
     this.setState({isLoading: true})
   }
 
+  handleOpenQuestion() {
+    this.setState({openQuestion: true})
+  }
+
+  handleManualReceipt() {
+    console.log("hello"); 
+    const manualItem = { ingredientName: "" , userId: this.props.user.id, servings: 1, price: 0.00, week: Date.now(), createdAt: Date.now() }
+    const manualReceipt = []; 
+    for(var i=0; i<5; i++) {
+      manualReceipt.push(manualItem); 
+    }
+    this.setState({ isReceipt: false})
+    this.props.setUserReceipt(manualReceipt); 
+  }
+
   isFileGone() {
     return [
         'canceled',
@@ -111,7 +137,6 @@ export class ReceiptUpload extends React.Component {
   }
 
   render() {
-
   const fileInputChildren = <span>Choose file</span>
   console.log('is there a current receipt', !!Object.keys(this.props.currentReceipt).length, this.props.currentReceipt.length)
   return (
@@ -119,26 +144,44 @@ export class ReceiptUpload extends React.Component {
       {
         (this.state.isLoading) 
         ? (<Dimmer active><Loader indeterminate>Parsing Files, Be Back Shortly</Loader></Dimmer>) 
-        : (<div style={{width: 400, marginLeft: "auto", marginRight:"auto"}}>
-            <Container>
-            { (this.props.currentReceipt.length > 0)
-              ? <CheckReceiptIng receipt={this.props.currentReceipt}/> 
-              : <ErrorModal open={this.state.openError} title="Parsing Error" message="Your receipt could not be parsed. We are sorry from the bottom of our hearts. ♥ "/>
-            }
+        : (
+          <div className="ui grid">
+            <div className="one wide column"></div>
+                    <div className="fourteen wide column">
+                      <div style={{width: 400, marginLeft: "auto", marginRight:"auto"}}>
+                        <Container>
+                        { (this.props.currentReceipt.length > 0)
+                          ? <CheckReceiptIng receipt={this.props.currentReceipt} isReceipt={this.state.isReceipt}/> 
+                          : <ErrorModal open={this.state.openError} title="Parsing Error" message="Your receipt could not be parsed. We are sorry from the bottom of our hearts. ♥ "/>
+                        }
 
-              <Gallery fileInput-children={ fileInputChildren } uploader={ uploader } style={{width: 400}}/>
-              <RaisedButton
-              primary={true}
-              label="Parse Purchases"
-              fullWidth={true}
-              onClick={this.handleSubmit}
-              ></RaisedButton>
-            </Container>
-          </div>)
+                          <Gallery fileInput-children={ fileInputChildren } uploader={ uploader } style={{width: 400}}/>
+                          <RaisedButton
+                          primary={true}
+                          label="Parse Purchases"
+                          fullWidth={true}
+                          onClick={this.handleSubmit}
+                          ></RaisedButton>
+                        </Container>
+                      </div>
+                    </div>
+            <div className="one wide column">
+              <FloatingActionButton mini={true} onClick={this.handleManualReceipt}>
+                <ContentAdd />
+              </FloatingActionButton>
+              <FloatingActionButton style={{marginTop: 15}} mini={true} onClick={this.handleOpenQuestion}>
+                ?
+              </FloatingActionButton>
+            </div> 
 
+            <DailyRecommendedModal open={this.state.openQuestion} />
+
+
+
+        </div>
+        )
       }
     </div>
-      
     )
   }
 }
@@ -146,7 +189,8 @@ export class ReceiptUpload extends React.Component {
 const mapState = (state) => {
   return {
     currentReceipt: state.currentReceipt, 
-    isLoading: state.isLoading
+    isLoading: state.isLoading, 
+    user: state.user
   }
 }
 
@@ -154,6 +198,9 @@ const mapDispatch = (dispatch) => {
   return {
     getReceipt() {
       dispatch(addReceipt())
+    }, 
+    setUserReceipt(manualReceipt) {
+      dispatch(setReceipt(manualReceipt))
     }
   }
 }

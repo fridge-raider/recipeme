@@ -78,23 +78,19 @@ const seed = () => {
 	})
 
 	const totalArrPromise = nutIdPromises.concat(ingredientPromises)
-
-	return Promise.all(totalArrPromise)
-
 	//console.log(allIngredients.length)
 
-	// return Promise.all(totalArrPromise)
-	// 				.then(() => {
-						
-	// 					//return OrderHistory.bulkCreate(all_order_histories)
-	// 				})
+	return Promise.all(totalArrPromise)
+					.then(() => {
+						return OrderHistory.bulkCreate(all_order_histories)
+					})
 
 
 }
 
 const main = () => {
 	console.log('Syncing db...');
-	db.sync({ force: true })
+	db.sync({ force: false })
 		.then(() => {
 			console.log('Seeding database...');
 			return seed();

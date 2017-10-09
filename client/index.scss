@@ -198,9 +198,8 @@ body {
 .c3-chart-arc.c3-target.c3-focused g path {
   opacity: 1; }
 
-// center-div {
-//   max-width: 400px; 
-//   margin-left: 40px; 
-//   margin-right: 40px;
-//   width: 400px; 
-// }
+.nopadding {
+   padding: 0 !important;
+   margin: 0 !important;
+}
+
