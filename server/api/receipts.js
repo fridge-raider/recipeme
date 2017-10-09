@@ -1,7 +1,5 @@
 const router = require('express').Router()
-const db = require('../db');
-const {OrderHistory, Ingredient, Frequency, ReceiptRepresentation} = require('../db/models')
-const returnCleanReceipt = require('./receiptParsing')
+const {OrderHistory, Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
 const {Receipt} = require('../db/models')
 
@@ -12,14 +10,14 @@ router.get('/parse', (req, res, next) => {
   Receipt.findOne({
     where: {
       userId: userId,
-      status: "Not Parsed"
+      status: 'Not Parsed'
     }
   })
   .then(receipt => res.json(receipt))
 })
 
 router.post('/add', (req, res, next) => {
-  const orders = req.body.currentReceipt; 
+  const orders = req.body.currentReceipt;
   Promise.mapSeries(orders, order => {
      return OrderHistory.create(order)
   }).then(succ => {
@@ -28,7 +26,7 @@ router.post('/add', (req, res, next) => {
 })
 
 router.put('/categories', (req, res, next) => {
-  const ingredients = req.body.currentIngredients; 
+  const ingredients = req.body.currentIngredients;
   Promise.mapSeries(ingredients, ingredient => {
     Ingredient.findOne({
       where: {
@@ -40,13 +38,13 @@ router.put('/categories', (req, res, next) => {
       })
     })
   }).then((succ) => {
-    res.json(succ); 
+    res.json(succ);
   })
 })
 
 router.put('/representations', (req, res, next) => {
-  const reps = req.body.currentRepresentations; 
-  console.log(reps); 
+  const reps = req.body.currentRepresentations;
+  console.log(reps);
   Promise.mapSeries(reps, rep => {
     ReceiptRepresentation.findOne({
       where: { rep : rep.name }
@@ -56,9 +54,6 @@ router.put('/representations', (req, res, next) => {
       })
     })
   }).then((succ) => {
-    res.json(succ); 
+    res.json(succ);
   })
 })
-
-
-
