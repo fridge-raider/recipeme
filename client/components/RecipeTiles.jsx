@@ -36,47 +36,19 @@ export class RecipeTiles extends React.Component {
     const actionIcons = [<StarBorder color="white" />, <FavoriteBorder color="white" />]
     // console.log('hi', recipe)
     return (
-      <div> 
-      { this.state.hover ? 
-        <div
+        <GridTile
+          onMouseEnter={this.handleMouseEnter}
           onMouseLeave={this.handleMouseLeave}
-        >  
-          <GridTile
-            key={recipe.id}
-            title="Ingredients"
-            titlePosition="top"
-            titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.3) 100%,rgba(0,0,0,0) 100%)"
-            subtitle={<span><b>{recipe.ingredients.join(', ')}</b></span>}
-            cols={1}
-            rows={1}
-            subtitleStyle={{width: "70%", overflow: "visible", whiteSpace: "initial"}}
-            actionIcon={<IconButton style={{position: "bottom",width: "none"}}>{actionIcons}</IconButton>}
-          >
-            <img 
-              src={imageUrl}
-              onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
-          </GridTile>
-        </div>
-        :
-        <div
-          onMouseEnter={this.handleMouseEnter}>
-          <GridTile
-            key={recipe.id}
-            title={this.props.recipe.recipeName}
-            titlePosition="top"
-            titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-            subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
-            cols={1}
-            rows={1}
-            actionIcon={<IconButton style={{position: "bottom", width: "none"}}>{actionIcons}</IconButton>}
-          >
-          <img 
-            src={imageUrl}
-            onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
-          </GridTile>
-        </div>
-        }
-      </div>
+          key={recipe.id}
+          title={this.hover ? "Ingredients" : recipe.recipeName}
+          subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
+          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+        >
+          <img src={imageUrl}
+            onClick={(evt) => this.props.handleClick(evt, recipe.id)} />
+        </GridTile>
+
+
 
     )
   }

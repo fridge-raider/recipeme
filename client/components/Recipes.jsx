@@ -53,19 +53,18 @@ class Recipes extends Component {
         { this.renderSearch() }
         <br /><br />
 
-
-        <GridList
-          cellHeight={500}
-          style={styles.gridList}
-          cols={3}
-          padding={6}
-        >
-        { (search.length) ? search.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} />
-          }) : getRecipes.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} /> })}
-          
-        </GridList>
+          <GridList
+            cellHeight={500}
+            style={styles.gridList}
+            cols={3}
+            padding={6}
+          >
+          { (search.length) ? search.map(recipe => {
+              return <RecipeCard key={recipe.id} recipe={recipe} />
+            }) : getRecipes.map(recipe => {
+              return <RecipeCard key={recipe.id} recipe={recipe} /> })}
+            
+          </GridList>
 
 
       </Container>
