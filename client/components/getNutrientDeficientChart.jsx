@@ -1,20 +1,23 @@
-const nutrients = ['Calories (kCal)', 'Total Fat (g)', 'Sat Fat (g)', 'Sodium (mg)', 'Carbs (g)']
+const nutrients = ['Total Fat', 'Sat Fat', 'Carbs', 'Fiber', 'Sugar', 'Protein']
 
 export default function getNutrientDeficientChart(deficits) {
 
      const avgDailyConsumption = []
      const dailyRecommendations = []
-
+      console.log('deficits', deficits)
 
      // for every item in deficits, add to the consumption and rec arrays
      for (let nutrient in deficits) {
+       if (nutrient === 'nf_total_fat' || nutrient === 'nf_saturated_fat' || nutrient === 'nf_dietary_fiber' || nutrient === 'nf_protein' || nutrient === 'nf_sugars' || nutrient === 'nf_total_carbohydrate') {
         avgDailyConsumption.push(deficits[nutrient][0])
         dailyRecommendations.push(deficits[nutrient][1])
         nutrients.push(nutrient)
+       }
      }
 
      avgDailyConsumption.unshift('Average Weekly Purchases')
      dailyRecommendations.unshift('Recommended Weekly Intake')
+
      const chartObj = {
       data: {
         columns: [

@@ -25,16 +25,7 @@ const styles = {
     paddingTop: 16,
     marginBottom: 12,
     fontWeight: 400,
-  },
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    width: 500,
-    height: 500,
-  },
+  }
 };
 
 class GraphVisualizations extends Component {
@@ -55,8 +46,7 @@ class GraphVisualizations extends Component {
 
    componentDidUpdate() {
 
-
-     console.log('props', this.props)
+    // CATEGORIES TAB CHARTS
       const {lineGraphObj, pieGraphObj} = getCategoryChart(this.props.categoryHistory)
       var categoryLineChart = c3.generate({
         bindto: '#category_line_chart',
@@ -69,13 +59,6 @@ class GraphVisualizations extends Component {
         data: pieGraphObj.data
       })
 
-      const nutrientChartInfo = getNutrientChart(this.props.nutrientHistory)
-      var nutrientChart = c3.generate({
-        bindto: '#nutrient_chart',
-        data: nutrientChartInfo.data,
-        axis: nutrientChartInfo.axis
-      })
-
       const categoryDeficientInfo = getCategoryDeficientChart(this.props.deficientCategories.deficits)
 
       var categoryDeficitChart = c3.generate({
@@ -86,6 +69,19 @@ class GraphVisualizations extends Component {
         tooltip: categoryDeficientInfo.tooltip
       })
 
+      // NUTRIENTS TAB CHARTS
+      const {lineGraphNutObj, pieGraphNutObj} = getNutrientChart(this.props.nutrientHistory)
+      var nutrientLineChart = c3.generate({
+        bindto: '#nutrient_line_chart',
+        data: lineGraphNutObj.data,
+        axis: lineGraphNutObj.axis
+      })
+
+      var nutrientPieChart = c3.generate({
+        bindto: '#nutrient_pie_chart',
+        data: pieGraphNutObj.data
+      })
+
       const nutrientDeficientInfo = getNutrientDeficientChart(this.props.deficientNutrients.deficits)
       var nutrientDeficitChart = c3.generate({
         bindto: '#nutrient_def_chart',
@@ -94,31 +90,36 @@ class GraphVisualizations extends Component {
         axis: nutrientDeficientInfo.axis
       })
 
-      let ticks = d3.selectAll('.tick')
+      // let ticks = d3.selectAll('.tick')
 
-      ticks.on('click', function(value,index){
-        console.log('this', this.props)
-        console.dir(this);
-        console.dir([value, index]);
-      });
+      // ticks.on('click', function(value,index){
+      //   console.log('this', this.props)
+      //   console.dir(this);
+      //   console.dir([value, index]);
+      // });
 
   }
 
 
   render() {
 
-
+    // CATEGORY TAB CHARTS
       let categoryLineDiv = ReactFauxDOM.createElement('div');
       categoryLineDiv.setAttribute('id', 'category_line_chart');
 
       let categoryPieDiv = ReactFauxDOM.createElement('div');
       categoryPieDiv.setAttribute('id', 'category_pie_chart');
 
-      let nutrientDiv = ReactFauxDOM.createElement('div');
-      nutrientDiv.setAttribute('id', 'nutrient_chart');
-
       let categoryDefDiv = ReactFauxDOM.createElement('div');
       categoryDefDiv.setAttribute('id', 'category_def_chart');
+
+
+      // NUTRIENT TAB CHARTS
+      let nutrientLineDiv = ReactFauxDOM.createElement('div');
+      nutrientLineDiv.setAttribute('id', 'nutrient_line_chart');
+
+      let nutrientPieDiv = ReactFauxDOM.createElement('div');
+      nutrientPieDiv.setAttribute('id', 'nutrient_pie_chart');
 
       let nutrientDefDiv = ReactFauxDOM.createElement('div');
       nutrientDefDiv.setAttribute('id', 'nutrient_def_chart');
@@ -126,7 +127,7 @@ class GraphVisualizations extends Component {
       return (
         <Container>
 
-        <Header as='h2' textAlign='center'>Purchasing History</Header>
+        <h2>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -135,7 +136,7 @@ class GraphVisualizations extends Component {
         <div>
         <br/>
 
-          <Card>
+          <Card >
           <CardHeader
           title="Purchases vs. Recommended Intake by Category"
           subtitle="Click Bars for Category Specific Recipes"
@@ -143,22 +144,22 @@ class GraphVisualizations extends Component {
           {categoryDefDiv.toReact()}
         </Card>
         <br/>
-        <div style={styles.root}>
+        <div>
         <GridList
-
-        cellHeight={500}
-        padding={1}
-        style={styles.gridList}
+        cols={2}
+        cellHeight={370}
+        padding={15}
       >
-      <GridTile >
+      <GridTile className='graph-box'>
         <Card >
         <CardHeader
         title="Purchases over Time by Category"
+
       />
         {categoryLineDiv.toReact()}
         </Card>
     </GridTile>
-    <GridTile >
+    <GridTile className='graph-box'>
         <Card >
         <CardHeader
         title="Category Distribution"
@@ -181,29 +182,58 @@ class GraphVisualizations extends Component {
               </div>
             }
         </div>
-      </Tab>
+
+
+
+
+        </Tab>
       <Tab label="By Nutrient" value="nutrients">
       <div>
-        <h2 style={styles.headline}>Nutrients</h2>
-      <div>
-        <Card>
+      <br/>
+
+        <Card >
+        <CardHeader
+        title="Purchases vs. Recommended Intake by Nutrient"
+        subtitle="Click Bars for Nutrient Specific Recipes"
+      />
         {nutrientDefDiv.toReact()}
-        </Card>
-        <br/>
-        <Card>
-        {nutrientDiv.toReact()}
-        </Card>
-        {!!Object.keys(this.props.deficientNutrients).length &&
-              <div>
-              <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
-              <RaisedButton
-              onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
-              >Get Recipes
-              </RaisedButton>
-              </h2>
-              </div>
-              }
+      </Card>
+      <br/>
+      <div>
+      <GridList
+      cols={2}
+      cellHeight={370}
+      padding={15}
+    >
+    <GridTile className='graph-box'>
+      <Card >
+      <CardHeader
+      title="Purchases over Time by Nutrient"
+    />
+      {nutrientLineDiv.toReact()}
+      </Card>
+  </GridTile>
+  <GridTile className='graph-box'>
+      <Card >
+      <CardHeader
+      title="Nutrient Distribution"
+    />
+      {nutrientPieDiv.toReact()}
+      </Card>
+      </GridTile>
+      </GridList>
       </div>
+      {!!Object.keys(this.props.deficientNutrients).length &&
+        <div>
+        <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
+        <RaisedButton
+        onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
+        >Get Recipes
+        </RaisedButton>
+        </h2>
+        </div>
+        }
+
       </div>
     </Tab>
 

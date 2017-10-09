@@ -21,7 +21,6 @@ export default function getCategoryChart(categoryHistory) {
      const sugarRow = new Array(dateRow.length).fill(0)
 
      // for every item, find the category and date to add servings
-     console.log('cat hist', categoryHistory)
     categoryHistory.forEach(item => {
       const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
 
