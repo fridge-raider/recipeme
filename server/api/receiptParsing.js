@@ -12,46 +12,48 @@ insert = remove = function(node) { return 1; };
 update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
 
 function receiptParsingMinDist(item) {
-  let searchArr = allIngredients[item.name.charAt(0)]; 
+  let searchArr = allIngredients[item.name.charAt(0)];
   let min = item.name.length
-  let scaledMin = 10000; 
+  let scaledMin = 10000;
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
       //console.log('Levenshtein', lev.distance, lev.pairs());
       if(lev.distance < min) {
-        min = lev.distance; 
-        //possibleWord = searchArr[i]; 
+        min = lev.distance;
+        //possibleWord = searchArr[i];
       }
     }
   }
   scaledMin = (min*min)*item.name.length
-  // console.log(item.name, item.name.length, scaledMin) 
+  // console.log(item.name, item.name.length, scaledMin)
   return scaledMin
 }
 
+// for each / map are cleaner than for loops - try to swap these out
 function findSimilarIngredient(item) {
   let min = item.name.length
-  let possibleMatch = "unknown"; 
-  let words = item.name.split(" "); 
+  let possibleMatch = "unknown";
+  let words = item.name.split(" ");
   for(let j=0; j<words.length; j++) {
     let searchArr = allIngredients[words[j].charAt(0)]
     if(searchArr) {
       for(let i=0; i<searchArr.length; i++) {
         var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
         if(lev.distance < min) {
-          min = lev.distance; 
-          possibleMatch = searchArr[i]; 
+          min = lev.distance;
+          possibleMatch = searchArr[i];
         }
       }
     }
   }
-  console.log(item.name, item.name.length, possibleMatch) 
-  return possibleMatch; 
+  console.log(item.name, item.name.length, possibleMatch)
+  return possibleMatch;
 }
 
 
-
+// think about making this more modular - different functions for the if and else
+// make function names descriptive
 function receiptParsingInitial(text) {
   const lines = text.split('\n');
   const cleanLines = [];
@@ -64,25 +66,25 @@ function receiptParsingInitial(text) {
           item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
           item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
           if(parseFloat(item.price) > 15) item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
-          item.name = item.name.replace(/[^\w\s]/, ''); 
+          item.name = item.name.replace(/[^\w\s]/, '');
           const tempName = item.name.replace(/\s/g, '');
           if (tempName.match(/^[0-9]*$/)) item.name = null
           if (tempName.includes('total') || tempName.includes('cash') || tempName.includes('subtotal')) item.name = null
       } else if(lines[i].match(itemRegex)) {
           //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
-          item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase(); 
-          item.name.replace(/[^a-zA-Z]/gi, ""); 
-          if(receiptParsingMinDist(item) > 0) item.name = null; 
-          item.price = "0.00"; 
+          item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase();
+          item.name.replace(/[^a-zA-Z]/gi, "");
+          if(receiptParsingMinDist(item) > 0) item.name = null;
+          item.price = "0.00";
       }
       if (item.name && item.price) {
         if(item.name.replace(/[^a-zA-Z]/gi, "").length > 4) {
           cleanLines.push(item);
         }
-          
+
       }
   }
-  return cleanLines; 
+  return cleanLines;
 
 }
 
@@ -90,20 +92,20 @@ function receiptParsingInitial(text) {
 function returnCleanReceipt(imageName) {
 
     const options = {
-      1: 'eng', 
+      1: 'eng',
       psm: 4,
-      binary: '/usr/local/bin/tesseract', 
-      config: 'receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine 
+      binary: '/usr/local/bin/tesseract',
+      config: 'receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
     }
 
     //brew install imagemagick
     const preprocessPromise = new Promise(function(resolve, reject) {
-      //doesn't do anything but eventually want to get imagemagick configured with textcleaner to 
-      //properly parse low quality, poorly angled, and wrinkled receipts 
+      //doesn't do anything but eventually want to get imagemagick configured with textcleaner to
+      //properly parse low quality, poorly angled, and wrinkled receipts
       im.readMetadata(imageName, function(err, metadata){
         if (err) reject(err);
-        console.log('Shot at '+metadata.exif.dateTimeOriginal);
-        resolve(); 
+        console.log('Shot at ' + metadata.exif.dateTimeOriginal);
+        resolve();
       })
     })
 
@@ -114,7 +116,7 @@ function returnCleanReceipt(imageName) {
               reject(err);
           } else {
               // write the file image to a text file
-              console.log("hullo", text); 
+              console.log("hullo", text);
               fs.writeFileSync('receipt.txt', text, err => {
                   if (err) reject(err)
                   console.log('file has beed saved')
@@ -126,7 +128,7 @@ function returnCleanReceipt(imageName) {
                       reject(err)
                   }
                   cleanLines = receiptParsingInitial(text);
-                  
+
                   resolve(cleanLines)
               })
           }
