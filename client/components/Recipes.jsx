@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { Search, Gride, Header, Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './Tile.jsx'
+import { Search, Header, Card, Container, Form } from 'semantic-ui-react'
+import RecipeCard from './RecipeTiles.jsx'
 import { getRecipesByIngredient } from '../store'
 import SearchBar from 'material-ui-search-bar'
 import _ from 'lodash'
+import { GridList, GridTile } from 'material-ui/GridList';
 
 class Recipes extends Component {
   constructor(props) {
@@ -43,7 +44,8 @@ class Recipes extends Component {
     })
 
     return (
-      <Container fluid style={{padding: '1em 2em'}}>
+      <Container fluid 
+        style={styles.root}>
 
         <h2>Recommended Recipes</h2> 
         { this.renderSearch() }
@@ -61,6 +63,7 @@ class Recipes extends Component {
           cellHeight={180}
           style={styles.gridList}
           cols={3}
+          padding={6}
         >
         { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
@@ -79,6 +82,7 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
+    padding: '1em 2em'
   },
   gridList: {
     width: 500,

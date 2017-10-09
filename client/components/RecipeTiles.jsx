@@ -26,45 +26,40 @@ export class RecipeTiles extends React.Component {
     this.state = {
       hover: false
     }
-    // this.renderStyle = this.renderStyle.bind(this)
-    this.renderStyle = (picture_url) => {
-      return {
-        backgroundImage: 'url(' + picture_url + ')',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center',
-        backgroundSize: 'cover',
-        width: '33.33vw',
-        height: '40vh'
-      }
+    this.handleMouseEnter = this.handleMouseEnter.bind(this)
+    this.handleMouseLeave = this.handleMouseLeave.bind(this)
   }
+
+  handleMouseEnter(e) {
+    this.setState({ hover: true })
+  }
+
+  handleMouseLeave (e) {
+    this.setState({ hover: false })
   }
 
 
   render() {
+    //1600
     const { recipe } = this.props
     let imageUrl = recipe.imageUrlsBySize["90"].split('=')[0]
-    imageUrl = imageUrl + "=s1600-c"
-    console.log('image', imageUrl)
+    imageUrl = imageUrl + "=s500-c"
+    // console.log('hi', recipe)
     return (
-      <div 
-        style={styles.root}
-        onClick={(evt)=>this.props.handleClick(evt, recipe.id)}
+
+      <GridTile
+        key={recipe.id}
+        title={this.props.recipe.recipeName}
+        titlePosition="top"
+        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+        subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
+        actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
       >
-        {/* <GridList
-          cellHeight={180}
-          style={styles.gridList}
-        > */}
-            <GridTile
-              key={recipe.id}
-              title={this.props.recipe.recipeName}
-              subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
-              actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-            >
-              <img src={imageUrl} />
-            </GridTile>
-          
-        {/* </GridList> */}
-      </div>
+        <img 
+          src={imageUrl}
+          onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
+      </GridTile>
+
     )
   }
 

@@ -5,7 +5,8 @@ import { NavLink } from 'react-router-dom'
 import { Card, Container, Form, Grid } from 'semantic-ui-react'
 import RecipeCard from './RecipeTiles.jsx'
 import { getRecipesByIngredient } from '../store'
-import { GridList } from 'material-ui/GridList'
+import { GridList, GridTile } from 'material-ui/GridList';
+import Subheader from 'material-ui/Subheader';
 import SearchBar from 'material-ui-search-bar'
 
 class FindRecipes extends Component {
@@ -35,19 +36,39 @@ class FindRecipes extends Component {
     let counter = 0;
     console.log(this.state)
     return (
-      <Container fluid style={{padding: '1em 2em'}}>
-        {/* <h2>Enter your favorite ingredient!</h2> */}
+      <Container fluid style={{ padding: '1em 2em' }}>
         { this.renderSearch() }
         <br />
-        <Card.Group itemsPerRow='3'>
+        <div style={styles.root}>
+
+        <GridList
+          cellHeight={250}
+          style={styles.gridList}
+          cols={2}
+          padding={5}
+        >
           { getRecipes && getRecipes.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} /> })
           }
-        </Card.Group>
+        </GridList>
+        </div>
       </Container>
     )
   }
 }
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 'flex',
+    height: 'flex',
+    overflowY: 'auto',
+  },
+};
 
 const mapProps = (state) => {
   return {
