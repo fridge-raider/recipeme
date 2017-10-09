@@ -1,5 +1,9 @@
 import * as d3 from 'd3';
 
+function begOfWeekDate(date) {
+  const day = new Date(date).getDay();
+  return new Date(new Date(date).setHours(-24 * day)).toISOString().split('T')[0];
+}
 
 export default function getNutrientChart(nutrientHistory) {
 
@@ -7,7 +11,7 @@ export default function getNutrientChart(nutrientHistory) {
      const dateRow = []
 
      nutrientHistory.forEach(categoryDate => {
-       const date = new Date(categoryDate.createdAt).toISOString().split('T')[0]
+       const date = begOfWeekDate(categoryDate.createdAt)
        if (!dateRow.includes(date)) dateRow.push(date)
      })
      dateRow.sort()
@@ -26,7 +30,7 @@ export default function getNutrientChart(nutrientHistory) {
      // for every item, find the category and date to add servings
      console.log('nutrient history', nutrientHistory)
      nutrientHistory.forEach(item => {
-      const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
+      const index = dateRow.indexOf(begOfWeekDate(item.createdAt))
 
       calRow[index] += item.nf_calories
       fatRow[index] += item.nf_total_fat
@@ -56,6 +60,12 @@ export default function getNutrientChart(nutrientHistory) {
      console.log('calRow', calRow)
 
      const lineGraphNutObj = {
+      padding: {
+        top: 10,
+        right: 50,
+        bottom: 20,
+        left: 50,
+    },
        data: {
         x: 'x',
         columns: [
@@ -76,18 +86,32 @@ export default function getNutrientChart(nutrientHistory) {
           type: 'timeseries',
           tick: {
              format: '%m-%d-%Y'
+          },
+          label: {
+            text: 'Date',
+            position: 'outer-center'
           }
        },
        y: {
          min: 0,
          padding : {
-           bottom : 0
-         }
+           bottom : 2
+         },
+         label: {
+          text: 'Grams',
+          position: 'outer-middle'
+        }
        }
        }
      }
 
      const pieGraphNutObj = {
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 10,
+        left: 0,
+    },
       data: {
        columns: [
         fatRow,

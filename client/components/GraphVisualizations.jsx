@@ -51,12 +51,14 @@ class GraphVisualizations extends Component {
       var categoryLineChart = c3.generate({
         bindto: '#category_line_chart',
         data: lineGraphObj.data,
-        axis: lineGraphObj.axis
+        axis: lineGraphObj.axis,
+        padding: lineGraphObj.padding
       })
 
       var categoryPieChart = c3.generate({
         bindto: '#category_pie_chart',
-        data: pieGraphObj.data
+        data: pieGraphObj.data,
+        padding: pieGraphObj.padding
       })
 
       const categoryDeficientInfo = getCategoryDeficientChart(this.props.deficientCategories.deficits)
@@ -66,7 +68,8 @@ class GraphVisualizations extends Component {
         data: categoryDeficientInfo.data,
         bar: categoryDeficientInfo.bar,
         axis: categoryDeficientInfo.axis,
-        tooltip: categoryDeficientInfo.tooltip
+        tooltip: categoryDeficientInfo.tooltip,
+        padding: categoryDeficientInfo.padding
       })
 
       // NUTRIENTS TAB CHARTS
@@ -74,12 +77,15 @@ class GraphVisualizations extends Component {
       var nutrientLineChart = c3.generate({
         bindto: '#nutrient_line_chart',
         data: lineGraphNutObj.data,
-        axis: lineGraphNutObj.axis
+        axis: lineGraphNutObj.axis,
+        padding: lineGraphNutObj.padding
+
       })
 
       var nutrientPieChart = c3.generate({
         bindto: '#nutrient_pie_chart',
-        data: pieGraphNutObj.data
+        data: pieGraphNutObj.data,
+        padding: pieGraphNutObj.padding
       })
 
       const nutrientDeficientInfo = getNutrientDeficientChart(this.props.deficientNutrients.deficits)
@@ -87,7 +93,8 @@ class GraphVisualizations extends Component {
         bindto: '#nutrient_def_chart',
         data: nutrientDeficientInfo.data,
         bar: nutrientDeficientInfo.bar,
-        axis: nutrientDeficientInfo.axis
+        axis: nutrientDeficientInfo.axis,
+        padding: nutrientDeficientInfo.padding
       })
 
       // let ticks = d3.selectAll('.tick')
@@ -147,13 +154,14 @@ class GraphVisualizations extends Component {
         <div>
         <GridList
         cols={2}
-        cellHeight={370}
+        cellHeight={390}
         padding={15}
       >
       <GridTile className='graph-box'>
         <Card >
         <CardHeader
         title="Purchases over Time by Category"
+        subtitle="by number of servings"
 
       />
         {categoryLineDiv.toReact()}
@@ -163,6 +171,7 @@ class GraphVisualizations extends Component {
         <Card >
         <CardHeader
         title="Category Distribution"
+        subtitle="by number of servings"
       />
         {categoryPieDiv.toReact()}
         </Card>
@@ -170,7 +179,7 @@ class GraphVisualizations extends Component {
         </GridList>
         </div>
 
-           {!!Object.keys(this.props.deficientCategories).length &&
+           {/*!!Object.keys(this.props.deficientCategories).length &&
               <div>
               <h2>You could use some more {this.props.deficientCategories.defCategory}!
               <br/>
@@ -180,7 +189,7 @@ class GraphVisualizations extends Component {
               </RaisedButton>
               </h2>
               </div>
-            }
+           */}
         </div>
 
 
@@ -202,13 +211,14 @@ class GraphVisualizations extends Component {
       <div>
       <GridList
       cols={2}
-      cellHeight={370}
+      cellHeight={390}
       padding={15}
     >
     <GridTile className='graph-box'>
       <Card >
       <CardHeader
       title="Purchases over Time by Nutrient"
+      subtitle="in grams"
     />
       {nutrientLineDiv.toReact()}
       </Card>
@@ -217,13 +227,14 @@ class GraphVisualizations extends Component {
       <Card >
       <CardHeader
       title="Nutrient Distribution"
+      subtitle="in grams"
     />
       {nutrientPieDiv.toReact()}
       </Card>
       </GridTile>
       </GridList>
       </div>
-      {!!Object.keys(this.props.deficientNutrients).length &&
+      {/*!!Object.keys(this.props.deficientNutrients).length &&
         <div>
         <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
         <RaisedButton
@@ -232,7 +243,7 @@ class GraphVisualizations extends Component {
         </RaisedButton>
         </h2>
         </div>
-        }
+      */}
 
       </div>
     </Tab>

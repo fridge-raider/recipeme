@@ -15,7 +15,7 @@ const OrderHistory = db.define('orderHistory', {
   },
   week: {
     type: Sequelize.INTEGER
-  },
+  }
 
 }, {
   defaultScope: {
@@ -59,7 +59,7 @@ const OrderHistory = db.define('orderHistory', {
     week: function(val) {
       //console.log("HELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOooooo", moment(val).week(), moment(val).get('month'), moment(val).get('year'));
       this.setDataValue('week', moment(val).week())
-    }
+    },
   }
 })
 

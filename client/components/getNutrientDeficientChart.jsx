@@ -19,6 +19,12 @@ export default function getNutrientDeficientChart(deficits) {
      dailyRecommendations.unshift('Recommended Weekly Intake')
 
      const chartObj = {
+      padding: {
+        top: 10,
+        right: 50,
+        bottom: 20,
+        left: 70,
+    },
       data: {
         columns: [
            avgDailyConsumption,
@@ -43,7 +49,7 @@ export default function getNutrientDeficientChart(deficits) {
       },
       y: {
         label: {
-          text: 'Units',
+          text: 'Grams',
           position: 'outer-middle'
         }
       }

@@ -1,11 +1,16 @@
 import * as d3 from 'd3';
 
+function begOfWeekDate(date) {
+  const day = new Date(date).getDay();
+  return new Date(new Date(date).setHours(-24 * day)).toISOString().split('T')[0];
+}
+
 export default function getCategoryChart(categoryHistory) {
 
      // get date row
      const dateRow = []
      categoryHistory.forEach(categoryDate => {
-       const date = new Date(categoryDate.createdAt).toISOString().split('T')[0]
+       const date = begOfWeekDate(categoryDate.createdAt)
        if (!dateRow.includes(date)) dateRow.push(date)
      })
      dateRow.sort()
@@ -22,7 +27,7 @@ export default function getCategoryChart(categoryHistory) {
 
      // for every item, find the category and date to add servings
     categoryHistory.forEach(item => {
-      const index = dateRow.indexOf(new Date(item.createdAt).toISOString().split('T')[0])
+      const index = dateRow.indexOf(begOfWeekDate(item.createdAt))
 
       if (item['ingredient.category'] === 'Grains') grainRow[index] += item.servingCount
       if (item['ingredient.category'] === 'Vegetables') veggieRow[index] += item.servingCount
@@ -46,6 +51,12 @@ export default function getCategoryChart(categoryHistory) {
      sugarRow.unshift('Added Sugars')
 
      const lineGraphObj = {
+      padding: {
+        top: 10,
+        right: 50,
+        bottom: 20,
+        left: 50,
+    },
        data: {
         x: 'x',
         columns: [
@@ -65,18 +76,34 @@ export default function getCategoryChart(categoryHistory) {
           type: 'timeseries',
           tick: {
              format: '%m-%d-%Y'
+          },
+          label: {
+            text: 'Date',
+            position: 'outer-center'
           }
        },
        y: {
          min: 0,
          padding : {
            bottom : 0
+         },
+         label: {
+           text: 'Servings',
+           position: 'outer-middle'
          }
        }
        }
      }
 
+
+
      const pieGraphObj = {
+      padding: {
+        top: 0,
+        right: 0,
+        bottom: 10,
+        left: 0,
+    },
       data: {
        columns: [
           grainRow,

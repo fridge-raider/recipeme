@@ -21,6 +21,12 @@ export default function getCategoryDeficientChart(deficits) {
 
 
   const chartObj = {
+    padding: {
+      top: 10,
+      right: 50,
+      bottom: 20,
+      left: 50,
+  },
     data: {
       columns: [
         avgDailyConsumption,
