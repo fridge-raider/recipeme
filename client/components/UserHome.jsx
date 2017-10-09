@@ -19,9 +19,8 @@ export class UserHome extends Component {
   render() {
     //console.log(this.props.ingredients); 
     return (
-      <Container fluid>
+      <Container fluid style={{backgroundColor:'#F5F5F5'}}>
 
-      <Grid.Column width={11} className='nurse-column'>
       { !this.props.categoryHistory.length &&
         <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
       }
@@ -30,7 +29,6 @@ export class UserHome extends Component {
         !!this.props.nutrientHistory.length &&
         <GraphVisualizations />
       }
-      </Grid.Column>
       </Container>
     )
   }

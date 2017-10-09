@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
 import { withRouter, Link, NavLink } from 'react-router-dom'
 import { Container, Menu, Grid } from 'semantic-ui-react'
-import {getRecipes} from '../store'
+import {getRecipes,logout} from '../store'
 
 
 export class Navbar extends Component {
@@ -21,29 +21,55 @@ export class Navbar extends Component {
         <Menu.Item>
           <NavLink to='/receipt'>Upload Receipt</NavLink>
         </Menu.Item>
-        <Menu.Menu position='right'>
+        {
+          !!this.props.isLoggedIn &&
+          <Menu.Menu position='right'>
+
           <Menu.Item>
-              <NavLink to='/signup' >Sign Up</NavLink>
+            <div onClick={this.props.logout} >Logout</div>
           </Menu.Item>
+          </Menu.Menu>
+
+        }
+        {
+          !this.props.isLoggedIn &&
+          <Menu.Menu position='right'>
+
+
           <Menu.Item>
-            <NavLink to='/login'>Log In</NavLink>
+          <NavLink to='/signup' >Sign Up</NavLink>
           </Menu.Item>
+        <Menu.Item>
+           <NavLink to='/login'>Log In</NavLink>
+        </Menu.Item>
         </Menu.Menu>
+
+        }
+
       </Menu>
     )
   }
 }
 
+const mapState = (state) => {
+  return {
+    isLoggedIn: !!state.user.id
+  }
+}
 
-const mapDispatch = (dispatch) => {
+const mapDispatch = (dispatch,ownProps) => {
   return {
     handleClick () {
       dispatch(getRecipes([]))
+    },
+    logout () {
+      dispatch(logout())
+      ownProps.history.push('/login')
     }
   }
 }
 
 // The `withRouter` wrapper makes sure that updates are not blocked
 // when the url changes
-export default withRouter(connect(null, mapDispatch)(Navbar))
+export default withRouter(connect(mapState, mapDispatch)(Navbar))
 

@@ -73,6 +73,16 @@ img {
   padding-top: 50px;
 }
 
+.graph-container {
+  background-color: #ffffff;
+  padding: 1em !important;
+}
+
+.graph-box {
+  box-shadow: rgba(0,0,0,0.12) 0px 1px 6px,
+  rgba(0,0,0,0.12) 0px 1px 4px
+}
+
 /*Columns*/
 .patient-column {
   background-color: #eff8fb;

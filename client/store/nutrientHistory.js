@@ -20,7 +20,6 @@ export function fetchNutrientOrderHistory() {
     return axios.get(`/api/orders/nutrients`)
       .then(res => res.data)
       .then(nutrients => {
-        console.log('nutrient history', nutrients)
         dispatch(setNutrientHistory(nutrients))
         dispatch(fetchDeficientNutrients(nutrients))
       })

@@ -73,7 +73,7 @@ export const getRecipeDetails = (recipeId) => dispatch => {
   return axios.get(`http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=${app_id}&_app_key=${app_key}`)
     .then(res => res.data)
     .then(recipe => {
-      window.location = recipe.source.sourceRecipeUrl
+      window.open(recipe.source.sourceRecipeUrl)
     })
     .catch(console.log)
 }

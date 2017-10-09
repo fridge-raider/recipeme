@@ -17,7 +17,7 @@ class Recipes extends Component {
       value: '',
       isLoading: false
     }
-    
+
     this.renderSearch = this.renderSearch.bind(this)
     this.renderResultSearch = this.renderResultSearch.bind(this)
   }
@@ -32,9 +32,9 @@ class Recipes extends Component {
 
   renderSearch() {
     return (
-      <Search 
+      <Search
         onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
-        onResultSelect={this.renderResultSearch} 
+        onResultSelect={this.renderResultSearch}
         />
     )
   }
@@ -43,7 +43,6 @@ class Recipes extends Component {
     // add filtering and searching functionality !!!
     // figure out how to send in what is deficient (cateogry or nutrient) so we can say recipes with x - add something to state
     const { getRecipes } = this.props
-    console.log('hi', getRecipes)
     const search = getRecipes.filter((recipe) => {
       return recipe.ingredients.includes(this.state.search)
     })
@@ -59,9 +58,8 @@ class Recipes extends Component {
           { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
           }) : getRecipes.map(recipe => {
-            // console.log('hi')
             return <RecipeCard key={recipe.id} recipe={recipe} /> })}
-          
+
         </Card.Group>
       </Container> /////
     )

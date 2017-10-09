@@ -22,7 +22,6 @@ export const setDeficientNutrients = nutrients => ({type: SET_DEF_NUTRIENTS, nut
 
 export function fetchDeficientNutrients(nutrientHistory) {
   return function thunk(dispatch) {
-    console.log('nutrient history', nutrientHistory)
     return axios.put(`/api/orders/nutrients/deficient`, {nutrientHistory})
       .then(res => res.data)
       .then(defNutrients => {
