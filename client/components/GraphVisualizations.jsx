@@ -120,26 +120,30 @@ class GraphVisualizations extends Component {
     })
 
     // add on click handler to category def chart ticks
-    var svg = d3.selectAll('#category_def_chart .tick')
+    // var svg = d3.selectAll('#category_def_chart .tick')
 
     // select all the items
     // append circle
     // gave circle attributes
     // onmouseover <- function does d3.select('this') <- add things here
 
-    var focus = svg.append("g")
-    .style("display", "none");
-    //d3.selectAll('#category_def_chart .tick')
-    svg.append("popup")
-      .attr("width", "10px")
-      .attr("height", "10px")
-      .on("mouseover", function() {focus.style("display", null)})
-      .on("mouseout", function() { focus.style("display", "none")})
+    // var focus = svg.append("g")
+    // .style("display", "none");
+
+    d3.selectAll('#category_def_chart .tick')
+    .on('mouseover', this.handleCategoryHover)
+    .on('click', this.handleCategoryClick)
+
+    // svg.append("popup")
+    //   .attr("width", "10px")
+    //   .attr("height", "10px")
+    //   .on("mouseover", function() {focus.style("display", null)})
+    //   .on("mouseout", function() { focus.style("display", "none")})
     // .on('mouseover', this.handleCategoryHover)
     // .enter()
     //   .append('p')
     //   .text('hello')
-    svg.on('click', this.handleCategoryClick)
+    // svg.on('click', this.handleCategoryClick)
 
     // add on click handler to nutrient def chart ticks
     d3.selectAll('#nutrient_def_chart .tick')
