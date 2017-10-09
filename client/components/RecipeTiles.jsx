@@ -20,10 +20,12 @@ export class RecipeTiles extends React.Component {
   }
 
   handleMouseEnter(e) {
+    console.log('hi')
     this.setState({ hover: true })
   }
 
   handleMouseLeave (e) {
+    console.log('bye')
     this.setState({ hover: false })
   }
 
@@ -35,14 +37,26 @@ export class RecipeTiles extends React.Component {
     imageUrl = imageUrl + "=s1600-c"
     const actionIcons = [<StarBorder color="white" />, <FavoriteBorder color="white" />]
     // console.log('hi', recipe)
+    let hover = false
+    const subtitleStr = `by ${recipe.sourceDisplayName}`+ '\n' + `ingredients: ${recipe.ingredients}`
     return (
         <GridTile
-          onMouseEnter={this.handleMouseEnter}
-          onMouseLeave={this.handleMouseLeave}
           key={recipe.id}
-          title={this.hover ? "Ingredients" : recipe.recipeName}
-          subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
-          actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
+          onMouseEnter={(e) => {
+            console.log('hi', hover)
+            return hover = true
+          }}
+          onMouseLeave={(e) => {
+            console.log('bye', hover)
+            return hover = false
+          }}
+          title={hover ? "Ingredients" : recipe.recipeName}
+          titlePosition="top"
+          titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 50%,rgba(0,0,0,0) 100%)"
+          subtitle={<span><b>{subtitleStr}</b></span>}
+          subtitleStyle={{whiteSpace: "initial"}}
+          titleStyle={{fontSize: 18}}
+          actionIcon={<IconButton style={{width: "none"}}>{actionIcons}</IconButton>}
         >
           <img src={imageUrl}
             onClick={(evt) => this.props.handleClick(evt, recipe.id)} />
