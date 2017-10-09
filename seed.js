@@ -3,10 +3,12 @@ const db = require('./server/db');
 const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
 
 //var fileName = require('./trainCategories.json');
-// var ingredients = new Set();
 
-let fileNutrientsIng = require('./nutrientsAll.json');
-let fileNutID = require('./nutritionID.json')
+var ingredients = new Set();
+
+var fileNutrientsIng = require('./allIngredients.json');
+var fileNutID = require('./nutritionID.json')
+
 
 // //setting up orderhistory promises
 const order_histories = require('./order_history_seed.js');

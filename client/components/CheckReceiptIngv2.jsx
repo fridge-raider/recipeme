@@ -8,7 +8,7 @@ import ReceiptRow from './ReceiptRow.jsx'
 import Dialog from 'material-ui/Dialog';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton'
-import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations} from '../store'; 
+import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations, fetchIngredientNames} from '../store'; 
 import * as moment from 'moment'; 
 
 /**
@@ -23,6 +23,10 @@ class CheckReceiptIng extends Component {
     }
     this.handleClose = this.handleClose.bind(this); 
     this.confirmReceipt = this.confirmReceipt.bind(this); 
+  }
+
+  componentWillMount() {
+    this.props.getAllIngredientNames();  
   }
 
   render() {
@@ -47,7 +51,7 @@ class CheckReceiptIng extends Component {
         })
         }
       </TableBody>
-      <TableFooter style={{backgroundColor:'#F0F0F0', paddingBottom:'20px'}}>
+      <TableFooter style={{paddingBottom:'20px'}}>
         <TableRow>
           <TableRowColumn>
           </TableRowColumn>
@@ -89,7 +93,8 @@ class CheckReceiptIng extends Component {
 const mapState = (state) => {
   return {
     currentReceipt: state.currentReceipt, 
-    user: state.user
+    user: state.user, 
+    ingredients: state.ingredients
   }
 }
 
@@ -99,6 +104,9 @@ const mapDispatch = (dispatch) => {
       dispatch(setReceiptToIngredients(ingredients))
       dispatch(setReceiptToRepresentations(reps)); 
       dispatch(setReceiptToOrderHistory(orders)); 
+    }, 
+    getAllIngredientNames() {
+      dispatch(fetchIngredientNames()); 
     }
   }
 }

@@ -18,8 +18,6 @@ fileName.map(recipe => {
 })
 
 ingredients.forEach(ingredient => {
-	// const instance = { name: ''};
-  // instance.name = ingredient;
 	rows.push('1 serving of ' + ingredient);
 })
 

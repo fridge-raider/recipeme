@@ -4,13 +4,14 @@ import {connect} from 'react-redux'
 import history from '../history'
 import { Button, Header, Icon, Image, Modal } from 'semantic-ui-react'
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
+import AutoComplete from 'material-ui/AutoComplete';
 import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import DropDownMenu from 'material-ui/DropDownMenu';
 import MenuItem from 'material-ui/MenuItem';
 import _ from 'lodash'
-import {setReceipt} from '../store'
+import {setReceipt, fetchIngredientNames} from '../store'
 
 export class ReceiptRow extends Component {
   constructor(props) {
@@ -18,18 +19,20 @@ export class ReceiptRow extends Component {
 
     // maintain local state for input while updating receipt
     this.state = {
+      newIng:  this.props.ingredient.ing, 
       ing: this.props.ingredient.ing,
       servings: 1,
       category: 8,
       category_str: this.props.ingredient.category,
-      price: this.props.ingredient.price,
-      rep: this.props.ingredient.rep
+      price: this.props.ingredient.price, 
+      rep: this.props.ingredient.rep, 
     }
 
     this.handlePriceChange = this.handlePriceChange.bind(this)
     this.handleQtyChange = this.handleQtyChange.bind(this)
     this.handleCategoryChange = this.handleCategoryChange.bind(this)
     this.handleNameChange = this.handleNameChange.bind(this)
+    this.updateNameChange = this.updateNameChange.bind(this)
   }
 
   componentWillMount() {
@@ -43,8 +46,9 @@ export class ReceiptRow extends Component {
     else if(this.props.ingredient.category === 'Fats') category = 6;
     else if(this.props.ingredient.category === 'Added Sugars') category = 7;
     else if(this.props.ingredient.category === 'Unsure') category = 8;
-    this.setState({ category });
 
+    this.setState({ category }); 
+     
   }
 
   handleCategoryChange(evt, value) {
@@ -63,11 +67,12 @@ export class ReceiptRow extends Component {
     })
 
   }
+  updateNameChange(ingredient) {
+    this.setState({newIng: ingredient})
+  }
 
-  handleNameChange(evt, value) {
-    this.setState({ing: value}, () => {
-      this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
-    })
+  handleNameChange(ingredient) {
+    this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
   }
 
   handleQtyChange(evt, value) {
@@ -78,13 +83,11 @@ export class ReceiptRow extends Component {
 
   handlePriceChange(evt, value) {
     this.setState({price: value.substring(1)}, () => {
-      console.log('this.state after setting', this.state)
       this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
     })
   }
 
   render() {
-
     return (
 
   <TableRow>
@@ -92,16 +95,23 @@ export class ReceiptRow extends Component {
       {this.props.ingredient.rep}
     </TableRowColumn>
     <TableRowColumn>
-      <TextField
-      defaultValue={this.props.ingredient.ing}
-      onChange={(evt, value) => this.handleNameChange(evt, value)}
+    <div>
+      <AutoComplete
+        filter={AutoComplete.fuzzyFilter}
+        dataSource={this.props.ingredients}
+        maxSearchResults={10}
+        onClose={this.handleNameChange}
+        onUpdateInput={this.updateNameChange}
+        hintText={this.props.ingredient.ing || "Unknown"}
       />
+    </div>
     </TableRowColumn>
 
-    <TableRowColumn>
+    <TableRowColumn style={{width: 100, marginLeft: 40}}>
     <TextField
     defaultValue={1}
     onChange={(evt, value) => this.handleQtyChange(evt, value)}
+    fullWidth={true}
     />
     </TableRowColumn>
     <TableRowColumn>
@@ -133,16 +143,19 @@ export class ReceiptRow extends Component {
 
 const mapState = (state) => {
   return {
-    currentReceipt: state.currentReceipt
+    currentReceipt: state.currentReceipt, 
+    ingredients: state.ingredients
   }
 }
 
 const mapDispatch = (dispatch) => {
   return {
     updateReceipt(state, row, receipt) {
-      let item = {ing: state.ing, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep};
-      console.log(item);
-      receipt[row] = item;
+
+      let item = {ing: state.newIng, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep}; 
+      console.log(item); 
+      receipt[row] = item; 
+
       dispatch(setReceipt(receipt))
     }
   }
