@@ -11,14 +11,11 @@ router.get('/:categoryName', (req, res, next) => {
   Frequency.findAll({
     where: {
       userId: req.user.id,
-      //'ingredient.category': req.params.categoryName
     },
     include: [{model: Ingredient, where: {category: req.params.categoryName}}],
     order: Sequelize.literal('freq DESC')
   })
   .then(frequencies => {
-    // console.log(frequencies[0].ingredient.category)
-    // console.log('frequencies', frequencies)
     frequencies.forEach(frequency => console.log(frequency.ingredient))
     if (!frequencies) {
       Ingredient.findAll({
@@ -35,3 +32,16 @@ router.get('/:categoryName', (req, res, next) => {
   })
 })
 
+router.get('/', (req, res, next) => {
+  const userId = req.user.id;
+  Frequency.findAll({
+    where: {
+      userId: req.user.id,
+    },
+    order: Sequelize.literal('freq DESC')
+  })
+  .then(frequencies => {
+    frequencies.forEach(frequency => console.log(frequency.ingredient))
+    return res.json(frequencies)
+  })
+})

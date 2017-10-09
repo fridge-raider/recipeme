@@ -4,20 +4,9 @@ import {GridList, GridTile} from 'material-ui/GridList';
 import IconButton from 'material-ui/IconButton';
 import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
+import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
 import {getRecipeDetails} from '../store'
 
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    width: 500,
-    height: 450,
-    overflowY: 'auto',
-  },
-};
 
 export class RecipeTiles extends React.Component {
   constructor(props) {
@@ -43,22 +32,49 @@ export class RecipeTiles extends React.Component {
     //1600
     const { recipe } = this.props
     let imageUrl = recipe.imageUrlsBySize["90"].split('=')[0]
-    imageUrl = imageUrl + "=s500-c"
+    imageUrl = imageUrl + "=s1600-c"
     // console.log('hi', recipe)
     return (
+        <div> 
+        { this.state.hover ? 
+        <div
+          onMouseLeave={this.handleMouseLeave}
+        >  
+          <GridTile
+            key={recipe.id}
+            title="Ingredients"
+            titlePosition="top"
+            titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.3) 100%,rgba(0,0,0,0) 100%)"
+            subtitle={<span><b>{recipe.ingredients.join(', ')}</b></span>}
+            subtitleStyle={{whiteSpace: "initial"}}
+            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
 
-      <GridTile
-        key={recipe.id}
-        title={this.props.recipe.recipeName}
-        titlePosition="top"
-        titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
-        subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
-        actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-      >
-        <img 
-          src={imageUrl}
-          onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
-      </GridTile>
+          >
+            <img 
+              src={imageUrl}
+              onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
+          </GridTile>
+        </div>
+          :
+        <div
+          onMouseEnter={this.handleMouseEnter}>
+          <GridTile
+            key={recipe.id}
+            title={this.props.recipe.recipeName}
+            titlePosition="top"
+            titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
+            subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
+            actionIcon={<IconButton><StarBorder color="white" /><FavoriteBorder color="white" /></IconButton>}
+            actionIcon={<IconButton><FavoriteBorder color="white" /></IconButton>}
+          >
+          <img 
+            src={imageUrl}
+            onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
+          </GridTile>
+        </div>
+        }
+        </div>
+        
 
     )
   }

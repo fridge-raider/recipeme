@@ -21,7 +21,7 @@ class FindRecipes extends Component {
   renderSearch() {
     return (
       <SearchBar 
-        style={{borderRadius:25, maxWidth:1000}}
+        style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => {
           this.setState({mainIngredient: value})
           }}
@@ -42,9 +42,9 @@ class FindRecipes extends Component {
         <div style={styles.root}>
 
         <GridList
-          cellHeight={250}
+          cellHeight={500}
           style={styles.gridList}
-          cols={2}
+          cols={3}
           padding={5}
         >
           { getRecipes && getRecipes.map(recipe => {
@@ -66,7 +66,7 @@ const styles = {
   gridList: {
     width: 'flex',
     height: 'flex',
-    overflowY: 'auto',
+    overflowY: 'flex',
   },
 };
 

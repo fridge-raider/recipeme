@@ -26,7 +26,7 @@ class Recipes extends Component {
   renderSearch() {
     return (
       <SearchBar 
-        style={{borderRadius:25, maxWidth:1000}}
+        style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={() => console.log('hi')}
         hintText="Search by ingredient"
@@ -44,12 +44,13 @@ class Recipes extends Component {
     })
 
     return (
-      <Container fluid 
-        style={styles.root}>
+      <Container fluid style={{padding: '1em 2em'}} >
 
         <h2>Recommended Recipes</h2> 
+        <p>(based on your past purchases)</p>
         { this.renderSearch() }
-        <br /><br />
+        <br />
+        <div style={styles.root}>
         {/* <Card.Group itemsPerRow='3'>
           { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
@@ -60,7 +61,7 @@ class Recipes extends Component {
         </Card.Group> */}
 
         <GridList
-          cellHeight={180}
+          cellHeight={500}
           style={styles.gridList}
           cols={3}
           padding={6}
@@ -68,11 +69,11 @@ class Recipes extends Component {
         { (search.length) ? search.map(recipe => {
             return <RecipeCard key={recipe.id} recipe={recipe} />
           }) : getRecipes.map(recipe => {
-            // console.log('hi')
             return <RecipeCard key={recipe.id} recipe={recipe} /> })}
           
         </GridList>
-      </Container> /////
+        </div>
+      </Container>
     )
   }
 }
@@ -82,12 +83,11 @@ const styles = {
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'space-around',
-    padding: '1em 2em'
   },
   gridList: {
-    width: 500,
-    height: 450,
-    overflowY: 'auto',
+    width: 'flex',
+    height: 'flex',
+    overflowY: 'flex',
   },
 };
 
