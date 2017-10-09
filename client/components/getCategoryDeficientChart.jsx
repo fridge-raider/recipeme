@@ -2,7 +2,8 @@ const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fats and
 import IconButton from 'material-ui/IconButton';
 import React, { Component } from 'react';
 
-export default function getCategoryDeficientChart(deficits) {
+export default function getCategoryDeficientChart(deficits, onClickHandler) {
+
   const avgDailyConsumption = []
   const dailyRecommendations = []
 
@@ -31,9 +32,9 @@ export default function getCategoryDeficientChart(deficits) {
         dailyRecommendations
       ],
       type: 'bar',
-      onclick: function (d, i) {
-        console.log('clicking', d, i)
-      },
+      // onclick: function (d, i) {
+      //   console.log('clicking', d, i)
+      // },
     },
     bar: {
       width: {
@@ -57,34 +58,34 @@ export default function getCategoryDeficientChart(deficits) {
         }
       }
     },
-    tooltip: {
-      contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-        const tableToReturn = `<div>
-        <table class='c3-tooltip'>
-        <tbody>
-        <tr>
-        <th colspan='2'>${categories[d[0].index]}: Click for Recipes!</th>
-        </tr>
-        <tr>
-        <td>
-        <span style="background-color:#1f77b4"></span>
-        ${defaultTitleFormat(d[0].name)}
-        </td>
-        <td>${defaultValueFormat(d[0].value)}</td>
-        </tr>
-        <tr>
-        <td>
-        <span style="background-color:#ff7f0e"></span>
-        ${defaultTitleFormat(d[1].name)}
-        </td>
-        <td>${defaultValueFormat(d[1].value)}</td>
-        </tr>
-        </tbody>
-        </table>
-        </div>`
-        return tableToReturn
-      }
-    }
+    // tooltip: {
+    //   contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
+    //     const tableToReturn = `<div>
+    //     <table class='c3-tooltip'>
+    //     <tbody>
+    //     <tr>
+    //     <th colspan='2'>${categories[d[0].index]}: Click for Recipes!</th>
+    //     </tr>
+    //     <tr>
+    //     <td>
+    //     <span style="background-color:#1f77b4"></span>
+    //     ${defaultTitleFormat(d[0].name)}
+    //     </td>
+    //     <td>${defaultValueFormat(d[0].value)}</td>
+    //     </tr>
+    //     <tr>
+    //     <td>
+    //     <span style="background-color:#ff7f0e"></span>
+    //     ${defaultTitleFormat(d[1].name)}
+    //     </td>
+    //     <td>${defaultValueFormat(d[1].value)}</td>
+    //     </tr>
+    //     </tbody>
+    //     </table>
+    //     </div>`
+    //     return tableToReturn
+    //   }
+    // }
   }
 
   return chartObj
