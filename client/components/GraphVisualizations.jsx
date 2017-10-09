@@ -26,6 +26,9 @@ const styles = {
   }
 };
 
+const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fats and Oil", "Nuts and Legumes", "Added Sugars"]
+const nutrients = ['nf_total_fat', 'nf_saturated_fat', 'nf_total_carbohydrate', 'nf_dietary_fiber', 'nf_sugars', 'nf_protein']
+
 class GraphVisualizations extends Component {
 
   constructor(props) {
@@ -34,12 +37,32 @@ class GraphVisualizations extends Component {
       value: 'categories',
     };
     this.handleChange = this.handleChange.bind(this)
+    this.handleCategoryClick = this.handleCategoryClick.bind(this)
+    this.handleNutrientClick = this.handleNutrientClick.bind(this)
+    this.handleCategoryHover = this.handleCategoryHover.bind(this)
   }
 
   handleChange(value) {
     this.setState({
       value: value,
     });
+  }
+
+  handleCategoryClick(category) {
+    this.props.handleCategoryClick(categories[category])
+  }
+
+  handleCategoryHover(category) {
+    this.setState({tooltip: category})
+    //this.props.handleCategoryClick(categories[category])
+  }
+
+  handleNutrientClick(nutrient) {
+    this.props.handleNutrientClick(nutrients[nutrient])
+  }
+
+  handleNutrientHover(nutrient) {
+    //this.props.handleNutrientClick(nutrients[nutrient])
   }
 
   componentDidUpdate() {
@@ -59,7 +82,7 @@ class GraphVisualizations extends Component {
       padding: pieGraphObj.padding
     })
 
-    const categoryDeficientInfo = getCategoryDeficientChart(this.props.deficientCategories.deficits)
+    const categoryDeficientInfo = getCategoryDeficientChart(this.props.deficientCategories.deficits, this.props.handleCategoryClick)
 
     var categoryDeficitChart = c3.generate({
       bindto: '#category_def_chart',
@@ -95,25 +118,36 @@ class GraphVisualizations extends Component {
       padding: nutrientDeficientInfo.padding
     })
 
-    // let ticks = d3.selectAll('.tick')
-    // const test = ReactFauxDOM.createElement('div')
-    // test.innerHTML = 'hi'
-    // let tick1 = d3.select('.tick text').data([0])
+    // add on click handler to category def chart ticks
+    // var svg = d3.selectAll('#category_def_chart .tick')
 
-    // let testImg = ReactFauxDOM.createElement('div');
-    // testImg.setAttribute('id', 'test_img');
+    // select all the items
+    // append circle
+    // gave circle attributes
+    // onmouseover <- function does d3.select('this') <- add things here
 
-    // d3.select('.tick text')
-    // .append("svg")
-    // // .attr("xlink:href", "http://placekitten.com/200/300")
-    // .attr("width", "20")
-    // .attr("height", "20");
-    // console.log('tick1', tick1)
+    // var focus = svg.append("g")
+    // .style("display", "none");
 
-    // ticks.on('click', function(value,index){
-    //   console.dir(this);
-    //   console.dir([value, index]);
-    // });
+    d3.selectAll('#category_def_chart .tick')
+    //.on('mouseover', this.handleCategoryHover)
+    .on('click', this.handleCategoryClick)
+
+    // svg.append("popup")
+    //   .attr("width", "10px")
+    //   .attr("height", "10px")
+    //   .on("mouseover", function() {focus.style("display", null)})
+    //   .on("mouseout", function() { focus.style("display", "none")})
+    // .on('mouseover', this.handleCategoryHover)
+    // .enter()
+    //   .append('p')
+    //   .text('hello')
+    // svg.on('click', this.handleCategoryClick)
+
+    // add on click handler to nutrient def chart ticks
+    d3.selectAll('#nutrient_def_chart .tick')
+    //.on('mouseover', this.handleNutrientHover)
+    .on('click', this.handleNutrientClick)
 
   }
 
@@ -156,7 +190,8 @@ class GraphVisualizations extends Component {
               <Card >
                 <CardHeader
                   title="Purchases vs. Recommended Intake by Category"
-                  subtitle="Click Bars for Category Specific Recipes"
+                  subtitle="Click Category Labels for Category Specific Recipes"
+                  subtitleColor="#03A9F4"
                 />
                 {categoryDefDiv.toReact()}
               </Card>
@@ -167,7 +202,7 @@ class GraphVisualizations extends Component {
                   cellHeight={390}
                   padding={15}
                 >
-                  <GridTile className='graph-box'>
+                  <GridTile className="graph-box">
                     <Card >
                       <CardHeader
                         title="Purchases over Time by Category"
@@ -177,7 +212,7 @@ class GraphVisualizations extends Component {
                       {categoryLineDiv.toReact()}
                     </Card>
                   </GridTile>
-                  <GridTile className='graph-box'>
+                  <GridTile className="graph-box">
                     <Card >
                       <CardHeader
                         title="Category Distribution"
@@ -202,9 +237,6 @@ class GraphVisualizations extends Component {
            */}
             </div>
 
-
-
-
           </Tab>
           <Tab label="By Nutrient" value="nutrients">
             <div>
@@ -213,7 +245,8 @@ class GraphVisualizations extends Component {
               <Card >
                 <CardHeader
                   title="Purchases vs. Recommended Intake by Nutrient"
-                  subtitle="Click Bars for Nutrient Specific Recipes"
+                  subtitle="Click Nutrient Labels for Nutrient Specific Recipes"
+                  subtitleColor="#03A9F4"
                 />
                 {nutrientDefDiv.toReact()}
               </Card>
@@ -257,11 +290,7 @@ class GraphVisualizations extends Component {
 
             </div>
           </Tab>
-
-
         </Tabs>
-
-
       </Container>
     )
   }
@@ -279,18 +308,14 @@ const mapProps = (state) => {
 
 const mapDispatch = (dispatch, ownProps) => {
   return {
-    handleSubmit: (evt, ingred) => {
-      dispatch(getRecipesByIngredient(ingred))
-      evt.preventDefault()
-    },
     handleCategoryClick: (category) => {
       dispatch(getRecipes([]))
       dispatch(getRecipesByDefCategory(category))
       history.push('/recipes/deficiencies')
     },
-    handleNutrientClick: (evt, state) => {
+    handleNutrientClick: (nutrient) => {
       dispatch(getRecipes([]))
-      dispatch(fetchIDofDefNutrient(state.deficientNutrients.defNutrient))
+      dispatch(fetchIDofDefNutrient(nutrient))
       history.push('/recipes/deficiencies')
     }
   }

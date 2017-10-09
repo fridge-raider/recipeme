@@ -17,11 +17,11 @@ export class UserHome extends Component {
 
 
   render() {
-    //console.log(this.props.ingredients); 
+    //console.log(this.props.ingredients);
     return (
       <Container fluid style={{backgroundColor:'#F5F5F5'}}>
 
-      { !this.props.categoryHistory.length &&
+      { !this.props.categoryHistory.length && // make a flag here to say data has returned
         <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
       }
 
@@ -46,7 +46,7 @@ const mapState = (state) => {
     categoryHistory: state.categoryHistory,
     nutrientHistory: state.nutrientHistory,
     deficientNutrients: state.deficientNutrients,
-    deficientCategories: state.deficientCategories, 
+    deficientCategories: state.deficientCategories,
     ingredients: state.ingredients
   }
 }
@@ -56,7 +56,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      dispatch(fetchIngredientNames())
+      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
     }
   }
 }
