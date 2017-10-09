@@ -39,18 +39,18 @@ class FindRecipes extends Component {
       <Container fluid style={{ padding: '1em 2em' }}>
         { this.renderSearch() }
         <br />
-        <div style={styles.root}>
+        <div>
 
-        <GridList
-          cellHeight={500}
-          style={styles.gridList}
-          cols={3}
-          padding={5}
-        >
-          { getRecipes && getRecipes.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} /> })
-          }
-        </GridList>
+          <GridList
+            cellHeight={300}
+            cols={3}
+            padding={4}
+
+          >
+            { getRecipes && getRecipes.map(recipe => {
+              return <RecipeCard key={recipe.id} recipe={recipe} /> })
+            }
+          </GridList>
         </div>
       </Container>
     )

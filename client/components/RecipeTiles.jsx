@@ -33,10 +33,11 @@ export class RecipeTiles extends React.Component {
     const { recipe } = this.props
     let imageUrl = recipe.imageUrlsBySize["90"].split('=')[0]
     imageUrl = imageUrl + "=s1600-c"
+    const actionIcons = [<StarBorder color="white" />, <FavoriteBorder color="white" />]
     // console.log('hi', recipe)
     return (
-        <div> 
-        { this.state.hover ? 
+      <div> 
+      { this.state.hover ? 
         <div
           onMouseLeave={this.handleMouseLeave}
         >  
@@ -46,16 +47,17 @@ export class RecipeTiles extends React.Component {
             titlePosition="top"
             titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 100%,rgba(0,0,0,0.3) 100%,rgba(0,0,0,0) 100%)"
             subtitle={<span><b>{recipe.ingredients.join(', ')}</b></span>}
-            subtitleStyle={{whiteSpace: "initial"}}
-            actionIcon={<IconButton><StarBorder color="white" /></IconButton>}
-
+            cols={1}
+            rows={1}
+            subtitleStyle={{width: "70%", overflow: "visible", whiteSpace: "initial"}}
+            actionIcon={<IconButton style={{position: "bottom",width: "none"}}>{actionIcons}</IconButton>}
           >
             <img 
               src={imageUrl}
               onClick={(evt)=>this.props.handleClick(evt, recipe.id)} />
           </GridTile>
         </div>
-          :
+        :
         <div
           onMouseEnter={this.handleMouseEnter}>
           <GridTile
@@ -64,8 +66,9 @@ export class RecipeTiles extends React.Component {
             titlePosition="top"
             titleBackground="linear-gradient(to bottom, rgba(0,0,0,0.7) 0%,rgba(0,0,0,0.3) 70%,rgba(0,0,0,0) 100%)"
             subtitle={<span>by <b>{recipe.sourceDisplayName}</b></span>}
-            actionIcon={<IconButton><StarBorder color="white" /><FavoriteBorder color="white" /></IconButton>}
-            actionIcon={<IconButton><FavoriteBorder color="white" /></IconButton>}
+            cols={1}
+            rows={1}
+            actionIcon={<IconButton style={{position: "bottom", width: "none"}}>{actionIcons}</IconButton>}
           >
           <img 
             src={imageUrl}
@@ -73,8 +76,7 @@ export class RecipeTiles extends React.Component {
           </GridTile>
         </div>
         }
-        </div>
-        
+      </div>
 
     )
   }
