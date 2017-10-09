@@ -2,10 +2,12 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 import { NavLink } from 'react-router-dom'
-import { Search, Gride, Header, Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './Tile.jsx'
+import { Search, Header, Card, Container, Form } from 'semantic-ui-react'
+import RecipeCard from './RecipeTiles.jsx'
 import { getRecipesByIngredient } from '../store'
+import SearchBar from 'material-ui-search-bar'
 import _ from 'lodash'
+import { GridList, GridTile } from 'material-ui/GridList';
 
 class Recipes extends Component {
   constructor(props) {
@@ -19,25 +21,21 @@ class Recipes extends Component {
     }
 
     this.renderSearch = this.renderSearch.bind(this)
-    this.renderResultSearch = this.renderResultSearch.bind(this)
-  }
-
-  renderResultSearch() {
-    this.setState({value: this.state.search, isLoading: false})
-    let searchArr = this.props.getRecipes.filter((recipe) => {
-      recipe.ingredients.includes(this.state.search)
-    })
-    this.setState({searchRecipes: searchArr})
   }
 
   renderSearch() {
     return (
-      <Search
-        onSearchChange={(evt) => this.setState({search: evt.target.value, isLoading: true})}
-        onResultSelect={this.renderResultSearch}
+
+      <SearchBar 
+        style={{borderRadius:25, maxWidth:"flex"}}
+        onChange={(value) => this.setState({search: value})}
+        onRequestSearch={() => console.log('hi')}
+        hintText="Search by ingredient"
+
         />
     )
   }
+
 
   render() {
     // add filtering and searching functionality !!!
@@ -48,23 +46,45 @@ class Recipes extends Component {
     })
 
     return (
-      <Container fluid style={{padding: '1em 2em'}}>
+      <Container fluid style={{padding: '1em 2em'}} >
 
-        <h2>Recipes</h2>
-        <br />
+        <h2>Recommended Recipes</h2> 
+        <p>(based on your past purchases)</p>
         { this.renderSearch() }
-        <br />
-        <Card.Group itemsPerRow='3'>
-          { (search.length) ? search.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} />
-          }) : getRecipes.map(recipe => {
-            return <RecipeCard key={recipe.id} recipe={recipe} /> })}
+        <br /><br />
 
-        </Card.Group>
-      </Container> /////
+          <GridList
+            cellHeight={500}
+            style={styles.gridList}
+            cols={3}
+            padding={6}
+          >
+          { (search.length) ? search.map(recipe => {
+              return <RecipeCard key={recipe.id} recipe={recipe} />
+            }) : getRecipes.map(recipe => {
+              return <RecipeCard key={recipe.id} recipe={recipe} /> })}
+            
+          </GridList>
+
+
+      </Container>
+
     )
   }
 }
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 'flex',
+    height: 'flex',
+    overflowY: 'flex',
+  },
+};
 
 const mapProps = (state) => {
   return {
