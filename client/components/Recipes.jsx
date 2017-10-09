@@ -26,7 +26,7 @@ class Recipes extends Component {
   renderSearch() {
     return (
 
-      <SearchBar 
+      <SearchBar
         style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={() => console.log('hi')}
@@ -48,8 +48,8 @@ class Recipes extends Component {
     return (
       <Container fluid style={{padding: '1em 2em'}} >
 
-        <h2>Recommended Recipes</h2> 
-        <p>(based on your past purchases)</p>
+        <h2>Recommended Recipes</h2>
+        <p style={{fontStyle: 'italic'}}>Based on your past purchases</p>
         { this.renderSearch() }
         <br /><br />
 
@@ -63,7 +63,7 @@ class Recipes extends Component {
               return <RecipeCard key={recipe.id} recipe={recipe} />
             }) : getRecipes.map(recipe => {
               return <RecipeCard key={recipe.id} recipe={recipe} /> })}
-            
+
           </GridList>
 
 

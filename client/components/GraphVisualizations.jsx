@@ -53,7 +53,6 @@ class GraphVisualizations extends Component {
   }
 
   handleCategoryHover(category) {
-    console.log('category', category)
     this.setState({tooltip: category})
     //this.props.handleCategoryClick(categories[category])
   }
@@ -131,7 +130,7 @@ class GraphVisualizations extends Component {
     // .style("display", "none");
 
     d3.selectAll('#category_def_chart .tick')
-    .on('mouseover', this.handleCategoryHover)
+    //.on('mouseover', this.handleCategoryHover)
     .on('click', this.handleCategoryClick)
 
     // svg.append("popup")
@@ -147,7 +146,7 @@ class GraphVisualizations extends Component {
 
     // add on click handler to nutrient def chart ticks
     d3.selectAll('#nutrient_def_chart .tick')
-    .on('mouseover', this.handleNutrientHover)
+    //.on('mouseover', this.handleNutrientHover)
     .on('click', this.handleNutrientClick)
 
   }
@@ -203,7 +202,7 @@ class GraphVisualizations extends Component {
                   cellHeight={390}
                   padding={15}
                 >
-                  <GridTile>
+                  <GridTile className="graph-box">
                     <Card >
                       <CardHeader
                         title="Purchases over Time by Category"
@@ -213,7 +212,7 @@ class GraphVisualizations extends Component {
                       {categoryLineDiv.toReact()}
                     </Card>
                   </GridTile>
-                  <GridTile>
+                  <GridTile className="graph-box">
                     <Card >
                       <CardHeader
                         title="Category Distribution"
