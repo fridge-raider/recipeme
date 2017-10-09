@@ -1,12 +1,12 @@
 const router = require('express').Router();
 const fs = require('fs')
-const CryptoJS = require("crypto-js")
-const aws = require("aws-sdk")
+const CryptoJS = require('crypto-js')
+const aws = require('aws-sdk')
 const { Receipt } = require('../db/models')
 const request = require('request')
-const {returnCleanReceipt, getReceiptIngredients} = require('./receiptParsing')
+const { returnCleanReceipt, getReceiptIngredients } = require('./receiptParsing')
 
-clientSecretKey = process.env.CLIENT_SECRET_KEY,
+const clientSecretKey = process.env.CLIENT_SECRET_KEY,
 
     // These two keys are only needed if you plan on using the AWS SDK
     serverPublicKey = process.env.AWS_ACCESS_KEY_ID,
@@ -25,17 +25,18 @@ clientSecretKey = process.env.CLIENT_SECRET_KEY,
     //expectedMaxSize = 15000000,
 
 
-    // Init S3, given your server-side keys.  Only needed if using the AWS SDK.
-    aws.config.update({
-        accessKeyId: serverPublicKey,
-        secretAccessKey: serverSecretKey
-    });
+// Init S3, given your server-side keys.  Only needed if using the AWS SDK.
+aws.config.update({
+    accessKeyId: serverPublicKey,
+    secretAccessKey: serverSecretKey
+});
+
 const s3 = new aws.S3();
 
 // Handles all signature requests and the success request FU S3 sends after the file is in S3
 // You will need to adjust these paths/conditions based on your setup.
-router.post("/signatureHandler", function (req, res, next) {
-    if (typeof req.query.success !== "undefined") {
+router.post('/signatureHandler', function (req, res, next) {
+    if (typeof req.query.success !== 'undefined') {
 
         verifyFileInS3(req, res);
     }
@@ -45,8 +46,7 @@ router.post("/signatureHandler", function (req, res, next) {
     }
 });
 
-router.post("/uploadSuccessful", function (req, res, next) {
-    console.log('req.user', req.user)
+router.post('/uploadSuccessful', function (req, res, next) {
 
     Receipt.create({
         imageUrl: req.body.key,
@@ -64,41 +64,44 @@ router.get('/clean', (req, res, next) => {
     Receipt.findOne({
         where: {
             userId: req.user.id,
-            status: "Not Parsed"
+            status: 'Not Parsed'
         }
     })
         .then(receipt => {
-            console.log('receipt', receipt, receipt.imageUrl)
 
             const urlParams = { Bucket: process.env.BUCKET_NAME, Key: receipt.imageUrl }
             s3.getSignedUrl('getObject', urlParams, function (err, url) {
-                console.log('the url of the image is', url);
-                var writeFileStream = fs.createWriteStream(filename)
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    console.log('the url of the image is', url);
+                    var writeFileStream = fs.createWriteStream(filename)
 
-                request(url).pipe(writeFileStream).on('close', function () {
-                    console.log(url, 'saved to', filename)
-                    returnCleanReceipt(filename)
-                        .then(cleanLines => {
-                            getReceiptIngredients(cleanLines)
-                            .then(result => {
-                                receipt.update({
-                                    status: "Parsed"
-                                })
-                                res.json(result)
+                    request(url).pipe(writeFileStream).on('close', function () {
+                        console.log(url, 'saved to', filename)
+                        returnCleanReceipt(filename)
+                            .then(cleanLines => {
+                                getReceiptIngredients(cleanLines)
+                                    .then(result => {
+                                        receipt.update({
+                                            status: 'Parsed'
+                                        })
+                                        res.json(result)
+                                    })
                             })
-
-                        })
-                })
+                    })
+                }
             })
         })
 })
 
 // Handles the standard DELETE (file) request sent by Fine Uploader S3.
 // Omit if you don't want to support this feature.
-router.delete("/s3handler/*", function (req, res) {
+router.delete('/s3handler/*', function (req, res) {
     deleteFile(req.query.bucket, req.query.key, function (err) {
         if (err) {
-            console.log("Problem deleting file: " + err);
+            console.log('Problem deleting file: ' + err);
             res.status(500);
         }
 
