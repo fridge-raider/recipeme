@@ -11,7 +11,7 @@ const GET_RECIPES = 'GET_RECIPES'
 export const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
-  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=10&requirePictures=true`)
+  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=50&requirePictures=true`)
     .then(res => res.data)
     .then(recipes => {
       dispatch(getRecipes(recipes.matches))
