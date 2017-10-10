@@ -4,26 +4,25 @@ const {Ingredient} = require('../server/db/models')
 const fs = require('fs')
 //Meat, Grains, Vegetables, Fruits, Dairy, Fat, NutsAndLegumes, Sugars
 const seed = () => {
+
 	// return Ingredient.findAll({
-	// 	where:{
-	// 		name: {
-	// 			$like: '%peanuts%'
-	// 		}
+	// 	where: {
+	// 		category: 'Sugars'
 	// 	}
 	// }).then(allIngredients => {
 	// 	let promises = allIngredients.map(ingred => {
-	// 		return ingred.update({category:'NutsAndLegumes'})
+	// 		return ingred.update({category:'Added Sugars'})
 	// 	})
 	// 	return Promise.all(promises)
 	// })
 
-
 	return Ingredient.findAll().then(ingredients => {
-		sorted = ingredients.sort(); 
+		sorted = ingredients.sort();
   	fs.writeFile('./ingredientCategories.js', JSON.stringify(sorted), (err) => {
       if (err) console.log(err)
     })
-  })
+	})
+
 }
 
 const main = () => {

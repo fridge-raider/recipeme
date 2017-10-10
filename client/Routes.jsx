@@ -14,7 +14,7 @@ import {fetchFavoriteRecipes} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    store.dispatch(fetchFavoriteRecipes(req.user.id))
+    //store.dispatch(fetchFavoriteRecipes(req.user.id))
   }
 
   render () {

@@ -14,15 +14,10 @@ const Recipe = db.define('recipe', {
     type: Sequelize.STRING
   },
   yummlyID: {
-    type: Sequelize.INTEGER
+    type: Sequelize.STRING
   },
   ingredientsList: {
     type: Sequelize.ARRAY(Sequelize.STRING)
-  }
-},
-{
-  defaultScope: {
-    include: [{model: User}]
   }
 })
 
