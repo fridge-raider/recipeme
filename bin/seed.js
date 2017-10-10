@@ -14,7 +14,7 @@ var ingredients = new Set();
 // const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
 
 
-let fileNutrientsIng = require('./nutrientsAll.json');
+let fileNutrientsIng = require('./ingredientCategories.js');
 let fileNutID = require('./nutritionID.json')
 
 // //setting up orderhistory promises 
@@ -80,7 +80,7 @@ const seed = () => {
 	const nutIdPromises = []; 
 
 
-	uniqueIngredients.forEach(row => {
+	fileNutrientsIng.forEach(row => {
 		ingredientPromises.push(Ingredient.create(row));
 	})
 	

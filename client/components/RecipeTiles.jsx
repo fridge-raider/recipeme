@@ -6,7 +6,7 @@ import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
 import AddBorder from 'material-ui/svg-icons/content/add-circle-outline'
-import { getRecipeDetails, setShoppingList } from '../store'
+import { getRecipeDetails, setShoppingList, addFavoriteRecipe } from '../store'
 
 
 export class RecipeTiles extends React.Component {
@@ -36,6 +36,7 @@ export class RecipeTiles extends React.Component {
     imageUrl = imageUrl + "=s1600-c"
     let hover = false
     const subtitleStr = `by ${recipe.sourceDisplayName}`
+    console.log(recipe, 'hi')
     return (
       <GridTile
         key={recipe.id}
@@ -53,7 +54,7 @@ export class RecipeTiles extends React.Component {
         titleStyle={{ fontSize: 18 }}
         actionIcon={[
           <IconButton key={`${recipe.id}-add`} style={{ width: "none" }} tooltip="Add to Shopping List" onClick={(evt) => this.props.addToShoppingList(evt, recipe.ingredients)}><AddBorder color="white" /></IconButton>,
-          <IconButton key={`${recipe.id}-fave`} style={{ width: "none" }} tooltip="Favorite" onClick={(evt) => this.props.addToFavorites(evt, recipes)}><FavoriteBorder color="white" /></IconButton>]}
+          <IconButton key={`${recipe.id}-fave`} style={{ width: "none" }} tooltip="Favorite" onClick={(evt) => this.props.addToFavorites(evt, recipe)}><FavoriteBorder color="white" /></IconButton>]}
       >
         <img src={imageUrl}
           onClick={(evt) => this.props.handleClick(evt, recipe.id)} />
@@ -78,8 +79,8 @@ const mapDispatch = (dispatch) => {
     addToShoppingList(evt, list) {
       dispatch(setShoppingList(list))
     },
-    addToFavorites(evt, recipes) {
-      dispatch()
+    addToFavorites(evt, recipe) {
+      dispatch(addFavoriteRecipe(recipe))
     }
   }
 }
