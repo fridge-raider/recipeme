@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient, fetchIngredientNames} from '../store'
 import {Grid, Container, Menu} from 'semantic-ui-react'
+import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
 
 
@@ -17,19 +18,27 @@ export class UserHome extends Component {
 
 
   render() {
-    //console.log(this.props.ingredients); 
+
     return (
-      <Container fluid style={{backgroundColor:'#F5F5F5'}}>
+      <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
+        <div className="ui grid"> 
+        <div className="row" style={{margin:0}}>
+          <div className="four wide column">
+            <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}></Paper> 
+          </div>
+          <div className="twelve wide column" style={{paddingRight:30}}>
+          { !this.props.categoryHistory.length &&
+            <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
+          }
 
-      { !this.props.categoryHistory.length &&
-        <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
-      }
-
-      {!!this.props.categoryHistory.length &&
-        !!this.props.nutrientHistory.length &&
-        <GraphVisualizations />
-      }
-      </Container>
+          {!!this.props.categoryHistory.length &&
+            !!this.props.nutrientHistory.length &&
+            <GraphVisualizations />
+          }
+          </div>
+        </div> 
+        </div>
+      </div>
     )
   }
 

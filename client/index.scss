@@ -23,6 +23,10 @@
 
 // }
 
+body {
+  position: absolute
+}
+
 /*-- Chart --*/
 .c3 svg {
   font: 10px sans-serif;
@@ -197,5 +201,9 @@
 
 .c3-chart-arc.c3-target.c3-focused g path {
   opacity: 1; }
+
+.michelle-grey {
+  background-color:'#F5F5F5'; 
+}
 
 

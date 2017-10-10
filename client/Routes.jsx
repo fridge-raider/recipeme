@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr, HomePage} from './components'
+import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr} from './components'
 import {me} from './store'
 
 /**
@@ -27,7 +27,6 @@ class Routes extends Component {
                   <Switch>
                     {/* Routes placed here are available to all visitors */}
                     <Route path='/findrecipes' component={FindRecipes} />
-                    <Route path='/login' component={Login} />
                     <Route path='/recipes/deficiencies' component={Recipes} />
                     <Route path='/receipt' component={ReceiptUpload} />
                     <Route path='/data' component={Data} />

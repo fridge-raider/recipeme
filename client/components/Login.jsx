@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, Container, Form, Grid, Icon, Image, Segment } from 'semantic-ui-react'
+import RaisedButton from 'material-ui/RaisedButton'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import {auth} from '../store'
-
 
 class Login extends Component {
   constructor() {
@@ -26,28 +26,82 @@ class Login extends Component {
   }
 
   render(){
+    const imgCircle = {
+      height: "150px",
+      width: "180px",
+      position: "absolute",
+      left: "50vw",
+      top:"400px",
+      marginTop:"-80px", 
+      marginLeft:"-90px", 
+      borderRadius:"50%"
+    }
+
+    const button = {
+      marginTop: "100px", 
+      left: "50vw"
+    }
+
+    const food1 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/FR5KGzul750E4SFIjmV6vUFphLzZn9TTDt6YMVi6L4_2XRspoubXNngHdp4B4hV1uvKmf0maNQVpPXUk6exh8w=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:1, 
+      marginTop:1
+    }
+
+    const food2 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/dTIMzMwlvF3_B2a254WRzrYqooxMwXBqnWY-Zcrv4fpR4i4TWHdZXqHbzB_q8fwOBOX2TaVYUlsS1huNHCxjzx8=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:1,
+      marginTop:1
+    }
+
+    const food3 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/4VRowJtHAQ2BiCWKZczFf8rJ1L8m4N4u18FO5UzOHF2F0HiFZvSOH2ldeQo4XqkqiJOvK_E873ufYC2SFLMCQg=s320-c-e365")`,
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:1,
+      marginTop:1
+
+    }
+
+    const food4 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/IcYpfainJZDHfnMJqLyJP1L4L1-zaCW-rHXZUAJf8NYTUDcLtf-ZiF-b8ufmNkhD91Uezpmw-YP4cuWgpFiR5A=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover", 
+      marginBottom:1,
+      marginTop:1
+
+    }
+    const shade = {
+      backgroundColor: `rgba(248, 247, 216, 0.7)`
+    }
+
     return (
-        <div className="ui grid" style={{marginTop:0, zIndex: 1}}> 
-          <div className="row" style={{minHeight:200}}> 
-            <div className="four wide column olive"> </div> 
-            <div className="four wide column black"> </div>
-            <div className="four wide column olive"> </div> 
-            <div className="four wide column black"> </div>  
+      <div> 
+          <div className="row" style={{minHeight:50, padding:0, backgroundColor:'#FFA494'}}> 
+            <div className="sixteen wide column"></div> 
+          </div> 
+        <div className="ui grid" style={{marginTop:0}}> 
+          <div className="row" style={{minHeight:340}}> 
+            <div className="four wide column olive" style={food1}><div style={shade}></div></div> 
+            <div className="four wide column black" style={food2}> </div>
+            <div className="four wide column olive" style={food3}> </div> 
+            <div className="four wide column black" style={food4}> </div>  
 
           </div> 
-          <div className="row" style={{minHeight:200, zIndex: 1}}> 
-            <div className="four wide column black"> </div> 
-            <div className="four wide column olive"> </div> 
-            <div className="four wide column black"> </div> 
-            <div className="four wide column olive"> </div> 
+          <div className="row" style={{minHeight:400, padding:0}}> 
+            <div className="sixteen wide column" style={{backgroundColor:'#FFA494'}}><div style={{marginLeft: "39.8vw"}}><a href='/auth/google'><RaisedButton secondary={true} label="Sign Up and Login with Google" style={button}/></a></div></div> 
           </div> 
-          <img class="ui medium circular image" src="http://saveabandonedbabies.org/wp-content/uploads/2015/08/default.png" style={{zIndex: 3, display:"inline-block"}}></img> 
-          <div className="row" style={{minHeight:400, zIndex: 1}}> 
-            <div className="sixteen wide column grey"> </div> 
-          </div> 
-
-
+          <img style={imgCircle} src="http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png"></img>
         </div> 
+      </div>
     )
   }
 }

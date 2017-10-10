@@ -10,7 +10,7 @@ export class Navbar extends Component {
 
   render() {
     return (
-      <Menu color='grey' size='large' inverted secondary className='nav-bar'>
+      <Menu color='grey' size='large' inverted secondary className='nav-bar' style={{height:60}}>
         <Menu.Item>
           <img src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' />
           <NavLink to='/home'>RecipeMe</NavLink>
