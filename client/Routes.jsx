@@ -20,23 +20,25 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
-      <div className ="container-fluid">
-        <Main>
-          <Navbar />
-            <Switch>
-              {/* Routes placed here are available to all visitors */}
-              <Route path='/findrecipes' component={FindRecipes} />
-              <Route path='/login' component={Login} />
-              <Route path='/recipes/deficiencies' component={Recipes} />
-              <Route path='/receipt' component={ReceiptUpload} />
-              <Route path='/data' component={Data} />
-              <Route path='/home' component={UserHome} />
-              <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
-              <Route path='/' component={Login} />
+      { (this.props.isLoggedIn)
+        ? (<div className ="container-fluid">
+              <Main>
+                <Navbar />
+                  <Switch>
+                    {/* Routes placed here are available to all visitors */}
+                    <Route path='/findrecipes' component={FindRecipes} />
+                    <Route path='/recipes/deficiencies' component={Recipes} />
+                    <Route path='/receipt' component={ReceiptUpload} />
+                    <Route path='/data' component={Data} />
+                    <Route path='/home' component={UserHome} />
+                    <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
+                    <Route path='/' component={UserHome} />
+                  </Switch>
+              </Main>
+            </div>)
+        : <Login />
 
-            </Switch>
-        </Main>
-        </div>
+      }
       </Router>
     )
   }

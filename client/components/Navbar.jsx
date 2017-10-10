@@ -10,10 +10,10 @@ export class Navbar extends Component {
 
   render() {
     return (
-      <Menu color='grey' size='large' inverted secondary className='nav-bar'>
+      <Menu color='grey' size='large' inverted secondary className='nav-bar' style={{height:60}}>
         <Menu.Item>
           <img src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' />
-          <NavLink to='/home'>RecipeMe</NavLink>
+          <NavLink to='/home'><span>RecipeMe</span></NavLink>
         </Menu.Item>
         <Menu.Item>
           <NavLink to='/findrecipes' onClick={this.props.handleClick}>Find Recipes</NavLink>
@@ -21,31 +21,11 @@ export class Navbar extends Component {
         <Menu.Item>
           <NavLink to='/receipt'>Upload Receipt</NavLink>
         </Menu.Item>
-        {
-          !!this.props.isLoggedIn &&
-          <Menu.Menu position='right'>
-
-          <Menu.Item>
-            <div onClick={this.props.logout} >Logout</div>
-          </Menu.Item>
-          </Menu.Menu>
-
-        }
-        {
-          !this.props.isLoggedIn &&
-          <Menu.Menu position='right'>
-
-
-          <Menu.Item>
-          <NavLink to='/signup' >Sign Up</NavLink>
-          </Menu.Item>
+        <Menu.Menu position='right'>
         <Menu.Item>
-           <NavLink to='/login'>Log In</NavLink>
+          <div onClick={this.props.logout}>Logout</div>
         </Menu.Item>
         </Menu.Menu>
-
-        }
-
       </Menu>
     )
   }

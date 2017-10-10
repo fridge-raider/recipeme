@@ -7,6 +7,7 @@ import { withRouter } from 'react-router'
 import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
+import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -178,7 +179,9 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <h2>Your Purchasing Dashboard</h2>
+        <Toolbar style={{marginBottom:10}}>
+          <ToolbarTitle text="Grocery Purchasing History" style={{fontWeight:"bold", fontColor:"#ffffff"}}/>
+        </Toolbar>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
