@@ -130,3 +130,8 @@ img {
   background-color:'#F5F5F5'; 
 }
 
+@font-face {
+  font-family: 'Alice-Script';
+  src: url('../../bin/StarsFromOurEyes.ttf');
+}
+

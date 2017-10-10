@@ -3,7 +3,7 @@ const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
 const path = require('path')
-const im = require('imagemagick');
+// const im = require('imagemagick');
 const ed = require('edit-distance');
 const allIngredients = require('../../ingredientNames.js')
 
@@ -18,7 +18,6 @@ function receiptParsingMinDist(item) {
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
-      //console.log('Levenshtein', lev.distance, lev.pairs());
       if(lev.distance < min) {
         min = lev.distance; 
         //possibleWord = searchArr[i]; 
@@ -26,31 +25,8 @@ function receiptParsingMinDist(item) {
     }
   }
   scaledMin = (min*min)*item.name.length
-  // console.log(item.name, item.name.length, scaledMin) 
   return scaledMin
 }
-
-function findSimilarIngredient(item) {
-  let min = item.name.length
-  let possibleMatch = "unknown"; 
-  let words = item.name.split(" "); 
-  for(let j=0; j<words.length; j++) {
-    let searchArr = allIngredients[words[j].charAt(0)]
-    if(searchArr) {
-      for(let i=0; i<searchArr.length; i++) {
-        var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
-        if(lev.distance < min) {
-          min = lev.distance; 
-          possibleMatch = searchArr[i]; 
-        }
-      }
-    }
-  }
-  console.log(item.name, item.name.length, possibleMatch) 
-  return possibleMatch; 
-}
-
-
 
 function receiptParsingInitial(text) {
   const lines = text.split('\n');
@@ -97,15 +73,15 @@ function returnCleanReceipt(imageName) {
     }
 
     //brew install imagemagick
-    const preprocessPromise = new Promise(function(resolve, reject) {
-      //doesn't do anything but eventually want to get imagemagick configured with textcleaner to 
-      //properly parse low quality, poorly angled, and wrinkled receipts 
-      im.readMetadata(imageName, function(err, metadata){
-        if (err) reject(err);
-        console.log('Shot at '+metadata.exif.dateTimeOriginal);
-        resolve(); 
-      })
-    })
+    // const preprocessPromise = new Promise(function(resolve, reject) {
+    //   //doesn't do anything but eventually want to get imagemagick configured with textcleaner to 
+    //   //properly parse low quality, poorly angled, and wrinkled receipts 
+    //   im.readMetadata(imageName, function(err, metadata){
+    //     if (err) reject(err);
+    //     console.log('Shot at '+metadata.exif.dateTimeOriginal);
+    //     resolve(); 
+    //   })
+    // })
 
     const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
@@ -133,10 +109,7 @@ function returnCleanReceipt(imageName) {
       });
     });
 
-    return preprocessPromise
-    .then(() => {
-      return tesseractPromise
-    })
+    return tesseractPromise
 }
 
 function setReceiptRep(item) {
@@ -175,6 +148,26 @@ function findByLongestMatch(longestWord) {
   })
 }
 
+function findSimilarIngredient(item) {
+  let min = item.name.length
+  let possibleMatch = "unknown"; 
+  let words = item.name.split(" "); 
+  for(let j=0; j<words.length; j++) {
+    let searchArr = allIngredients[words[j].charAt(0)]
+    if(searchArr) {
+      for(let i=0; i<searchArr.length; i++) {
+        var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
+        if(lev.distance < min) {
+          min = lev.distance; 
+          possibleMatch = searchArr[i]; 
+        }
+      }
+    }
+  }
+  console.log(item.name, item.name.length, possibleMatch) 
+  return possibleMatch; 
+}
+
 function getReceiptIngredients(parsedReceipt) {
 
   return Promise.mapSeries(parsedReceipt, item => {
@@ -202,7 +195,8 @@ function getReceiptIngredients(parsedReceipt) {
           ingredientName = results[2].name;
           category = results[2].category;
         }
-
+        
+        //levenstein if none of those work
         if(ingredientName === "unknown") {
           ingredientName = findSimilarIngredient(item);
         }
