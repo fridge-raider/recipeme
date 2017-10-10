@@ -4,7 +4,6 @@ const Sequelize = require('sequelize')
 
 module.exports = router
 
-// update so specific to user
 router.get('/:categoryName', (req, res, next) => {
   Frequency.findAll({
     where: {
