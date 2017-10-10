@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+//import * as d3 from 'd3';
 import c3 from 'c3';
 import React, { Component } from 'react';
 import ReactFauxDOM from 'react-faux-dom';
@@ -7,7 +7,8 @@ import { withRouter } from 'react-router'
 import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import * as d3 from 'd3'
+import d3Tip from 'd3-tip';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -67,6 +68,8 @@ class GraphVisualizations extends Component {
   }
 
   componentDidUpdate() {
+
+
 
     // CATEGORIES TAB CHARTS
     const { lineGraphObj, pieGraphObj } = getCategoryChart(this.props.categoryHistory)
@@ -129,8 +132,20 @@ class GraphVisualizations extends Component {
 
     // var focus = svg.append("g")
     // .style("display", "none");
+    // tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; });
 
-    d3.selectAll('#category_def_chart .tick')
+    var tooltip = d3.d3Tip().attr('class', 'd3-tip').html(() => {return '<div>hullo</div>'})
+
+    d3.selectAll('#category_def_chart g.tick')
+      .on('mouseover', (val) => {
+
+        console.log(val, tooltip)
+        tooltip.show()
+        d3Tip.show()
+      })
+
+
+    d3.selectAll('#category_def_chart g.tick')
     //.on('mouseover', this.handleCategoryHover)
     .on('click', this.handleCategoryClick)
 
@@ -179,9 +194,7 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <Toolbar style={{marginBottom:10}}>
-          <ToolbarTitle text="Grocery Purchasing History" style={{fontWeight:"bold", fontColor:"#ffffff"}}/>
-        </Toolbar>
+        <h2>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
