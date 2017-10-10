@@ -35,10 +35,10 @@ export class RecipeTiles extends React.Component {
     const { recipe } = this.props
     let imageUrl = recipe.imageUrlsBySize["90"].split('=')[0]
     imageUrl = imageUrl + "=s1600-c"
-    const actionIcons = [<StarBorder color="white" />, <FavoriteBorder color="white" />]
+    const actionIcons = [<StarBorder color="white" recipe={recipe}/>, <FavoriteBorder color="white" />]
     // console.log('hi', recipe)
     let hover = false
-    const subtitleStr = `by ${recipe.sourceDisplayName}`+ '\n' + `ingredients: ${recipe.ingredients}`
+    const subtitleStr = `by ${recipe.sourceDisplayName}`
     return (
         <GridTile
           key={recipe.id}

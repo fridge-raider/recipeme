@@ -15,6 +15,9 @@ const Recipe = db.define('recipe', {
   },
   yummlyID: {
     type: Sequelize.INTEGER
+  },
+  ingredientsList: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 },
 {

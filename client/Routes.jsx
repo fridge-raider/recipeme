@@ -6,6 +6,7 @@ import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr} from './components'
 import {me} from './store'
+import {fetchFavoriteRecipes} from './store'
 
 /**
  * COMPONENT
@@ -13,6 +14,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
+    store.dispatch(fetchFavoriteRecipes(req.user.id))
   }
 
   render () {

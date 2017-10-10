@@ -1,25 +1,25 @@
 const Sequelize = require('sequelize')
-const db = require('./server/db');
-const {Ingredient, NutrientsAPIID, OrderHistory} = require('./server/db/models')
+const db = require('../server/db');
+const {Ingredient, NutrientsAPIID, OrderHistory} = require('../server/db/models')
 
 //var fileName = require('./trainCategories.json');
 
 var ingredients = new Set();
 
-var fileNutrientsIng = require('./nutrientsAll.json');
-var fileNutID = require('./nutritionID.json')
+// var fileNutrientsIng = require('./nutrientsAll.json');
+// var fileNutID = require('./nutritionID.json')
 
 //setting up orderhistory promises 
-const order_histories = require('./order_history_seed.js'); 
-const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
+// const order_histories = require('./order_history_seed.js'); 
+// const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
 
 
 let fileNutrientsIng = require('./nutrientsAll.json');
 let fileNutID = require('./nutritionID.json')
 
 // //setting up orderhistory promises 
-// const order_histories = require('./order_history_seed.js'); 
-// const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
+const order_histories = require('./order_history_seed.js'); 
+const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
 
 const temp = new Set(); 
 const uniqueIngredients = new Set();
