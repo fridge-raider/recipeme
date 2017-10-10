@@ -34,7 +34,6 @@ export class RecipeTiles extends React.Component {
     const { recipe } = this.props
     let imageUrl = recipe.imageUrlsBySize["90"].split('=')[0]
     imageUrl = imageUrl + "=s1600-c"
-    //const actionIcons = [<AddBorder color="white"/>, <FavoriteBorder color="white" />]
     let hover = false
     const subtitleStr = `by ${recipe.sourceDisplayName}`
     return (

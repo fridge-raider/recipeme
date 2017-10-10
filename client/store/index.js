@@ -11,9 +11,10 @@ import deficientNutrients from './deficientNutrients'
 import foods from './foods'
 import ingredients from './ingredients'
 import shoppingList from './shoppingList'
+import favoriteRecipes from './favoriteRecipes'
 
+const reducer = combineReducers({user, foods, getRecipes, currentReceipt, nutrientHistory, categoryHistory, deficientCategories, deficientNutrients, ingredients, shoppingList, favoriteRecipes})
 
-const reducer = combineReducers({user, foods, getRecipes, currentReceipt, nutrientHistory, categoryHistory, deficientCategories, deficientNutrients, ingredients, shoppingList})
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
 
@@ -28,3 +29,4 @@ export * from './deficientCategories'
 export * from './foods'
 export * from './ingredients'
 export * from './shoppingList'
+export * from './favoriteRecipes'
