@@ -53,7 +53,7 @@ export class RecipeTiles extends React.Component {
         titleStyle={{ fontSize: 18 }}
         actionIcon={[
           <IconButton key={`${recipe.id}-add`} style={{ width: "none" }} tooltip="Add to Shopping List" onClick={(evt) => this.props.addToShoppingList(evt, recipe.ingredients)}><AddBorder color="white" /></IconButton>,
-          <IconButton key={`${recipe.id}-fave`} style={{ width: "none" }} tooltip="Favorite"><FavoriteBorder color="white" /></IconButton>]}
+          <IconButton key={`${recipe.id}-fave`} style={{ width: "none" }} tooltip="Favorite" onClick={(evt) => this.props.addToFavorites(evt, recipes)}><FavoriteBorder color="white" /></IconButton>]}
       >
         <img src={imageUrl}
           onClick={(evt) => this.props.handleClick(evt, recipe.id)} />
@@ -77,6 +77,9 @@ const mapDispatch = (dispatch) => {
     },
     addToShoppingList(evt, list) {
       dispatch(setShoppingList(list))
+    },
+    addToFavorites(evt, recipes) {
+      dispatch()
     }
   }
 }
