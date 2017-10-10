@@ -17,7 +17,7 @@ router.get('/:userId', (req, res, next) => {
 
 router.post('/:userId', (req, res, next) => {
   const favoriteRec = req.body.recipe
-  Recipe.findOrCreate({ favoriteRec, userId: req.params.userId })
+  Recipe.findOrCreate({ favoriteRec, userId: req.user.id })
     .then(fav => res.json(fav))
     .catch(next)
 })

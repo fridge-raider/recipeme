@@ -14,8 +14,9 @@ OrderHistory.belongsTo(Ingredient)
 Ingredient.belongsToMany(User, {through: Frequency});
 Frequency.belongsTo(Ingredient)
 ReceiptRepresentation.belongsTo(Ingredient);
-Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
+// Recipe.belongsToMany(Ingredient, {through: 'recipeIngredients'})
 Receipt.belongsTo(User)
+
 
 module.exports = {
   User,
