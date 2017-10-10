@@ -24,7 +24,6 @@ export class UserHome extends Component {
 
 
   render() {
-
     return (
       <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
         <div className="ui grid"> 
@@ -83,7 +82,6 @@ export class UserHome extends Component {
           { !this.props.categoryHistory.length &&
             <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
           }
-
           {!!this.props.categoryHistory.length &&
             !!this.props.nutrientHistory.length &&
             <GraphVisualizations />
@@ -108,7 +106,7 @@ const mapState = (state) => {
     categoryHistory: state.categoryHistory,
     nutrientHistory: state.nutrientHistory,
     deficientNutrients: state.deficientNutrients,
-    deficientCategories: state.deficientCategories, 
+    deficientCategories: state.deficientCategories,
     ingredients: state.ingredients
   }
 }
@@ -118,7 +116,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      dispatch(fetchIngredientNames())
+      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
     }
   }
 }

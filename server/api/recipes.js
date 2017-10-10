@@ -14,7 +14,6 @@ router.get('/:categoryName', (req, res, next) => {
     order: Sequelize.literal('freq DESC')
   })
   .then(frequencies => {
-
     frequencies.forEach(frequency => console.log(frequency.ingredient))
     if (!frequencies) {
       Ingredient.findAll({
@@ -31,3 +30,16 @@ router.get('/:categoryName', (req, res, next) => {
   })
 })
 
+router.get('/', (req, res, next) => {
+  const userId = req.user.id;
+  Frequency.findAll({
+    where: {
+      userId: req.user.id,
+    },
+    order: Sequelize.literal('freq DESC')
+  })
+  .then(frequencies => {
+    frequencies.forEach(frequency => console.log(frequency.ingredient))
+    return res.json(frequencies)
+  })
+})

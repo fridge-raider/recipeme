@@ -23,29 +23,28 @@ const OrderHistory = db.define('orderHistory', {
   },
   hooks: {
     beforeCreate: function(inst) {
-
-      const promise1 = Frequency.findOrCreate({
+      // can return promises for testing (maybe)
+      Frequency.findOrCreate({
         where: {
           userId: inst.userId,
           ingredientName: inst.ingredientName
         }
-      }).spread((item, created) => {
-        if(created) {
+      }).spread((item, created) => { // use ES6 to destructure array
+        if (created) {
           let freq = +inst.servings;
           item.update({ freq });
         } else {
-          let freq = +item.freq+ +inst.servings;
+          let freq = +item.freq + +inst.servings;
           item.update({ freq })
         }
       })
 
-      const promise2 = Ingredient.findOrCreate({
+      Ingredient.findOrCreate({
         where: {
           name: inst.ingredientName
         }
       }).spread((item, created) => {
-        console.log('ingredient', item, created)
-        if(created) {
+        if (created) {
           let freq = +inst.servings;
           item.update({ freq });
         } else {
@@ -55,9 +54,9 @@ const OrderHistory = db.define('orderHistory', {
       })
     }
   },
+  // dont need "week" field anymore
   setterMethods: {
     week: function(val) {
-      //console.log("HELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOoooooHELLOOOOooooo", moment(val).week(), moment(val).get('month'), moment(val).get('year'));
       this.setDataValue('week', moment(val).week())
     },
   }

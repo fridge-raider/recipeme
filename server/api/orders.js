@@ -1,7 +1,9 @@
+// put comments that es6 looks for to ignore the camelCase rule
+
 const router = require('express').Router()
 const { OrderHistory, Ingredient } = require('../db/models')
 const Sequelize = require('sequelize')
-const db = require('../db');
+const db = require('../db'); // dont need this
 
 
 const recWeeklyIntakeByCategory = {
@@ -28,9 +30,7 @@ const recWeeklyIntakeByNutrient = {
   nf_p: 7000
 }
 
-
 module.exports = router
-
 
 // gets last 60 days of orders, groups by date, sums nutrients - for graph
 router.get('/nutrients', (req, res, next) => {
@@ -41,7 +41,7 @@ router.get('/nutrients', (req, res, next) => {
         $gt: new Date(new Date(Date.now()).getTime() - 60 * 24 * 60 * 60 * 1000) // in last 60 days
       }
     },
-    // change this to date not createdAt
+    // maybe get rid of the groups aggregations and move it all to frontend
     group: ['orderHistory.createdAt'],
     attributes: ['createdAt', [Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_calories*servings')), 'nf_calories'],
       [Sequelize.fn('SUM', Sequelize.literal('ingredient.nf_total_fat*servings')), 'nf_total_fat'],
@@ -74,6 +74,7 @@ router.put('/nutrients/deficient', (req, res, next) => {
     nf_potassium: 0,
     nf_p: 0
   }
+  // what if only one receipt
   let minDate = new Date(Date.now())
   let maxDate = new Date('01-01-1990')
 
@@ -85,7 +86,7 @@ router.put('/nutrients/deficient', (req, res, next) => {
     })
   })
 
-  const numWeeks = Math.round((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7))
+  const numWeeks = ((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
 
   res.json(getDeficientNutrients(nutrients, numWeeks))
 
@@ -154,7 +155,7 @@ router.put('/categories/deficient', (req, res, next) => {
     if (new Date(categoryDate.createdAt) > maxDate) maxDate = new Date(categoryDate.createdAt)
   })
 
-  const numWeeks = Math.round((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7))
+  const numWeeks = ((maxDate.getTime() - minDate.getTime()) / (1000 * 60 * 60 * 24 * 7)) + 1
 
   res.json(getDeficientCategories(categories, numWeeks))
 })
@@ -169,6 +170,7 @@ function getDeficientCategories(categoryTotals, numWeeks) {
 
   categories.forEach(category => {
     if (category !== 'null' && category !== 'Unsure') {
+
       deficits[category] = [+categoryTotals[category] / numWeeks, +recWeeklyIntakeByCategory[category], +recWeeklyIntakeByCategory[category] - +categoryTotals[category] / numWeeks]
 
       if (+deficits[category][2] > maxDef) {

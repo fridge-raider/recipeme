@@ -12,6 +12,9 @@ const Recipe = db.define('recipe', {
   },
   image: {
     type: Sequelize.STRING
+  },
+  yummlyID: {
+    type: Sequelize.INTEGER
   }
 },
 {

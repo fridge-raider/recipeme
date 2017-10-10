@@ -3,7 +3,16 @@ const db = require('../server/db');
 const {Ingredient, NutrientsAPIID, OrderHistory} = require('../server/db/models')
 
 //var fileName = require('./trainCategories.json');
-// var ingredients = new Set();
+
+var ingredients = new Set();
+
+var fileNutrientsIng = require('./nutrientsAll.json');
+var fileNutID = require('./nutritionID.json')
+
+//setting up orderhistory promises 
+const order_histories = require('./order_history_seed.js'); 
+const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)}); 
+
 
 let fileNutrientsIng = require('./ingredientCategories.js');
 let fileNutID = require('./nutritionID.json')
@@ -19,10 +28,12 @@ const rowsNut = new Set();
 fileNutID.forEach(nutrient => {
 	const instance = {
 		name: '',
-		apiId: 0
+		apiId: 0,
+		suggested: 0
 	}
 	instance.name = nutrient.name
 	instance.apiId = nutrient.apiId
+	instance.suggested = nutrient.suggested
 
 	rowsNut.add(instance)
 })
@@ -76,6 +87,7 @@ const seed = () => {
 	rowsNut.forEach(row => {
 		nutIdPromises.push(NutrientsAPIID.create(row));
 	})
+
 
 	const totalArrPromise = nutIdPromises.concat(ingredientPromises)
 	//console.log(allIngredients.length)
