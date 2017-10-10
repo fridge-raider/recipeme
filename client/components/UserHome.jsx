@@ -19,6 +19,7 @@ import Divider from 'material-ui/Divider';
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
+import Favorite from 'material-ui/svg-icons/action/favorite'
 // import store, { fetchFavoriteRecipes } from '../store'
 
 
@@ -41,14 +42,20 @@ export class UserHome extends Component {
         <div className="row" style={{margin:0}}>
           <div className="four wide column">
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
-             <List>
-                <Subheader>Favorite Recipes</Subheader>
+            <Subheader>Favorite Recipes<Favorite color="pink"/></Subheader>
                 <SearchBar 
                   style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
                   hintText="Search Favorite Recipes"
                 />
+             <List style={{maxHeight: 300, overflow: "auto"}}>
+                {/* <Subheader>Favorite Recipes<Favorite color="pink"/></Subheader>
+                <SearchBar 
+                  style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
+                  hintText="Search Favorite Recipes"
+                /> */}
                 { favoriteRecipes && favoriteRecipes.map((recipe) => {
                   return ( 
+
                   <ListItem
                     primaryText={recipe.name}
                     leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
