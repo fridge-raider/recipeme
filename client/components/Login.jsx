@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Button, Checkbox, Container, Form, Grid, Icon, Image, Segment } from 'semantic-ui-react'
+import RaisedButton from 'material-ui/RaisedButton'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import {auth} from '../store'
-
 
 class Login extends Component {
   constructor() {
@@ -26,49 +26,76 @@ class Login extends Component {
   }
 
   render(){
-    return (
-      <Container fluid className='login-container'>
-        <Grid centered columns={4}>
-        </Grid>
-        <Grid centered columns={2}>
-          <Grid.Column>
-            <Segment.Group>
-              <Segment textAlign='center' color='blue' inverted>
+    const imgCircle = {
+      height: "150px",
+      width: "180px",
+      position: "absolute",
+      left: "50vw",
+      top:"33vh", 
+      marginLeft:"-90px", 
+      borderRadius:"50%"
+    }
 
-                Welcome to RecipeMe!
-              </Segment>
-              <Segment>
-                <Form onSubmit={this.props.handleSubmit}>
-                  <Form.Field>
-                    <label>Email</label>
-                    <input name='email' type='text' placeholder='joesmith@gmail.com' onChange={this.handleEmail}/>
-                  </Form.Field>
-                  <Form.Field>
-                    <label>Password</label>
-                    <input name='password' type='password' placeholder='Password' onChange={this.handlePassword}/>
-                  </Form.Field>
-                  <br>
-                  </br>
-                  <Link to="/home">
-                    <Button type="submit" color='teal' onClick={(evt)=>this.props.handleSubmit(evt,this.state, 'login')}>
-                      Login
-                      <Icon name='arrow right'></Icon>
-                    </Button>
-                  </Link>
-                  <Link to="/home">
-                  <Button type="submit" color='teal' onClick={(evt)=>this.props.handleSubmit(evt,this.state,'signup')}>
-                    New User? Sign Up
-                    <Icon name='arrow right'></Icon>
-                  </Button>
-                </Link>
-                {this.props.error && this.props.error.response && <div> {this.props.error.response.data} </div>}
-                </Form>
-                or<a href='/auth/google'> Sign Up or Log in with Google+</a>
-              </Segment>
-            </Segment.Group>
-          </Grid.Column>
-        </Grid>
-      </Container>
+    const button = {
+      marginTop: "100px", 
+      left: "50vw"
+    }
+
+    const food1 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/FR5KGzul750E4SFIjmV6vUFphLzZn9TTDt6YMVi6L4_2XRspoubXNngHdp4B4hV1uvKmf0maNQVpPXUk6exh8w=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:0.5
+    }
+
+    const food2 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/dTIMzMwlvF3_B2a254WRzrYqooxMwXBqnWY-Zcrv4fpR4i4TWHdZXqHbzB_q8fwOBOX2TaVYUlsS1huNHCxjzx8=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:0.5
+    }
+
+    const food3 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/4VRowJtHAQ2BiCWKZczFf8rJ1L8m4N4u18FO5UzOHF2F0HiFZvSOH2ldeQo4XqkqiJOvK_E873ufYC2SFLMCQg=s320-c-e365")`,
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover",
+      marginBottom:0.5
+
+    }
+
+    const food4 = {
+      backgroundImage: `url("https://lh3.googleusercontent.com/IcYpfainJZDHfnMJqLyJP1L4L1-zaCW-rHXZUAJf8NYTUDcLtf-ZiF-b8ufmNkhD91Uezpmw-YP4cuWgpFiR5A=s320-c-e365")`, 
+      backgroundSize: "100%", 
+      backgroundRepeat: "no-repeat", 
+      backgroundSize: "cover", 
+      marginBottom:0.5
+
+    }
+    const shade = {
+      backgroundImage: `url("https://static.pexels.com/photos/139321/pexels-photo-139321.jpeg")`,
+      backgroundSize: "100%",
+      backgroundSize: "cover" 
+    }
+
+    return (
+      <div style={shade}> 
+        <div className="ui grid" style={{marginTop:-10}}> 
+          <div className="row" style={{minHeight:"50vh"}}> 
+            <div className="four wide column olive" style={food1}><div style={shade}></div></div> 
+            <div className="four wide column black" style={food2}> </div>
+            <div className="four wide column olive" style={food3}> </div> 
+            <div className="four wide column black" style={food4}> </div>  
+
+          </div> 
+          <div className="row" style={{minHeight:400, padding:0}}> 
+            <div className="sixteen wide column" style={{}}><div style={{marginLeft: "39.8vw"}}><a href='/auth/google'><RaisedButton secondary={true} label="Sign Up and Login with Google" style={button}/></a></div></div> 
+          </div> 
+          <img style={imgCircle} src="http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png"></img>
+        </div> 
+      </div>
     )
   }
 }
