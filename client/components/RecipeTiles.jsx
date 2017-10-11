@@ -93,7 +93,12 @@ export class RecipeTiles extends React.Component {
             Ingredients added!
             </Dialog>
           </IconButton>,
-          <IconButton key={`${recipe.id}-fave`} style={{ width: "none" }} tooltip="Favorite"><FavoriteBorder color="white" /></IconButton>]}
+          <IconButton 
+            key={`${recipe.id}-fave`} 
+            style={{ width: "none" }} 
+            tooltip="Favorite"
+            onClick={(evt) => this.props.addToFavorites(evt, recipe)}
+          ><FavoriteBorder color="white" /></IconButton>]}
       >
         <img src={imageUrl}
           onClick={(evt) => this.props.handleClick(evt, recipe.id)} />
