@@ -9,6 +9,7 @@ import Dialog from 'material-ui/Dialog';
 import TextField from 'material-ui/TextField';
 import SelectField from 'material-ui/SelectField';
 import DropDownMenu from 'material-ui/DropDownMenu';
+import Delete from 'material-ui/svg-icons/action/delete'
 import MenuItem from 'material-ui/MenuItem';
 import _ from 'lodash'
 import {setReceipt, fetchIngredientNames} from '../store'
@@ -129,7 +130,7 @@ export class ReceiptRow extends Component {
       </DropDownMenu>
     </TableRowColumn>
     <TableRowColumn style={{width:40}}>
-      <i class="trash outline icon"><button onClick={(row, receipt, callback) => {this.props.removeItemReceipt(this.props.row, this.props.receipt, this.props.callback)}}>&#xE872;</button></i>
+      <Delete onClick={(row, receipt, callback) => {this.props.removeItemReceipt(this.props.row, this.props.receipt, this.props.callback)}} />
     </TableRowColumn>
   </TableRow>
 

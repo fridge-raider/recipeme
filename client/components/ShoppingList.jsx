@@ -22,8 +22,7 @@ class ShoppingList extends Component {
     return (
       <List style={{maxHeight: '400', overflowY: 'auto'}}>
       <ul>
-        <h3>Shopping List</h3>
-        <Subheader>Ingredients</Subheader>
+        <Subheader style={{marginLeft:'-15px'}}>Ingredients</Subheader>
         {
           this.props.shoppingList.ingredients.map(item => {
             return (
@@ -38,13 +37,11 @@ class ShoppingList extends Component {
           this.props.shoppingList.recipeDetails.map(recipe => {
             return (
               <div key={recipe.name}>
-              <li style={{marginLeft: '15px', display: 'inline-block', float: 'left'}}
+              <li style={{display: 'inline-block', float: 'left', width:"100%"}}
               onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>
               {recipe.name}
+              <Delete style={{float: 'right'}} onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />
               </li>
-              <span style={{float: 'right', display: 'inline-block'}}>
-              <Delete onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />
-              </span>
               </div>
             )
           })
