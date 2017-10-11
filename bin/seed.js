@@ -15,8 +15,8 @@ let fileNutrientsIng = require('./ingredientCategories.js');
 let fileNutID = require('./nutritionID.json')
 
 // //setting up orderhistory promises
-const order_histories = require('./order_history_seed.js');
-const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)});
+//const order_histories = require('./order_history_seed.js');
+//const all_order_histories = order_histories.map(order_history => { OrderHistory.create(order_history)});
 
 // const temp = new Set();
 // const uniqueIngredients = new Set();
