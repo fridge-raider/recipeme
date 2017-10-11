@@ -13,8 +13,8 @@ update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
 
 function receiptParsingMinDist(item) {
   let searchArr = allIngredients[item.name.charAt(0)];
-  let min = item.name.length
-  let scaledMin = 10000;
+  let min = 100
+  //let scaledMin = 10000;
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
@@ -24,9 +24,9 @@ function receiptParsingMinDist(item) {
       }
     }
   }
-  scaledMin = (min*min)*item.name.length
+  //scaledMin = (min*min)*item.name.length
   // console.log(item.name, item.name.length, scaledMin)
-  return scaledMin
+  return min
 }
 
 // think about making this more modular - different functions for the if and else
@@ -77,12 +77,12 @@ function returnCleanReceipt(imageName) {
 
     //brew install imagemagick
     // const preprocessPromise = new Promise(function(resolve, reject) {
-    //   //doesn't do anything but eventually want to get imagemagick configured with textcleaner to 
-    //   //properly parse low quality, poorly angled, and wrinkled receipts 
+    //   //doesn't do anything but eventually want to get imagemagick configured with textcleaner to
+    //   //properly parse low quality, poorly angled, and wrinkled receipts
     //   im.readMetadata(imageName, function(err, metadata){
     //     if (err) reject(err);
     //     console.log('Shot at '+metadata.exif.dateTimeOriginal);
-    //     resolve(); 
+    //     resolve();
     //   })
     // })
 
@@ -153,22 +153,22 @@ function findByLongestMatch(longestWord) {
 
 function findSimilarIngredient(item) {
   let min = item.name.length
-  let possibleMatch = "unknown"; 
-  let words = item.name.split(" "); 
+  let possibleMatch = "unknown";
+  let words = item.name.split(" ");
   for(let j=0; j<words.length; j++) {
     let searchArr = allIngredients[words[j].charAt(0)]
     if(searchArr) {
       for(let i=0; i<searchArr.length; i++) {
         var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
         if(lev.distance < min) {
-          min = lev.distance; 
-          possibleMatch = searchArr[i]; 
+          min = lev.distance;
+          possibleMatch = searchArr[i];
         }
       }
     }
   }
-  console.log(item.name, item.name.length, possibleMatch) 
-  return possibleMatch; 
+  console.log(item.name, item.name.length, possibleMatch)
+  return possibleMatch;
 }
 
 function getReceiptIngredients(parsedReceipt) {
@@ -198,7 +198,7 @@ function getReceiptIngredients(parsedReceipt) {
           ingredientName = results[2].name;
           category = results[2].category;
         }
-        
+
         //levenstein if none of those work
         if(ingredientName === "unknown") {
           ingredientName = findSimilarIngredient(item);
