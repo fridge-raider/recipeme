@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import {getAutopopRecipesByCategory} from './autopopRecipes'
 
 /**
  * ACTION TYPES
@@ -20,6 +21,7 @@ export function fetchDeficientCategories(categoryHistory) {
       .then(res => res.data)
       .then(defCategories => {
         dispatch(setDeficientCategories(defCategories));
+        dispatch(getAutopopRecipesByCategory(defCategories.defCategory))
       })
     }
   }
