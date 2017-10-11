@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import {auth} from '../store'
+import {auth, fetchIngredientNames} from '../store'
 
 class Login extends Component {
   constructor() {
@@ -99,7 +99,7 @@ class Login extends Component {
             <span 
               className="subsubTitle"
               style={{opacity: 1, marginTop: 100, marginLeft: "80vw", color: "white", fontSize: 30, fontWeight: "bolder"}}
-            >Made with love ~ p*a*m</span>
+            >Made with love ♥</span>
           </div> 
 
           <img style={imgCircle} src="http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png"></img>
@@ -122,6 +122,7 @@ const mapDispatch = (dispatch) => {
       const email = state.email
       const password = state.password
       dispatch(auth(email, password, action))
+      dispatch(fetchIngredientNames())
     }
   }
 }

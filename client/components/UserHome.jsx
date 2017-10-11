@@ -50,7 +50,7 @@ export class UserHome extends Component {
         style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={(value) => this.setState({submit: value})}
-        hintText="Search Favorite Recipes"
+        hintText="Search Favorites"
         />
     )
   }
@@ -64,7 +64,7 @@ export class UserHome extends Component {
         <div className="row" style={{margin:0}}>
           <div className="four wide column">
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
-            <Subheader style={{fontSize: 16}}>Favorite Recipes<Favorite color="pink"/></Subheader>
+            <Subheader style={{fontSize: 16}}>Favorite Recipes</Subheader>
               {this.renderSearch()}
               <FavoritesList search={this.state.search}/>
               <Divider />
@@ -73,8 +73,9 @@ export class UserHome extends Component {
             </Paper>
           </div>
           <div className="twelve wide column" style={{paddingRight:30}}>
-          { !this.props.categoryHistory.length &&
-            <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
+          { (!this.props.categoryHistory)
+            ? null
+            : (!this.props.categoryHistory.length)? (<h2> You have no past purchasing history. Go Upload a Reciept! </h2>) : null
           }
           {!!this.props.categoryHistory.length &&
             !!this.props.nutrientHistory.length &&
@@ -117,7 +118,6 @@ const mapDispatch = (dispatch) => {
     },
     handleClick(evt, recipeId) {
       dispatch(getRecipeDetails(recipeId))
-
     }
   }
 }

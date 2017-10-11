@@ -1,4 +1,4 @@
-import * as d3 from 'd3';
+//import * as d3 from 'd3';
 import c3 from 'c3';
 import React, { Component } from 'react';
 import ReactFauxDOM from 'react-faux-dom';
@@ -7,7 +7,8 @@ import { withRouter } from 'react-router'
 import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
+import * as d3 from 'd3';
+import d3Tip from 'd3-tip';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -40,7 +41,6 @@ class GraphVisualizations extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleCategoryClick = this.handleCategoryClick.bind(this)
     this.handleNutrientClick = this.handleNutrientClick.bind(this)
-    this.handleCategoryHover = this.handleCategoryHover.bind(this)
   }
 
   handleChange(value) {
@@ -53,11 +53,6 @@ class GraphVisualizations extends Component {
     this.props.handleCategoryClick(categories[category])
   }
 
-  handleCategoryHover(category) {
-    this.setState({tooltip: category})
-    //this.props.handleCategoryClick(categories[category])
-  }
-
   handleNutrientClick(nutrient) {
     this.props.handleNutrientClick(nutrients[nutrient])
   }
@@ -67,6 +62,8 @@ class GraphVisualizations extends Component {
   }
 
   componentDidUpdate() {
+
+
 
     // CATEGORIES TAB CHARTS
     const { lineGraphObj, pieGraphObj } = getCategoryChart(this.props.categoryHistory)
@@ -91,7 +88,7 @@ class GraphVisualizations extends Component {
       bar: categoryDeficientInfo.bar,
       axis: categoryDeficientInfo.axis,
       tooltip: categoryDeficientInfo.tooltip,
-      padding: categoryDeficientInfo.padding
+      padding: categoryDeficientInfo.padding,
     })
 
     // NUTRIENTS TAB CHARTS
@@ -119,31 +116,48 @@ class GraphVisualizations extends Component {
       padding: nutrientDeficientInfo.padding
     })
 
-    // add on click handler to category def chart ticks
-    // var svg = d3.selectAll('#category_def_chart .tick')
+    const div = d3.select('#app').insert('div')
+      .style('position', 'relative')
+      .style('background-color', '#484848')
+      .style('opacity', 0.8)
+      .style('border-style', 'solid')
+      .style('border-color', '#808080')
+      .style('display', 'inline-block')
+      .style('z-index', 999999)
 
-    // select all the items
-    // append circle
-    // gave circle attributes
-    // onmouseover <- function does d3.select('this') <- add things here
+    d3.selectAll('#category_def_chart g.tick')
+      .on('mouseover', (val) => {
+        console.log(val)
+        let category = ''
+        if(val === 0) category = 'grains'
+        else if(val === 1) category = 'vegetables'
+        else if(val === 2) category = 'fruits'
+        else if(val === 3) category = 'dairy'
+        else if(val === 4) category = 'meat'
+        else if(val === 5) category = 'fats and oils'
+        else if(val === 6) category = 'nuts and legumes'
+        else if(val === 7) category = 'added sugars'
+        let mouseEvent = categoryDeficitChart.internal.d3.event
+        console.log(mouseEvent)
+        div.html('click for recipes with ' + category)
+          .style('left', (mouseEvent.pageX-90)+"px")
+          .style('bottom', (mouseEvent.pageY+10)+"px")
+          .style('visibility', 'visible')
+          .style('padding-left', '7px')
+          .style('padding-right', '7px')
+          .style('border-radius', '10px')
+          .style('border-width', '1px')
+          .style('color', '#ffffff')
+      })
+      .on('mouseout', () => {
+        let mouseEvent = categoryDeficitChart.internal.d3.event
+        div.style('visibility', 'hidden')
+        .style('left', (mouseEvent-90)+"px")
+        .style('bottom', (mouseEvent.pageY+10)+"px")
+      }) 
 
-    // var focus = svg.append("g")
-    // .style("display", "none");
-
-    d3.selectAll('#category_def_chart .tick')
-    //.on('mouseover', this.handleCategoryHover)
+    d3.selectAll('#category_def_chart g.tick')
     .on('click', this.handleCategoryClick)
-
-    // svg.append("popup")
-    //   .attr("width", "10px")
-    //   .attr("height", "10px")
-    //   .on("mouseover", function() {focus.style("display", null)})
-    //   .on("mouseout", function() { focus.style("display", "none")})
-    // .on('mouseover', this.handleCategoryHover)
-    // .enter()
-    //   .append('p')
-    //   .text('hello')
-    // svg.on('click', this.handleCategoryClick)
 
     // add on click handler to nutrient def chart ticks
     d3.selectAll('#nutrient_def_chart .tick')
@@ -158,6 +172,11 @@ class GraphVisualizations extends Component {
     // CATEGORY TAB CHARTS
     let categoryLineDiv = ReactFauxDOM.createElement('div');
     categoryLineDiv.setAttribute('id', 'category_line_chart');
+
+    let body = d3.select(categoryLineDiv).append('div').attr('id', 'myDiv')
+    
+   
+
 
     let categoryPieDiv = ReactFauxDOM.createElement('div');
     categoryPieDiv.setAttribute('id', 'category_pie_chart');
@@ -179,9 +198,7 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <Toolbar style={{marginBottom:10}}>
-          <ToolbarTitle text="Grocery Purchasing History" style={{fontWeight:"bold", fontColor:"#ffffff"}}/>
-        </Toolbar>
+        <h2>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
