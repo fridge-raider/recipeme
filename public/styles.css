@@ -55,6 +55,9 @@ img {
   width: 500px
 }
 
+.item:hover {
+  background-color: #eff8fb
+}
 
 .nav-bar {
   height: 50px;
