@@ -22,6 +22,7 @@ import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
 import Favorite from 'material-ui/svg-icons/action/favorite'
 import ShoppingList from './ShoppingList.jsx'
+import FavoritesList from './FavoritesList.jsx'
 
 
 /**
@@ -55,10 +56,6 @@ export class UserHome extends Component {
 
 
   render() {
-    const { favoriteRecipes } = this.props
-    const search = favoriteRecipes.filter((recipe) => {
-      return recipe.ingredientsList.includes(this.state.search)
-    })
 
     return (
       <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
@@ -68,22 +65,9 @@ export class UserHome extends Component {
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
             <Subheader style={{fontSize: 16}}>Favorite Recipes<Favorite color="pink"/></Subheader>
               {this.renderSearch()}
-             <List style={{maxHeight: 350, overflowY: "auto"}}>
-              { (search.length) ? search.map(recipe => {
-                return (<ListItem
-                    primaryText={recipe.name}
-                    leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
-                    onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
-                  />) 
-                }) : favoriteRecipes.map(recipe => {
-                return (<ListItem
-                    primaryText={recipe.name}
-                    leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
-                    onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
-                  />)
-                })}
-              </List>
+              <FavoritesList search={this.state.search}/>
               <Divider />
+            <Subheader style={{fontSize: 16}}>Shopping List</Subheader>
              <ShoppingList />
             </Paper>
           </div>

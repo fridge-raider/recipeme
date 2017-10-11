@@ -6,7 +6,7 @@ import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
 import AddBorder from 'material-ui/svg-icons/content/add-circle-outline'
-import { getRecipeDetails, setShoppingList, addFavoriteRecipe } from '../store'
+import { getRecipeDetails, setShoppingList, addFavoriteRecipe, addToShoppingList } from '../store'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 

@@ -5,73 +5,51 @@ import { fetchFavoriteRecipes, getRecipeDetails } from '../store'
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
 import Avatar from 'material-ui/Avatar';
+import { withRouter } from 'react-router'
 
 class FavoritesList extends Component {
   constructor(props) {
     super(props)
 
-    this.handleRecipeClick = this.handleRecipeClick.bind(this)
-  }
-
-  handleRecipeClick(evt, url) {
-    window.open(url)
   }
 
   render() {
+    const { favoriteRecipes } = this.props
+    const search = favoriteRecipes.filter((recipe) => {
+      return recipe.ingredientsList.includes(this.props.search)
+    })
     return (
-      <List style={{maxHeight: '400', overflowY: 'auto'}}>
-      <ul>
-        <h3>Shopping List</h3>
-        <Subheader>Ingredients</Subheader>
-        {
-          this.props.shoppingList.ingredients.map(item => {
-            return (
-              <li key={item} style={{marginLeft: '15px'}}>{item}
-              </li>
-            )
-          })
-        }
-        <br/>
-        <Subheader>Recipes</Subheader>
-        {
-          this.props.shoppingList.recipeDetails.map(recipe => {
-            return (
-              <div key={recipe.name}>
-              <li style={{marginLeft: '15px', display: 'inline-block', float: 'left'}}
-              onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>
-              {recipe.name}
-              </li>
-              <span style={{float: 'right', display: 'inline-block'}}>
-              <Delete onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />
-              </span>
-              </div>
-            )
-          })
-        }
-      </ul>
+      <List style={{maxHeight: 350, overflowY: "auto"}}>
+        { (search.length) ? search.map(recipe => {
+          return (<ListItem
+              primaryText={recipe.name}
+              leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
+              onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
+            />) 
+          }) : favoriteRecipes.map(recipe => {
+          return (<ListItem
+              primaryText={recipe.name}
+              leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
+              onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
+            />)
+          })}
       </List>
     )
   }
 }
 
-const mapProps = (state) => {
+const mapState = (state) => {
   return {
-    shoppingList: state.shoppingList
+    favoriteRecipes: state.favoriteRecipes
   }
 }
 
-const mapState = (dispatch) => {
+const mapProps = (dispatch) => {
   return {
-    // handleDeleteIng(evt, item) {
-    //   dispatch(deleteIngredient(item))
-    // },
-    clearShoppingList() {
-      dispatch(clearList({ingredients: [], recipeDetails: []}))
-    },
-    removeRecipe(evt, name) {
-      dispatch(removeRecipeFromList(name))
-    },
+    handleClick(evt, recipeId) {
+      dispatch(getRecipeDetails(recipeId))
+    }
   }
 }
 
-export default withRouter(connect(mapProps, mapState)(ShoppingList));
+export default withRouter(connect(mapState, mapProps)(FavoritesList));
