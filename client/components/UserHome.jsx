@@ -33,7 +33,8 @@ export class UserHome extends Component {
     super(props)
 
     this.state = {
-      value: ''
+      search: '',
+      submit: ''
     }
 
     this.renderSearch = this.renderSearch.bind(this)
@@ -48,7 +49,7 @@ export class UserHome extends Component {
       <SearchBar
         style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
         onChange={(value) => this.setState({search: value})}
-        onRequestSearch={() => console.log('hi')}
+        onRequestSearch={(value) => this.setState({submit: value})}
         hintText="Search Favorite Recipes"
         />
     )
@@ -111,11 +112,12 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
       dispatch(fetchShoppingList())
-      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
+      // dispatch(fetchIngredientNames()) // can do this before logging in to speed up
       dispatch(fetchFavoriteRecipes())
     },
     handleClick(evt, recipeId) {
       dispatch(getRecipeDetails(recipeId))
+
     }
   }
 }

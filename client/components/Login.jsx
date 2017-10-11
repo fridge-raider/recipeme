@@ -31,8 +31,8 @@ class Login extends Component {
       width: "180px",
       position: "absolute",
       left: "50vw",
-      top:"35vh", 
-      marginLeft:"-90px", 
+      top:"33vh",
+      marginLeft:"-90px",
       borderRadius:"50%"
     }
 
@@ -43,18 +43,18 @@ class Login extends Component {
     }
 
     const food1 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/FR5KGzul750E4SFIjmV6vUFphLzZn9TTDt6YMVi6L4_2XRspoubXNngHdp4B4hV1uvKmf0maNQVpPXUk6exh8w=s320-c-e365")`, 
-      backgroundSize: "100%", 
-      backgroundRepeat: "no-repeat", 
+      backgroundImage: `url("https://lh3.googleusercontent.com/FR5KGzul750E4SFIjmV6vUFphLzZn9TTDt6YMVi6L4_2XRspoubXNngHdp4B4hV1uvKmf0maNQVpPXUk6exh8w=s320-c-e365")`,
+      backgroundSize: "100%",
+      backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       marginBottom:0.5,
       opacity: 1.5
     }
 
     const food2 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/dTIMzMwlvF3_B2a254WRzrYqooxMwXBqnWY-Zcrv4fpR4i4TWHdZXqHbzB_q8fwOBOX2TaVYUlsS1huNHCxjzx8=s320-c-e365")`, 
-      backgroundSize: "100%", 
-      backgroundRepeat: "no-repeat", 
+      backgroundImage: `url("https://lh3.googleusercontent.com/dTIMzMwlvF3_B2a254WRzrYqooxMwXBqnWY-Zcrv4fpR4i4TWHdZXqHbzB_q8fwOBOX2TaVYUlsS1huNHCxjzx8=s320-c-e365")`,
+      backgroundSize: "100%",
+      backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       marginBottom:0.5,
       opacity: 1.5
@@ -62,8 +62,8 @@ class Login extends Component {
 
     const food3 = {
       backgroundImage: `url("https://lh3.googleusercontent.com/4VRowJtHAQ2BiCWKZczFf8rJ1L8m4N4u18FO5UzOHF2F0HiFZvSOH2ldeQo4XqkqiJOvK_E873ufYC2SFLMCQg=s320-c-e365")`,
-      backgroundSize: "100%", 
-      backgroundRepeat: "no-repeat", 
+      backgroundSize: "100%",
+      backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
       marginBottom:0.5,
       opacity: 1.5, 
@@ -84,14 +84,13 @@ class Login extends Component {
     }
 
     return (
-      <div style={shade}> 
-        <div className="ui grid" style={{marginTop:-10}}> 
-          <div className="row" style={{minHeight:"50vh"}}> 
-            <div className="four wide column olive" style={food1}></div> 
+      <div style={shade}>
+        <div className="ui grid" style={{marginTop:-10}}>
+          <div className="row" style={{minHeight:"50vh"}}>
+            <div className="four wide column olive" style={food1}><div style={shade}></div></div>
             <div className="four wide column black" style={food2}> </div>
-            <div className="four wide column olive" style={food3}> </div> 
-            <div className="four wide column black" style={food4}> </div>  
-
+            <div className="four wide column olive" style={food3}> </div>
+            <div className="four wide column black" style={food4}> </div>
           </div> 
 
           <div className="row blur" style={{minHeight:400, padding:0}}> 
@@ -102,8 +101,9 @@ class Login extends Component {
               style={{opacity: 1, marginTop: 100, marginLeft: "80vw", color: "white", fontSize: 30, fontWeight: "bolder"}}
             >Made with love ~ p*a*m</span>
           </div> 
+
           <img style={imgCircle} src="http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png"></img>
-        </div> 
+        </div>
       </div>
     )
   }
