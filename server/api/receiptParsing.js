@@ -30,6 +30,7 @@ function receiptParsingMinDist(item) {
 // think about making this more modular - different functions for the if and else
 // make function names descriptive
 function receiptParsingInitial(text) {
+  console.log('text', text)
   const lines = text.split('\n');
   const cleanLines = [];
   const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
@@ -94,7 +95,7 @@ function returnCleanReceipt(imageName) {
 
     const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
-      tesseract.process(imageName, function (err, text) {
+      tesseract.process(imageName, options, function (err, text) {
           if (err) {
               reject(err);
           } else {
