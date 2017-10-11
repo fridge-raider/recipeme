@@ -75,12 +75,12 @@ function receiptParsingInitial(text) {
 
 function returnCleanReceipt(imageName) {
 
-    // const options = {
-    //   1: 'eng',
-    //   psm: 4,
-    //   binary: '/usr/local/bin/tesseract',
-    //   config: '../../receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
-    // }
+    const options = {
+      1: 'eng',
+      psm: 4,
+      binary: '/usr/local/bin/tesseract',
+      config: '../../receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
+    }
 
     //brew install imagemagick
     // const preprocessPromise = new Promise(function(resolve, reject) {
@@ -95,7 +95,7 @@ function returnCleanReceipt(imageName) {
 
     const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
-      tesseract.process(imageName, function (err, text) {
+      tesseract.process(imageName, options, function (err, text) {
           if (err) {
               reject(err);
           } else {
