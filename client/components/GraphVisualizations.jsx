@@ -7,7 +7,7 @@ import { withRouter } from 'react-router'
 import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
-import * as d3 from 'd3'
+import * as d3 from 'd3';
 import d3Tip from 'd3-tip';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
@@ -41,7 +41,6 @@ class GraphVisualizations extends Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleCategoryClick = this.handleCategoryClick.bind(this)
     this.handleNutrientClick = this.handleNutrientClick.bind(this)
-    this.handleCategoryHover = this.handleCategoryHover.bind(this)
   }
 
   handleChange(value) {
@@ -52,11 +51,6 @@ class GraphVisualizations extends Component {
 
   handleCategoryClick(category) {
     this.props.handleCategoryClick(categories[category])
-  }
-
-  handleCategoryHover(category) {
-    this.setState({tooltip: category})
-    //this.props.handleCategoryClick(categories[category])
   }
 
   handleNutrientClick(nutrient) {
@@ -94,7 +88,7 @@ class GraphVisualizations extends Component {
       bar: categoryDeficientInfo.bar,
       axis: categoryDeficientInfo.axis,
       tooltip: categoryDeficientInfo.tooltip,
-      padding: categoryDeficientInfo.padding
+      padding: categoryDeficientInfo.padding,
     })
 
     // NUTRIENTS TAB CHARTS
@@ -122,43 +116,48 @@ class GraphVisualizations extends Component {
       padding: nutrientDeficientInfo.padding
     })
 
-    // add on click handler to category def chart ticks
-    // var svg = d3.selectAll('#category_def_chart .tick')
-
-    // select all the items
-    // append circle
-    // gave circle attributes
-    // onmouseover <- function does d3.select('this') <- add things here
-
-    // var focus = svg.append("g")
-    // .style("display", "none");
-    // tip = d3.tip().attr('class', 'd3-tip').html(function(d) { return d; });
-
-    var tooltip = d3.d3Tip().attr('class', 'd3-tip').html(() => {return '<div>hullo</div>'})
+    const div = d3.select('#app').insert('div')
+      .style('position', 'relative')
+      .style('background-color', '#484848')
+      .style('opacity', 0.8)
+      .style('border-style', 'solid')
+      .style('border-color', '#808080')
+      .style('display', 'inline-block')
+      .style('z-index', 999999)
 
     d3.selectAll('#category_def_chart g.tick')
       .on('mouseover', (val) => {
-
-        console.log(val, tooltip)
-        tooltip.show()
-        d3Tip.show()
+        console.log(val)
+        let category = ''
+        if(val === 0) category = 'grains'
+        else if(val === 1) category = 'vegetables'
+        else if(val === 2) category = 'fruits'
+        else if(val === 3) category = 'dairy'
+        else if(val === 4) category = 'meat'
+        else if(val === 5) category = 'fats and oils'
+        else if(val === 6) category = 'nuts and legumes'
+        else if(val === 7) category = 'added sugars'
+        let mouseEvent = categoryDeficitChart.internal.d3.event
+        console.log(mouseEvent)
+        div.html('click for recipes with ' + category)
+          .style('left', (mouseEvent.pageX-90)+"px")
+          .style('bottom', (mouseEvent.pageY+10)+"px")
+          .style('visibility', 'visible')
+          .style('padding-left', '7px')
+          .style('padding-right', '7px')
+          .style('border-radius', '10px')
+          .style('border-width', '1px')
+          .style('color', '#ffffff')
       })
-
+      .on('mouseout', () => {
+        let mouseEvent = categoryDeficitChart.internal.d3.event
+        div.style('visibility', 'hidden')
+        .style('left', (mouseEvent-90)+"px")
+        .style('bottom', (mouseEvent.pageY+10)+"px")
+      }) 
 
     d3.selectAll('#category_def_chart g.tick')
-    //.on('mouseover', this.handleCategoryHover)
     .on('click', this.handleCategoryClick)
-
-    // svg.append("popup")
-    //   .attr("width", "10px")
-    //   .attr("height", "10px")
-    //   .on("mouseover", function() {focus.style("display", null)})
-    //   .on("mouseout", function() { focus.style("display", "none")})
-    // .on('mouseover', this.handleCategoryHover)
-    // .enter()
-    //   .append('p')
-    //   .text('hello')
-    // svg.on('click', this.handleCategoryClick)
 
     // add on click handler to nutrient def chart ticks
     d3.selectAll('#nutrient_def_chart .tick')
@@ -173,6 +172,11 @@ class GraphVisualizations extends Component {
     // CATEGORY TAB CHARTS
     let categoryLineDiv = ReactFauxDOM.createElement('div');
     categoryLineDiv.setAttribute('id', 'category_line_chart');
+
+    let body = d3.select(categoryLineDiv).append('div').attr('id', 'myDiv')
+    
+   
+
 
     let categoryPieDiv = ReactFauxDOM.createElement('div');
     categoryPieDiv.setAttribute('id', 'category_pie_chart');
@@ -239,18 +243,6 @@ class GraphVisualizations extends Component {
                   </GridTile>
                 </GridList>
               </div>
-
-              {/*!!Object.keys(this.props.deficientCategories).length &&
-              <div>
-              <h2>You could use some more {this.props.deficientCategories.defCategory}!
-              <br/>
-              <RaisedButton color="blue"
-              onClick={(evt)=>this.props.handleCategoryClick(evt, this.props)}
-              >Get Recipes
-              </RaisedButton>
-              </h2>
-              </div>
-           */}
             </div>
 
           </Tab>
@@ -293,17 +285,6 @@ class GraphVisualizations extends Component {
                   </GridTile>
                 </GridList>
               </div>
-              {/*!!Object.keys(this.props.deficientNutrients).length &&
-        <div>
-        <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
-        <RaisedButton
-        onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
-        >Get Recipes
-        </RaisedButton>
-        </h2>
-        </div>
-      */}
-
             </div>
           </Tab>
         </Tabs>

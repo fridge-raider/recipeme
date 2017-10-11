@@ -79,8 +79,9 @@ export class UserHome extends Component {
             </Paper> 
           </div>
           <div className="twelve wide column" style={{paddingRight:30}}>
-          { !this.props.categoryHistory.length &&
-            <h2> You have no past purchasing history. Go Upload a Reciept! </h2>
+          { (!this.props.categoryHistory)
+            ? null
+            : (!this.props.categoryHistory.length)? (<h2> You have no past purchasing history. Go Upload a Reciept! </h2>) : null
           }
           {!!this.props.categoryHistory.length &&
             !!this.props.nutrientHistory.length &&
@@ -116,7 +117,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
-      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
+       // can do this before logging in to speed up
     }
   }
 }

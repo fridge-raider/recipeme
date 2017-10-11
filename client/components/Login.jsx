@@ -4,7 +4,7 @@ import RaisedButton from 'material-ui/RaisedButton'
 import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import {auth} from '../store'
+import {auth, fetchIngredientNames} from '../store'
 
 class Login extends Component {
   constructor() {
@@ -84,10 +84,10 @@ class Login extends Component {
       <div style={shade}> 
         <div className="ui grid" style={{marginTop:-10}}> 
           <div className="row" style={{minHeight:"50vh"}}> 
-            <div className="four wide column olive" style={food1}><div style={shade}></div></div> 
-            <div className="four wide column black" style={food2}> </div>
-            <div className="four wide column olive" style={food3}> </div> 
-            <div className="four wide column black" style={food4}> </div>  
+            <div className="four wide column" style={food1}><div style={shade}></div></div> 
+            <div className="four wide column" style={food2}> </div>
+            <div className="four wide column" style={food3}> </div> 
+            <div className="four wide column" style={food4}> </div>  
 
           </div> 
           <div className="row" style={{minHeight:400, padding:0}}> 
@@ -113,6 +113,7 @@ const mapDispatch = (dispatch) => {
       const email = state.email
       const password = state.password
       dispatch(auth(email, password, action))
+      dispatch(fetchIngredientNames())
     }
   }
 }
