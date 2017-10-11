@@ -8,16 +8,13 @@ export default function getCategoryDeficientChart(deficits, onClickHandler) {
   const dailyRecommendations = []
 
   // for every item in deficits, add to the consumption and rec arrays
-  for (let category in deficits) {
+  Object.keys(deficits).forEach(category => {
     avgDailyConsumption.push(deficits[category][0])
     dailyRecommendations.push(deficits[category][1])
-    categories.push(category)
-  }
-
+  })
 
   avgDailyConsumption.unshift('Average Weekly Purchases')
   dailyRecommendations.unshift('Recommended Weekly Intake')
-
 
   const chartObj = {
     padding: {
@@ -32,9 +29,6 @@ export default function getCategoryDeficientChart(deficits, onClickHandler) {
         dailyRecommendations
       ],
       type: 'bar',
-      // onclick: function (d, i) {
-      //   console.log('clicking', d, i)
-      // },
     },
     bar: {
       width: {
@@ -57,35 +51,7 @@ export default function getCategoryDeficientChart(deficits, onClickHandler) {
           position: 'outer-middle'
         }
       }
-    },
-    // tooltip: {
-    //   contents: function (d, defaultTitleFormat, defaultValueFormat, color) {
-    //     const tableToReturn = `<div>
-    //     <table class='c3-tooltip'>
-    //     <tbody>
-    //     <tr>
-    //     <th colspan='2'>${categories[d[0].index]}: Click for Recipes!</th>
-    //     </tr>
-    //     <tr>
-    //     <td>
-    //     <span style="background-color:#1f77b4"></span>
-    //     ${defaultTitleFormat(d[0].name)}
-    //     </td>
-    //     <td>${defaultValueFormat(d[0].value)}</td>
-    //     </tr>
-    //     <tr>
-    //     <td>
-    //     <span style="background-color:#ff7f0e"></span>
-    //     ${defaultTitleFormat(d[1].name)}
-    //     </td>
-    //     <td>${defaultValueFormat(d[1].value)}</td>
-    //     </tr>
-    //     </tbody>
-    //     </table>
-    //     </div>`
-    //     return tableToReturn
-    //   }
-    // }
+    }
   }
 
   return chartObj

@@ -4,7 +4,6 @@ const Sequelize = require('sequelize')
 
 module.exports = router
 
-// update so specific to user
 router.get('/:categoryName', (req, res, next) => {
   Frequency.findAll({
     where: {
@@ -23,6 +22,7 @@ router.get('/:categoryName', (req, res, next) => {
         order: Sequelize.literal('freq DESC')
       })
       .then(ingredients => {
+        console.log('ingredients', ingredients)
         res.json(ingredients)
       })
     }

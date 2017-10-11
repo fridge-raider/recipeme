@@ -1,5 +1,4 @@
 import axios from 'axios'
-import secrets from '../../secrets'
 import Promise from 'bluebird'
 import history from '../history'
 
@@ -11,7 +10,7 @@ const GET_RECIPES = 'GET_RECIPES'
 export const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
-  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=50&requirePictures=true`)
+  return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredient}&maxResult=50&requirePictures=true`)
     .then(res => res.data)
     .then(recipes => {
       dispatch(getRecipes(recipes.matches))
@@ -55,7 +54,7 @@ export function fetchIDofDefNutrient(nutrient) {
       .then(defNutId => {
         const nutID = defNutId.apiId
         const nutSuggested = defNutId.suggested
-        return axios.get(`/api/recipes`) 
+        return axios.get(`/api/recipes`)
           .then(frequencies => frequencies.data)
           .then(ingredients => {
             const food1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].ingredientName}&nutrition.${nutID}.min=${nutSuggested}&maxResult=50`)
@@ -72,15 +71,8 @@ export function fetchIDofDefNutrient(nutrient) {
               dispatch(getRecipes(recipes))
             })
           })
-        
-      .catch(console.log)
 
-        // return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=salt&nutrition.${nutID}.min=${nutSuggested}&maxResult=75`)
-        //   .then(res => res.data)
-        //   .then(recipes =>{
-        //     dispatch(getRecipes(recipes.matches))
-        //   })
-        //   .catch(console.error)
+      .catch(console.log)
       })
 
   }

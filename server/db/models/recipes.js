@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
-const Ingredient = require('./ingredients')
+const User = require('./user')
 
 const Recipe = db.define('recipe', {
   name: {
@@ -14,12 +14,10 @@ const Recipe = db.define('recipe', {
     type: Sequelize.STRING
   },
   yummlyID: {
-    type: Sequelize.INTEGER
-  }
-},
-{
-  defaultScope: {
-    include: [{model: Ingredient}]
+    type: Sequelize.STRING
+  },
+  ingredientsList: {
+    type: Sequelize.ARRAY(Sequelize.STRING)
   }
 })
 
