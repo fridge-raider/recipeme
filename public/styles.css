@@ -130,8 +130,14 @@ img {
   background-color:'#F5F5F5'; 
 }
 
-@font-face {
-  font-family: 'Alice-Script';
-  src: url('../../bin/StarsFromOurEyes.ttf');
+.title {
+  font-family: 'Clicker Script', cursive;
 }
 
+.subsubTitle {
+  font-family: 'Sacramento', cursive;
+}
+
+.blur {
+  opacity: 1
+}

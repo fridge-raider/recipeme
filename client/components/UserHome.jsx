@@ -30,7 +30,6 @@ export class UserHome extends Component {
 
   componentWillMount() {
     this.props.initialData()
-    // store.dispatch(fetchFavoriteRecipes())
   }
 
 
@@ -47,12 +46,7 @@ export class UserHome extends Component {
                   style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
                   hintText="Search Favorite Recipes"
                 />
-             <List style={{maxHeight: 300, overflow: "auto"}}>
-                {/* <Subheader>Favorite Recipes<Favorite color="pink"/></Subheader>
-                <SearchBar 
-                  style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
-                  hintText="Search Favorite Recipes"
-                /> */}
+             <List style={{maxHeight: 300, overflowY: "auto"}}>
                 { favoriteRecipes && favoriteRecipes.map((recipe) => {
                   return ( 
 
