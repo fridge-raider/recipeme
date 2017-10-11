@@ -11,11 +11,9 @@ const GET_RECIPES = 'GET_RECIPES'
 export const getRecipes = recipes => ({ type: GET_RECIPES, recipes })
 
 export const getRecipesByIngredient = (ingredient) => dispatch => {
-  console.log('in thunk!!! with ', ingredient)
   return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&q=${ingredient}&maxResult=50&requirePictures=true`)
     .then(res => res.data)
     .then(recipes => {
-      console.log('recipes', recipes)
       dispatch(getRecipes(recipes.matches))
       })
     .catch(console.log)
@@ -76,13 +74,6 @@ export function fetchIDofDefNutrient(nutrient) {
           })
 
       .catch(console.log)
-
-        // return axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=salt&nutrition.${nutID}.min=${nutSuggested}&maxResult=75`)
-        //   .then(res => res.data)
-        //   .then(recipes =>{
-        //     dispatch(getRecipes(recipes.matches))
-        //   })
-        //   .catch(console.error)
       })
 
   }

@@ -10,7 +10,6 @@ const GET_AUTOPOP_RECIPES = 'GET_AUTOPOP_RECIPES'
 export const getAutopopRecipes = recipes => ({ type: GET_AUTOPOP_RECIPES, recipes })
 
 export const getAutopopRecipesByCategory = (category) => dispatch => {
-  console.log('in thunk with category ', category)
   return axios.get(`/api/recipes/${category}`)
     .then(res => res.data)
     .then(ingredients => {
