@@ -12,7 +12,7 @@ ReactDOM.render(
   <Provider store={store}>
   <MuiThemeProvider>
     <Routes />
-    </MuiThemeProvider>
+  </MuiThemeProvider>
 
   </Provider>,
   document.getElementById('app')

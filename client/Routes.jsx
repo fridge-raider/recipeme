@@ -4,8 +4,9 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr} from './components'
+import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr, SideBar} from './components'
 import {me} from './store'
+import {fetchFavoriteRecipes} from './store'
 
 /**
  * COMPONENT
@@ -13,6 +14,7 @@ import {me} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
+    //store.dispatch(fetchFavoriteRecipes(req.user.id))
   }
 
   render () {
@@ -20,6 +22,7 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
+
       { (this.props.isLoggedIn)
         ? (<div className ="container-fluid">
               <Main>
