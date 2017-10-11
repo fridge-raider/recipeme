@@ -1,7 +1,6 @@
 import axios from 'axios'
 import Promise from 'bluebird'
 import history from '../history'
-import secrets from '../../secrets'
 
 const app_id = process.env.YUMMLY_ID
 const app_key = process.env.YUMMLY_KEY
