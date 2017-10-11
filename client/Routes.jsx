@@ -5,7 +5,7 @@ import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
 import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr, SideBar} from './components'
-import {me} from './store'
+import {me, fetchIngredientNames} from './store'
 import {fetchFavoriteRecipes} from './store'
 
 /**
@@ -62,6 +62,7 @@ const mapDispatch = (dispatch) => {
   return {
     loadInitialData () {
       dispatch(me())
+      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
     }
   }
 }

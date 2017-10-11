@@ -100,7 +100,6 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
       dispatch(fetchShoppingList())
-      dispatch(fetchIngredientNames()) // can do this before logging in to speed up
     }
   }
 }
