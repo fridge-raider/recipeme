@@ -78,7 +78,7 @@ function returnCleanReceipt(imageName) {
     const options = {
       1: 'eng',
       psm: 4,
-      binary: '/usr/local/bin/tesseract',
+      //binary: '/usr/local/bin/tesseract',
       config: '../../receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
     }
 
