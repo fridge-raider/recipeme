@@ -17,20 +17,22 @@ export const addFavRecipe = recipe => ({type: ADD_FAV_RECIPE, recipe})
 export const removeFavRecipe = recipe => ({type: REMOVE_FAV_RECIPE, recipe})
 
 //thunk
-export function fetchFavoriteRecipes(userId) {
+export function fetchFavoriteRecipes() {
   return function thunk(dispatch) {
-    return axios.put(`/api/favorites/${userId}`)
+    console.log('inthunk')
+    return axios.get(`/api/favorites/`)
       .then(res => res.data)
       .then(recipes => {
+        console.log('inin thunk', recipes)
         dispatch(getFavRecipes(recipes));
       })
       .catch(console.log)
   }
 }
 
-export function addFavoriteRecipe(userId) {
+export function addFavoriteRecipe(favoritedRecipe) {
   return function thunk(dispatch) {
-    return axios.post(`/api/favorites/${userId}`)
+    return axios.post(`/api/favorites/`, favoritedRecipe)
       .then(res => res.data)
       .then(recipe => {
         dispatch(addFavRecipe(recipe))

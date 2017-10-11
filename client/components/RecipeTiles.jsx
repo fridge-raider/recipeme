@@ -6,9 +6,10 @@ import Subheader from 'material-ui/Subheader';
 import StarBorder from 'material-ui/svg-icons/toggle/star-border';
 import FavoriteBorder from 'material-ui/svg-icons/action/favorite-border'
 import AddBorder from 'material-ui/svg-icons/content/add-circle-outline'
-import { getRecipeDetails, addToShoppingList } from '../store'
+import { getRecipeDetails, setShoppingList, addFavoriteRecipe, addToShoppingList } from '../store'
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+
 
 const customContentStyle = {
   width: '200px',
@@ -53,11 +54,13 @@ export class RecipeTiles extends React.Component {
     imageUrl = imageUrl + "=s1600-c"
     let hover = false
     const subtitleStr = `by ${recipe.sourceDisplayName}`
+
     const actions = [<FlatButton
       label="Okay!"
       primary={true}
       onClick={this.handleClose}
     />]
+
     return (
       <GridTile
         key={recipe.id}
@@ -111,6 +114,12 @@ const mapDispatch = (dispatch) => {
   return {
     handleClick(evt, recipeId) {
       dispatch(getRecipeDetails(recipeId))
+    },
+    addToShoppingList(evt, list) {
+      dispatch(setShoppingList(list))
+    },
+    addToFavorites(evt, recipe) {
+      dispatch(addFavoriteRecipe(recipe))
     },
     addRecipeToList(evt, recipe) {
       dispatch(addToShoppingList(recipe))

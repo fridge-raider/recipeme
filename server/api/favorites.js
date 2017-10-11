@@ -1,13 +1,13 @@
 const router = require('express').Router()
-const {Recipe} = require('../db/models')
+const {Recipe, User} = require('../db/models')
 const Sequelize = require('sequelize')
 
 module.exports = router
 
-router.get('/:userId', (req, res, next) => {
+router.get('/', (req, res, next) => {
   Recipe.findAll({
     where: {
-      userId: req.params.userId
+      userFavoriteId: req.user.id
     }
   })
   .then(recipes => {
@@ -15,17 +15,25 @@ router.get('/:userId', (req, res, next) => {
   })
 })
 
-router.post('/:userId', (req, res, next) => {
-  const favoriteRec = req.body.recipe
-  Recipe.findOrCreate({ favoriteRec, userId: req.user.id })
-    .then(fav => res.json(fav))
+router.post('/', (req, res, next) => {
+  const favoriteRec = req.body
+  Recipe.findOrCreate({ 
+    where: {
+      name: favoriteRec.recipeName, 
+      image: favoriteRec.smallImageUrls[0], 
+      ingredientsList: favoriteRec.ingredients, 
+      yummlyID: favoriteRec.id, 
+      userFavoriteId: req.user.id 
+    }
+  })
+    .spread((favorite, created) => res.json(favorite))
     .catch(next)
 })
 
 router.delete('/:favoriteId/:userId', (req, res, next) => {
   Recipe.findOne({
     where: {
-      userId: req.params.userId,
+      user_favorite_id: req.params.userId,
       yummlyID: req.params.favoriteId
     }
   })
