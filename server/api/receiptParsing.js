@@ -14,7 +14,7 @@ update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
 function receiptParsingMinDist(item) {
   let searchArr = allIngredients[item.name.charAt(0)];
   let min = item.name.length
-  let scaledMin = 10000;
+  //let scaledMin = 10000;
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
@@ -24,9 +24,9 @@ function receiptParsingMinDist(item) {
       }
     }
   }
-  scaledMin = (min*min)*item.name.length
+  //scaledMin = (min*min)*item.name.length
   // console.log(item.name, item.name.length, scaledMin)
-  return scaledMin
+  return min
 }
 
 // think about making this more modular - different functions for the if and else
