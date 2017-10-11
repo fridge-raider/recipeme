@@ -22,6 +22,7 @@ router.get('/:categoryName', (req, res, next) => {
         order: Sequelize.literal('freq DESC')
       })
       .then(ingredients => {
+        console.log('ingredients', ingredients)
         res.json(ingredients)
       })
     }

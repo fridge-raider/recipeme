@@ -42,7 +42,7 @@ class Recipes extends Component {
     // figure out how to send in what is deficient (cateogry or nutrient) so we can say recipes with x - add something to state
     const { getRecipes } = this.props
     const search = getRecipes.filter((recipe) => {
-      return recipe.ingredients.includes(this.state.search)
+      return (recipe.ingredients.includes(this.state.search) || (recipe.recipeName.toLowerCase().indexOf(this.state.search.toLowerCase()) !== -1))
     })
 
     return (
@@ -59,7 +59,7 @@ class Recipes extends Component {
             cols={3}
             padding={6}
           >
-          { (search.length) ? search.map(recipe => {
+          { (this.state.search.length) ? search.map(recipe => {
               return <RecipeCard key={recipe.id} recipe={recipe} />
             }) : getRecipes.map(recipe => {
               return <RecipeCard key={recipe.id} recipe={recipe} /> })}
