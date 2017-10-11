@@ -5,16 +5,6 @@ import { Redirect } from 'react-router';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
 import {auth} from '../store'
-// import { injectGlobal } from 'styled-components'
-// import AliceFont from '../../public/StarsFromOurEyes.ttf';
-// injectGlobal`
-//   @font-face {
-//     font-family: 'PTC55F';
-//     src: url(${AliceFont}) format('truetype');
-//     font-weight: normal;
-//     font-style: normal;
-//   }
-// `;
 
 class Login extends Component {
   constructor() {
