@@ -7,29 +7,31 @@ const app_key = process.env.YUMMLY_KEY
 /**
  * ACTION TYPES
  */
-const SET_SHOPPING_LIST = 'SET_SHOPPING_LIST'
+const ADD_TO_SHOPPING_LIST = 'ADD_TO_SHOPPING_LIST'
+const CLEAR_LIST = 'CLEAR_LIST'
 
 /**
  * ACTION CREATORS
  */
-export const setShoppingList = recipe => ({ type: SET_SHOPPING_LIST, recipe })
+export const addToList = recipe => ({ type: ADD_TO_SHOPPING_LIST, recipe })
+export const clearList = () => ({ type: CLEAR_LIST })
 
 /**THUNKS */
 export function addToShoppingList(recipe) {
   return function thunk(dispatch) {
-    return axios.post(`/api/shoppingList`, {recipe})
+    return axios.post(`/api/shoppingList`, { recipe })
       .then(res => res.data)
       .then(shoppingListRecipe => {
         if (shoppingListRecipe !== 'Already added') {
           return axios.get(`http://api.yummly.com/v1/api/recipe/${recipe.id}?_app_id=${app_id}&_app_key=${app_key}`)
             .then(res => res.data)
             .then(recipeDetails => {
-              dispatch(setShoppingList({ingredients: shoppingListRecipe, recipeDetails: [{name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl}]}))
+              dispatch(addToList({ ingredients: shoppingListRecipe, recipeDetails: [{ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl }] }))
             })
         }
       })
-    }
   }
+}
 
 export function fetchShoppingList() {
   return function think(dispatch) {
@@ -42,28 +44,60 @@ export function fetchShoppingList() {
 
         Promise.map(recipeIds, recipeId => {
           return axios.get(`http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=${app_id}&_app_key=${app_key}`)
-          .then(res => res.data)
-          .then(recipeDetails => {
-            console.log('recipeDetails', recipeDetails)
-            recipes.push({name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl})
+            .then(res => res.data)
+            .then(recipeDetails => {
+              recipes.push({ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl })
+            })
+        })
+          .then(() => {
+            dispatch(addToList({ ingredients: ingredients, recipeDetails: recipes }))
           })
-        })
-        .then(() => {
-          dispatch(setShoppingList({ingredients: ingredients, recipeDetails: recipes}))
-        })
       })
   }
 }
 
+export function removeRecipeFromList(name) {
+  return function thunk(dispatch) {
+    return axios.delete(`/api/shoppingList/${name}`)
+      .then(() => {
+        dispatch(clearList())
+        dispatch(fetchShoppingList())
+      })
+  }
+}
+
+// add this functionality later
+
+// export function handleDeleteIng(item) {
+//   return function thunk(dispatch) {
+//     return axios.put(`/api/shoppingList/${item}`)
+//       .then(res => res.data)
+//       .then(shoppingListRecipe => {
+//         if (shoppingListRecipe !== 'Already added') {
+//           return axios.get(`http://api.yummly.com/v1/api/recipe/${recipe.id}?_app_id=${app_id}&_app_key=${app_key}`)
+//             .then(res => res.data)
+//             .then(recipeDetails => {
+//               dispatch(setShoppingList({ ingredients: shoppingListRecipe, recipeDetails: [{ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl }] }))
+//             })
+//         }
+//       })
+//   }
+// }
+
 /**
  * REDUCER
  */
-export default function (state = {ingredients: [], recipeDetails: []}, action) {
+export default function (state = { ingredients: [], recipeDetails: [] }, action) {
   switch (action.type) {
-    case SET_SHOPPING_LIST:
+    case ADD_TO_SHOPPING_LIST:
+      console.log('in reducer')
       const newList = state.ingredients.concat(action.recipe.ingredients)
       const newRecipeDetails = state.recipeDetails.concat(action.recipe.recipeDetails)
-      return {ingredients: newList, recipeDetails: newRecipeDetails}
+      return { ingredients: newList, recipeDetails: newRecipeDetails }
+
+    case CLEAR_LIST:
+      return { ingredients: [], recipeDetails: [] }
+
     default:
       return state
   }

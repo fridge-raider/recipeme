@@ -49,3 +49,18 @@ router.get('/', (req, res, next) => {
     })
     .catch(next)
 })
+
+router.delete('/:name', (req, res, next) => {
+  console.log('req.params.name', req.params.name, 'user', req.user.id)
+  Recipe.destroy({
+    where: {
+      userShoppingId: req.user.id,
+      name: req.params.name
+    }
+  })
+    .then((numDeleted) => {
+      console.log(numDeleted)
+      res.sendStatus(200)
+    })
+    .catch(next)
+})
