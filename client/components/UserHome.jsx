@@ -1,7 +1,6 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-<<<<<<< HEAD
 import { fetchFavoriteRecipes, 
   fetchCategoryOrderHistory, 
   fetchNutrientOrderHistory, 
@@ -10,10 +9,8 @@ import { fetchFavoriteRecipes,
   getRecipesByDefCategory, 
   getRecipesByIngredient, 
   fetchIngredientNames, 
+  fetchShoppingList,
   getRecipeDetails } from '../store'
-=======
-import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient, fetchIngredientNames, fetchShoppingList} from '../store'
->>>>>>> master
 import SearchBar from 'material-ui-search-bar'
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -23,47 +20,67 @@ import Divider from 'material-ui/Divider';
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
-<<<<<<< HEAD
 import Favorite from 'material-ui/svg-icons/action/favorite'
-// import store, { fetchFavoriteRecipes } from '../store'
-
-=======
 import ShoppingList from './ShoppingList.jsx'
->>>>>>> master
+
 
 /**
  * COMPONENT
  */
 export class UserHome extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      value: ''
+    }
+
+    this.renderSearch = this.renderSearch.bind(this)
+  }
 
   componentWillMount() {
     this.props.initialData()
+  }
+  renderSearch() {
+    return (
+
+      <SearchBar
+        style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
+        onChange={(value) => this.setState({search: value})}
+        onRequestSearch={() => console.log('hi')}
+        hintText="Search Favorite Recipes"
+        />
+    )
   }
 
 
   render() {
     const { favoriteRecipes } = this.props
+    const search = favoriteRecipes.filter((recipe) => {
+      return recipe.ingredientsList.includes(this.state.search)
+    })
+
     return (
       <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
         <div className="ui grid">
         <div className="row" style={{margin:0}}>
           <div className="four wide column">
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
-            <Subheader>Favorite Recipes<Favorite color="pink"/></Subheader>
-                <SearchBar 
-
-                  style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
-                  hintText="Search Favorite Recipes"
-                />
-             <List style={{maxHeight: 300, overflowY: "auto"}}>
-                { favoriteRecipes && favoriteRecipes.map((recipe) => {
-                  return ( 
-
-                  <ListItem
+            <Subheader style={{fontSize: 16}}>Favorite Recipes<Favorite color="pink"/></Subheader>
+              {this.renderSearch()}
+             <List style={{maxHeight: 350, overflowY: "auto"}}>
+              { (search.length) ? search.map(recipe => {
+                return (<ListItem
                     primaryText={recipe.name}
                     leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
                     onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
-                  /> )
+                  />) 
+                }) : favoriteRecipes.map(recipe => {
+                return (<ListItem
+                    primaryText={recipe.name}
+                    leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
+                    onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
+                  />)
                 })}
               </List>
               <Divider />
