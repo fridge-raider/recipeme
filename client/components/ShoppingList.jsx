@@ -38,11 +38,11 @@ class ShoppingList extends Component {
           this.props.shoppingList.recipeDetails.map(recipe => {
             return (
               <div key={recipe.name}>
-              <li style={{marginLeft: '15px'}}
+              <li style={{marginLeft: '15px', display: 'inline-block', float: 'left'}}
               onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>
               {recipe.name}
               </li>
-              <span style={{textAlign: 'right'}}>
+              <span style={{float: 'right', display: 'inline-block'}}>
               <Delete onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />
               </span>
               </div>
