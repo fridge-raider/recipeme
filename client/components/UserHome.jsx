@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+<<<<<<< HEAD
 import { fetchFavoriteRecipes, 
   fetchCategoryOrderHistory, 
   fetchNutrientOrderHistory, 
@@ -10,6 +11,9 @@ import { fetchFavoriteRecipes,
   getRecipesByIngredient, 
   fetchIngredientNames, 
   getRecipeDetails } from '../store'
+=======
+import {fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchDeficientCategories, fetchDeficientNutrients, getRecipesByDefCategory, getRecipesByIngredient, fetchIngredientNames, fetchShoppingList} from '../store'
+>>>>>>> master
 import SearchBar from 'material-ui-search-bar'
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -19,9 +23,13 @@ import Divider from 'material-ui/Divider';
 import {Grid, Container, Menu} from 'semantic-ui-react'
 import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
+<<<<<<< HEAD
 import Favorite from 'material-ui/svg-icons/action/favorite'
 // import store, { fetchFavoriteRecipes } from '../store'
 
+=======
+import ShoppingList from './ShoppingList.jsx'
+>>>>>>> master
 
 /**
  * COMPONENT
@@ -37,12 +45,13 @@ export class UserHome extends Component {
     const { favoriteRecipes } = this.props
     return (
       <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
-        <div className="ui grid"> 
+        <div className="ui grid">
         <div className="row" style={{margin:0}}>
           <div className="four wide column">
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
             <Subheader>Favorite Recipes<Favorite color="pink"/></Subheader>
                 <SearchBar 
+
                   style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
                   hintText="Search Favorite Recipes"
                 />
@@ -58,25 +67,8 @@ export class UserHome extends Component {
                 })}
               </List>
               <Divider />
-              <List>
-                <Subheader>Ingredients List</Subheader>
-                <ListItem
-                  primaryText="Cabbage"
-                />
-                <ListItem
-                  primaryText="Chicken"
-                />
-                <ListItem
-                  primaryText="Bread"
-                />
-                <ListItem
-                  primaryText="Cheese"
-                />
-                <ListItem
-                  primaryText="Pasta"
-                />
-              </List>
-            </Paper> 
+             <ShoppingList />
+            </Paper>
           </div>
           <div className="twelve wide column" style={{paddingRight:30}}>
           { !this.props.categoryHistory.length &&
@@ -87,7 +79,7 @@ export class UserHome extends Component {
             <GraphVisualizations />
           }
           </div>
-        </div> 
+        </div>
         </div>
       </div>
     )
@@ -117,6 +109,7 @@ const mapDispatch = (dispatch) => {
     initialData() {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
+      dispatch(fetchShoppingList())
       dispatch(fetchIngredientNames()) // can do this before logging in to speed up
       dispatch(fetchFavoriteRecipes())
     },

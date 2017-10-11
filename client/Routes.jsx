@@ -14,7 +14,7 @@ import {fetchFavoriteRecipes} from './store'
 class Routes extends Component {
   componentDidMount () {
     this.props.loadInitialData()
-    store.dispatch(fetchFavoriteRecipes(req.user.id))
+    //store.dispatch(fetchFavoriteRecipes(req.user.id))
   }
 
   render () {
@@ -22,6 +22,7 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
+
       { (this.props.isLoggedIn)
         ? (<div className ="container-fluid">
               <Main>

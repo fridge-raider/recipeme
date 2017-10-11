@@ -226,18 +226,6 @@ class GraphVisualizations extends Component {
                   </GridTile>
                 </GridList>
               </div>
-
-              {/*!!Object.keys(this.props.deficientCategories).length &&
-              <div>
-              <h2>You could use some more {this.props.deficientCategories.defCategory}!
-              <br/>
-              <RaisedButton color="blue"
-              onClick={(evt)=>this.props.handleCategoryClick(evt, this.props)}
-              >Get Recipes
-              </RaisedButton>
-              </h2>
-              </div>
-           */}
             </div>
 
           </Tab>
@@ -280,17 +268,6 @@ class GraphVisualizations extends Component {
                   </GridTile>
                 </GridList>
               </div>
-              {/*!!Object.keys(this.props.deficientNutrients).length &&
-        <div>
-        <h2>You could use some more {this.props.deficientNutrients.defNutrient}!
-        <RaisedButton
-        onClick={(evt)=>this.props.handleNutrientClick(evt, this.props)}
-        >Get Recipes
-        </RaisedButton>
-        </h2>
-        </div>
-      */}
-
             </div>
           </Tab>
         </Tabs>
