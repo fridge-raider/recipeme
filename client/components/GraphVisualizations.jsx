@@ -8,7 +8,6 @@ import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
 import * as d3 from 'd3';
-import d3Tip from 'd3-tip';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -154,7 +153,7 @@ class GraphVisualizations extends Component {
         div.style('visibility', 'hidden')
         .style('left', (mouseEvent-90)+"px")
         .style('bottom', (mouseEvent.pageY+10)+"px")
-      }) 
+      })
 
     d3.selectAll('#category_def_chart g.tick')
     .on('click', this.handleCategoryClick)
@@ -174,8 +173,8 @@ class GraphVisualizations extends Component {
     categoryLineDiv.setAttribute('id', 'category_line_chart');
 
     let body = d3.select(categoryLineDiv).append('div').attr('id', 'myDiv')
-    
-   
+
+
 
 
     let categoryPieDiv = ReactFauxDOM.createElement('div');
