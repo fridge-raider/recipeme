@@ -16,27 +16,36 @@ class FindRecipes extends Component {
     this.state = {
       mainIngredient: ''
     }
+
+    this.renderSearch = this.renderSearch.bind(this)
   }
 
   renderSearch() {
     return (
-      <SearchBar 
+      <SearchBar
         style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => {
           this.setState({mainIngredient: value})
           }}
-        onRequestSearch={(evt) => this.props.handleSubmit(evt, this.state.mainIngredient)} 
-        hintText="Enter your favorite ingredient!"
+        onRequestSearch={(evt) => {
+          this.props.handleSubmit(evt, this.state.mainIngredient)
+        }}
+        hintText="Begin new search by ingredient!"
         />
     )
   }
 
   render() {
-    const { getRecipes } = this.props
+    //const { getRecipes, autopopRecipes, deficientCategories } = this.props
     let counter = 0;
-    console.log(this.state)
     return (
       <Container fluid style={{ padding: '1em 2em' }}>
+        <h2>Recipes</h2>
+        {
+          !this.state.mainIngredient.length &&
+          <p style={{fontStyle: 'italic'}}>Auto-populated with recipes with {this.props.deficientCategories.defCategory.toLowerCase()} (your largest deficiency), based on past purchases</p>
+        }
+
         { this.renderSearch() }
         <br />
         <div style={styles.root}>
@@ -46,9 +55,15 @@ class FindRecipes extends Component {
           cellHeight={300}
           style={styles.gridList}
           >
-            { getRecipes && getRecipes.map(recipe => {
-              return <RecipeCard key={recipe.id} recipe={recipe} /> })
+            { !this.state.mainIngredient.length ?
+              this.props.autopopRecipes.map(recipe => {
+                return <RecipeCard key={recipe.id} recipe={recipe} />
+              })
+              :
+              this.props.getRecipes.map(recipe => {
+                return <RecipeCard key={recipe.id} recipe={recipe} /> })
             }
+
           </GridList>
         </div>
       </Container>
@@ -71,7 +86,9 @@ const styles = {
 
 const mapProps = (state) => {
   return {
-    getRecipes: state.getRecipes
+    getRecipes: state.getRecipes,
+    autopopRecipes: state.autopopRecipes,
+    deficientCategories: state.deficientCategories
   }
 }
 
@@ -79,7 +96,6 @@ const mapDispatch = (dispatch, ownProps) => {
   return {
     handleSubmit: (evt, ingred) => {
       dispatch(getRecipesByIngredient(ingred))
-      // evt.preventDefault()
     }
   }
 }
