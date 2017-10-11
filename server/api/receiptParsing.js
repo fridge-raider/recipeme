@@ -14,7 +14,6 @@ update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
 function receiptParsingMinDist(item) {
   let searchArr = allIngredients[item.name.charAt(0)];
   let min = item.name.length
-  //let scaledMin = 10000;
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
@@ -24,8 +23,7 @@ function receiptParsingMinDist(item) {
       }
     }
   }
-  //scaledMin = (min*min)*item.name.length
-  // console.log(item.name, item.name.length, scaledMin)
+  console.log(item.name, item.name.length)
   return min
 }
 
@@ -42,7 +40,10 @@ function receiptParsingInitial(text) {
           item.price = lines[i].match(priceRegex)[0];
           item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
           item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
-          if(parseFloat(item.price) > 15) item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          if(parseFloat(item.price) > 15) {
+            console.log("nulling cause of price", item.name, item.price)
+            item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          }
           item.name = item.name.replace(/[^\w\s]/, '');
           const tempName = item.name.replace(/\s/g, '');
           if (tempName.match(/^[0-9]*$/)) item.name = null
@@ -54,7 +55,7 @@ function receiptParsingInitial(text) {
           item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase();
           item.name.replace(/[^a-zA-Z]/gi, "");
           if(receiptParsingMinDist(item) > 0) {
-            console.log('item.name is being nulled', item.name)
+            console.log('nulling because not matching levenstien', item.name)
             item.name = null;
           }
           item.price = "0.00";
