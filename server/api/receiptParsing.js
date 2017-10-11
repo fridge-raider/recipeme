@@ -53,7 +53,10 @@ function receiptParsingInitial(text) {
           //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
           item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase();
           item.name.replace(/[^a-zA-Z]/gi, "");
-          if(receiptParsingMinDist(item) > 0) item.name = null;
+          if(receiptParsingMinDist(item) > 0) {
+            console.log('item.name is being nulled', item.name)
+            item.name = null;
+          }
           item.price = "0.00";
       }
       if (item.name && item.price) {
