@@ -8,7 +8,6 @@ import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
 import * as d3 from 'd3';
-import d3Tip from 'd3-tip';
 
 import { Tabs, Tab } from 'material-ui/Tabs'
 import getCategoryChart from './getCategoryChart.jsx'
@@ -198,7 +197,7 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <h2>Your Purchasing Dashboard</h2>
+        <h2 className="headings" style={{fontSize: 40}}>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}

@@ -40,7 +40,7 @@ class FindRecipes extends Component {
     let counter = 0;
     return (
       <Container fluid style={{ padding: '1em 2em' }}>
-        <h2>Recipes</h2>
+        <h2 style={{fontSize: 40}}>Recipes</h2>
         {
           !this.state.mainIngredient.length &&
           <p style={{fontStyle: 'italic'}}>Auto-populated with recipes with {this.props.deficientCategories.defCategory.toLowerCase()} (your largest deficiency), based on past purchases</p>

@@ -36,6 +36,8 @@ export class Navbar extends Component {
           <NavLink to='/home'>
             <span 
               onMouseEnter={(e) => this.handleMouseEnter()}
+              className='title'
+              style={{fontSize: 30, fontWeight: "bold"}}
             >RecipeMe</span>
           </NavLink>
         </Menu.Item></a>
