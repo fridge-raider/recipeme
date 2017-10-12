@@ -1,6 +1,6 @@
-//utils 
+//utils
 import _ from 'lodash'
-import * as moment from 'moment' 
+import * as moment from 'moment'
 
 //react-redux
 import React, {Component} from 'react'
@@ -8,9 +8,9 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import history from '../history'
 import ReceiptRow from './ReceiptRow.jsx'
-import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations, fetchIngredientNames} from '../store'
+import { setReceiptToOrderHistory, setFrequencyForItem, setReceiptToIngredients, setReceiptToRepresentations, fetchIngredientNames, fetchCategoryOrderHistory, fetchNutrientOrderHistory} from '../store'
 
-//UI-frameworks 
+//UI-frameworks
 import Dialog from 'material-ui/Dialog';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -29,7 +29,7 @@ class CheckReceiptIng extends Component {
     super(props)
     this.state = {
       open: true,
-      createdAt: Date.now(), 
+      createdAt: Date.now(),
       receipts: this.props.currentReceipt
     }
     this.handleClose = this.handleClose.bind(this)
@@ -43,7 +43,7 @@ class CheckReceiptIng extends Component {
   }
 
   componentWillMount() {
-    this.props.getAllIngredientNames();  
+    this.props.getAllIngredientNames();
   }
 
   render() {
@@ -63,7 +63,7 @@ class CheckReceiptIng extends Component {
         <TableHeaderColumn><h3>Item</h3></TableHeaderColumn>
         <TableHeaderColumn style={{width: 100}}><h3 style={{marginLeft:-20}}>Servings</h3></TableHeaderColumn>
         <TableHeaderColumn><h3>Category</h3></TableHeaderColumn>
-        <TableRowColumn style={{width:40}}></TableRowColumn> 
+        <TableRowColumn style={{width:40}}></TableRowColumn>
       </TableRow>
       </TableHeader>
       <TableBody displayRowCheckbox={false}>
@@ -96,37 +96,38 @@ class CheckReceiptIng extends Component {
     this.setState({open: false})
   }
 
-  handleDate(evt, val) { 
-    val = Date.parse(val); 
+  handleDate(evt, val) {
+    val = Date.parse(val);
     this.setState({createdAt: val})
   }
 
   confirmReceipt(e) {
-    e.preventDefault(); 
-    this.handleClose(); 
-    const orders = []; 
-    const ingredients = []; 
-    const reps = []; 
-    //re-naming keys and adding userId for easy mapping to OrderHistory table 
+    e.preventDefault();
+    this.handleClose();
+    const orders = [];
+    const ingredients = [];
+    const reps = [];
+    //re-naming keys and adding userId for easy mapping to OrderHistory table
     this.props.currentReceipt.forEach(order => {
       console.log(order);
       if(order.ingredientName !== "") {
         let orderHistoryInstance = { ingredientName: order.ing , userId: this.props.user.id, servings: order.servings, price: order.price, week: this.state.createdAt, createdAt: this.state.createdAt }
         let ingredientsInstance = {name: order.ing, category: order.category}
-        let repInstance = {name: order.rep, ingredientName: order.ing}; 
-        orders.push(orderHistoryInstance); 
-        ingredients.push(ingredientsInstance); 
-        reps.push(repInstance); 
+        let repInstance = {name: order.rep, ingredientName: order.ing};
+        orders.push(orderHistoryInstance);
+        ingredients.push(ingredientsInstance);
+        reps.push(repInstance);
       }
     })
-    this.props.confirmReceipt(orders, ingredients, reps); 
+    this.props.confirmReceipt(orders, ingredients, reps);
+    history.push('/home')
   }
 }
 
 const mapState = (state) => {
   return {
-    currentReceipt: state.currentReceipt, 
-    user: state.user, 
+    currentReceipt: state.currentReceipt,
+    user: state.user,
     ingredients: state.ingredients
   }
 }
@@ -135,15 +136,17 @@ const mapDispatch = (dispatch) => {
   return {
     confirmReceipt(orders, ingredients, reps) {
       dispatch(setReceiptToIngredients(ingredients))
-      dispatch(setReceiptToRepresentations(reps)); 
-      dispatch(setReceiptToOrderHistory(orders)); 
-    }, 
+      dispatch(setReceiptToRepresentations(reps));
+      dispatch(setReceiptToOrderHistory(orders));
+      dispatch(fetchCategoryOrderHistory());
+      dispatch(fetchNutrientOrderHistory());
+    },
     getAllIngredientNames() {
-      dispatch(fetchIngredientNames()); 
+      dispatch(fetchIngredientNames());
     }
   }
 }
 
-export default connect(mapState, mapDispatch)(CheckReceiptIng); 
+export default connect(mapState, mapDispatch)(CheckReceiptIng);
 
 

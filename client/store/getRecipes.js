@@ -2,8 +2,8 @@ import axios from 'axios'
 import Promise from 'bluebird'
 import history from '../history'
 
-const app_id = process.env.YUMMLY_ID
-const app_key = process.env.YUMMLY_KEY
+const app_id = "1bae5fc6"
+const app_key = "3eefade9510fd0f9d50fcfeb98587587"
 
 const GET_RECIPES = 'GET_RECIPES'
 

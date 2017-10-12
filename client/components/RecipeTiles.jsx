@@ -22,12 +22,15 @@ export class RecipeTiles extends React.Component {
 
     this.state = {
       hover: false,
-      open: false
+      open: false,
+      favOpen: false
     }
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
     this.handleClose = this.handleClose.bind(this)
+    this.handleFavClose = this.handleFavClose.bind(this)
     this.addRecipeToList = this.addRecipeToList.bind(this)
+    this.addFavorite = this.addFavorite.bind(this)
   }
 
   handleMouseEnter(e) {
@@ -42,9 +45,18 @@ export class RecipeTiles extends React.Component {
     this.setState({open: false})
   }
 
+  handleFavClose() {
+    this.setState({favOpen: false})
+  }
+
   addRecipeToList(evt, recipe) {
     this.setState({open: true})
     this.props.addRecipeToList(evt, recipe)
+  }
+
+  addFavorite(evt, recipe) {
+    this.setState({favOpen: true})
+    this.props.addToFavorites(evt, recipe)
   }
 
   render() {
@@ -59,6 +71,12 @@ export class RecipeTiles extends React.Component {
       label="Okay!"
       primary={true}
       onClick={this.handleClose}
+    />]
+
+    const favActions = [<FlatButton
+      label="Okay!"
+      primary={true}
+      onClick={this.handleFavClose}
     />]
 
     return (
@@ -93,12 +111,22 @@ export class RecipeTiles extends React.Component {
             Ingredients added!
             </Dialog>
           </IconButton>,
-          <IconButton 
-            key={`${recipe.id}-fave`} 
-            style={{ width: "none" }} 
+          <IconButton
+            key={`${recipe.id}-fave`}
+            style={{ width: "none" }}
             tooltip="Favorite"
-            onClick={(evt) => this.props.addToFavorites(evt, recipe)}
-          ><FavoriteBorder color="white" /></IconButton>]}
+            onClick={(evt) => this.addFavorite(evt, recipe)}
+          ><FavoriteBorder color="white" />
+          <Dialog
+          contentStyle={customContentStyle}
+          actions={favActions}
+          modal={false}
+          open={this.state.favOpen}
+          onRequestClose={this.handleFavClose}
+        >
+          Recipe added to favorites!
+          </Dialog>
+          </IconButton>]}
       >
         <img src={imageUrl}
           onClick={(evt) => this.props.handleClick(evt, recipe.id)} />

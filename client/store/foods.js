@@ -1,12 +1,6 @@
 import axios from 'axios'
-import secrets from '../../secrets'
 import history from '../history'
 import { getRecipesByDefNutr } from './getRecipes'
-
-const Yapp_id = process.env.YUMMLY_ID
-const Yapp_key = process.env.YUMMLY_KEY
-
-const NDBapp_key = process.env.NDB_KEY
 
 /**
  * ACTION TYPES

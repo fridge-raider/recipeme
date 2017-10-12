@@ -1,5 +1,4 @@
 import axios from 'axios'
-import secrets from '../../secrets'
 import history from '../history'
 
 /**
@@ -19,11 +18,9 @@ export const removeFavRecipe = recipe => ({type: REMOVE_FAV_RECIPE, recipe})
 //thunk
 export function fetchFavoriteRecipes() {
   return function thunk(dispatch) {
-    console.log('inthunk')
     return axios.get(`/api/favorites/`)
       .then(res => res.data)
       .then(recipes => {
-        console.log('inin thunk', recipes)
         dispatch(getFavRecipes(recipes));
       })
       .catch(console.log)
