@@ -64,13 +64,13 @@ class FavoritesList extends Component {
 
     return (
       <List style={{maxHeight: 350, overflowY: "auto"}}>
-        { (search.length) ? search.map(recipe => {
+        { (!search.length && search=='') ? favoriteRecipes.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
               leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
               onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
             />) 
-          }) : favoriteRecipes.map(recipe => {
+          }) : search.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
               leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}

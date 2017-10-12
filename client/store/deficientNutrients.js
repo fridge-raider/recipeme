@@ -1,11 +1,5 @@
 import axios from 'axios'
-import secrets from '../../secrets'
 import history from '../history'
-
-const Yapp_id = process.env.YUMMLY_ID
-const Yapp_key = process.env.YUMMLY_KEY
-
-const NBDapp_key = process.env.NBD_KEY
 
 /**
  * ACTION TYPES

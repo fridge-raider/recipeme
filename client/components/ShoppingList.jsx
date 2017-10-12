@@ -37,9 +37,8 @@ class ShoppingList extends Component {
           this.props.shoppingList.recipeDetails.map(recipe => {
             return (
               <div key={recipe.name}>
-              <li style={{display: 'inline-block', float: 'left', width:"100%"}}
-              onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>
-              {recipe.name}
+              <li style={{display: 'inline-block', float: 'left', width:"100%"}}>
+              <span onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>{recipe.name}</span>
               <Delete style={{float: 'right'}} onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />
               </li>
               </div>

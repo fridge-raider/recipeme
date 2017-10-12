@@ -2,8 +2,8 @@ import axios from 'axios'
 import Promise from 'bluebird'
 import history from '../history'
 
-const app_id = process.env.YUMMLY_ID
-const app_key = process.env.YUMMLY_KEY
+const app_id = "1bae5fc6"
+const app_key = "3eefade9510fd0f9d50fcfeb98587587"
 
 const GET_RECIPES = 'GET_RECIPES'
 
@@ -24,7 +24,6 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
     .then(ingredients => {
-      console.log('ingredients', ingredients)
       const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].ingredientName}&maxResult=75`)
       let ing2 = ''
       if (ingredients[1]) {

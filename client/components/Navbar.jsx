@@ -32,10 +32,15 @@ export class Navbar extends Component {
     return (
       <Menu size='large' color="grey" inverted secondary className='nav-bar' style={{height:60}}>
         <a><Menu.Item className='item'>
-          <img src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png' />
+          <img 
+            src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png'
+            onClick={(e) => this.props.handleClickImg()}
+          />
           <NavLink to='/home'>
             <span 
               onMouseEnter={(e) => this.handleMouseEnter()}
+              className='title'
+              style={{fontSize: 30, fontWeight: "bold"}}
             >RecipeMe</span>
           </NavLink>
         </Menu.Item></a>
@@ -66,6 +71,9 @@ const mapDispatch = (dispatch,ownProps) => {
     handleClick () {
       dispatch(getRecipes([]))
     },
+    handleClickImg () {
+      ownProps.history.push('/home')
+    }, 
     logout () {
       dispatch(logout())
       ownProps.history.push('/login')

@@ -20,12 +20,12 @@ export class ReceiptRow extends Component {
 
     // maintain local state for input while updating receipt
     this.state = {
-      newIng:  this.props.ingredient.ing, 
+      newIng:  this.props.ingredient.ing,
       ing: this.props.ingredient.ing,
       servings: 1,
       category: 8,
       category_str: this.props.ingredient.category,
-      price: this.props.ingredient.price, 
+      price: this.props.ingredient.price,
       rep: this.props.ingredient.rep
     }
 
@@ -40,7 +40,7 @@ export class ReceiptRow extends Component {
     let category = 8;
     if(this.props.ingredient.category === 'Grains') category = 0;
     else if(this.props.ingredient.category === 'Fruits') category = 1;
-    else if(this.props.ingredient.category === 'Vegtables') category = 2;
+    else if(this.props.ingredient.category === 'Vegetables') category = 2;
     else if(this.props.ingredient.category === 'Dairy') category = 3;
     else if(this.props.ingredient.category === 'Meat') category = 4;
     else if(this.props.ingredient.category === 'Nuts and Legumes') category = 5;
@@ -48,15 +48,15 @@ export class ReceiptRow extends Component {
     else if(this.props.ingredient.category === 'Added Sugars') category = 7;
     else if(this.props.ingredient.category === 'Unsure') category = 8;
 
-    this.setState({ category }); 
-     
+    this.setState({ category });
+
   }
 
   handleCategoryChange(evt, value) {
     let category_str = '';
     if(value === 0) category_str = 'Grains';
     else if(value === 1) category_str = 'Fruits';
-    else if(value === 2) category_str = 'Vegtables';
+    else if(value === 2) category_str = 'Vegetables';
     else if(value === 3) category_str = 'Dairy';
     else if(value === 4) category_str = 'Meat';
     else if(value === 5) category_str = 'Nuts and Legumes';
@@ -149,17 +149,17 @@ const mapDispatch = (dispatch) => {
   return {
     updateReceipt(state, row, receipt) {
 
-      let item = {ing: state.newIng, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep}; 
-      console.log(item); 
-      receipt[row] = item; 
+      let item = {ing: state.newIng, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep};
+      console.log(item);
+      receipt[row] = item;
 
       dispatch(setReceipt(receipt))
-    }, 
+    },
     removeItemReceipt(row, receipt, callback) {
       console.log(row, receipt)
-      receipt.splice(row, 1); 
-      dispatch(setReceipt(receipt)); 
-      callback(); 
+      receipt.splice(row, 1);
+      dispatch(setReceipt(receipt));
+      callback();
     }
   }
 }

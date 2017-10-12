@@ -3,7 +3,6 @@ const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
 const path = require('path')
-// const im = require('imagemagick');
 const ed = require('edit-distance');
 const allIngredients = require('../../ingredientNames.js')
 
@@ -13,8 +12,7 @@ update = (stringA, stringB) => { return stringA !== stringB ? 1 : 0; };
 
 function receiptParsingMinDist(item) {
   let searchArr = allIngredients[item.name.charAt(0)];
-  let min = 100
-  //let scaledMin = 10000;
+  let min = item.name.length
   if(searchArr) {
     for(let i=0; i<searchArr.length; i++) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
@@ -24,14 +22,14 @@ function receiptParsingMinDist(item) {
       }
     }
   }
-  //scaledMin = (min*min)*item.name.length
-  // console.log(item.name, item.name.length, scaledMin)
+  console.log(item.name, item.name.length)
   return min
 }
 
 // think about making this more modular - different functions for the if and else
 // make function names descriptive
 function receiptParsingInitial(text) {
+  console.log('text', text)
   const lines = text.split('\n');
   const cleanLines = [];
   const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
@@ -42,16 +40,24 @@ function receiptParsingInitial(text) {
           item.price = lines[i].match(priceRegex)[0];
           item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
           item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
-          if(parseFloat(item.price) > 15) item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          if(parseFloat(item.price) > 15) {
+            console.log("nulling cause of price", item.name, item.price)
+            item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+          }
           item.name = item.name.replace(/[^\w\s]/, '');
           const tempName = item.name.replace(/\s/g, '');
           if (tempName.match(/^[0-9]*$/)) item.name = null
           if (tempName.includes('total') || tempName.includes('cash') || tempName.includes('subtotal')) item.name = null
       } else if(lines[i].match(itemRegex)) {
+        console.log('match', lines[i].match(itemRegex))
+        console.log('lines', lines[i])
           //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
           item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase();
           item.name.replace(/[^a-zA-Z]/gi, "");
-          if(receiptParsingMinDist(item) > 0) item.name = null;
+          if(receiptParsingMinDist(item) > 0) {
+            console.log('nulling because not matching levenstien', item.name)
+            item.name = null;
+          }
           item.price = "0.00";
       }
       if (item.name && item.price) {
@@ -71,24 +77,13 @@ function returnCleanReceipt(imageName) {
     const options = {
       1: 'eng',
       psm: 4,
-      binary: '/usr/local/bin/tesseract',
+      //binary: '/usr/local/bin/tesseract',
       config: '../../receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
     }
 
-    //brew install imagemagick
-    // const preprocessPromise = new Promise(function(resolve, reject) {
-    //   //doesn't do anything but eventually want to get imagemagick configured with textcleaner to
-    //   //properly parse low quality, poorly angled, and wrinkled receipts
-    //   im.readMetadata(imageName, function(err, metadata){
-    //     if (err) reject(err);
-    //     console.log('Shot at '+metadata.exif.dateTimeOriginal);
-    //     resolve();
-    //   })
-    // })
-
     const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
-      tesseract.process(__dirname + '/' + imageName, function (err, text) {
+      tesseract.process(imageName, options, function (err, text) {
           if (err) {
               reject(err);
           } else {
@@ -105,9 +100,10 @@ function returnCleanReceipt(imageName) {
                       reject(err)
                   }
                   cleanLines = receiptParsingInitial(text);
-
+                  fs.unlink('receipt.txt')
                   resolve(cleanLines)
               })
+
           }
       });
     });
