@@ -3,7 +3,6 @@ const tesseract = require('node-tesseract');
 const {Ingredient, ReceiptRepresentation} = require('../db/models')
 const Promise = require('bluebird')
 const path = require('path')
-// const im = require('imagemagick');
 const ed = require('edit-distance');
 const allIngredients = require('../../ingredientNames.js')
 
@@ -81,17 +80,6 @@ function returnCleanReceipt(imageName) {
       config: '../../receipt' //add receipt configurations to usr/local/share/tessdata/configs or wherever /tessdata/configs is located on your machine
     }
 
-    //brew install imagemagick
-    // const preprocessPromise = new Promise(function(resolve, reject) {
-    //   //doesn't do anything but eventually want to get imagemagick configured with textcleaner to
-    //   //properly parse low quality, poorly angled, and wrinkled receipts
-    //   im.readMetadata(imageName, function(err, metadata){
-    //     if (err) reject(err);
-    //     console.log('Shot at '+metadata.exif.dateTimeOriginal);
-    //     resolve();
-    //   })
-    // })
-
     const tesseractPromise = new Promise(function (resolve, reject) {
       // Use tesseract to process a file image
       tesseract.process(imageName, function (err, text) {
@@ -111,9 +99,10 @@ function returnCleanReceipt(imageName) {
                       reject(err)
                   }
                   cleanLines = receiptParsingInitial(text);
-
+                  fs.unlink('receipt.txt')
                   resolve(cleanLines)
               })
+
           }
       });
     });
