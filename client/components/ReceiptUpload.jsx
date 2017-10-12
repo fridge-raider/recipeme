@@ -191,7 +191,6 @@ export class ReceiptUpload extends React.Component {
 const mapState = (state) => {
   return {
     currentReceipt: state.currentReceipt,
-    isLoading: state.isLoading,
     user: state.user
   }
 }

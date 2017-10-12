@@ -8,6 +8,8 @@ import { getRecipesByIngredient } from '../store'
 import SearchBar from 'material-ui-search-bar'
 import _ from 'lodash'
 import { GridList, GridTile } from 'material-ui/GridList';
+import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
+
 
 class Recipes extends Component {
   constructor(props) {
@@ -17,7 +19,7 @@ class Recipes extends Component {
       search: '',
       searchRecipes: [],
       value: '',
-      isLoading: false
+      isLoading: true
     }
 
     this.renderSearch = this.renderSearch.bind(this)
@@ -30,12 +32,20 @@ class Recipes extends Component {
         style={{borderRadius:25, maxWidth:"flex"}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={() => console.log('hi')}
-        hintText="Search by ingredient"
+        hintText="Filter by ingredient"
 
         />
     )
   }
 
+  componentWillReceiveProps(nextProps) {
+    console.log("inside props", nextProps.autopopRecipes);
+    console.log('this.props', this.props)
+    if (this.props !== nextProps) {
+      //checking product has been set from state to props -- error with .length off of null
+        this.setState({isLoading: false})
+    }
+  }
 
   render() {
     // add filtering and searching functionality !!!
@@ -52,7 +62,10 @@ class Recipes extends Component {
         <p style={{fontStyle: 'italic'}}>Based on your past purchases</p>
         { this.renderSearch() }
         <br /><br />
-
+        {
+          (this.state.isLoading)
+          ? (<Loader active inline='centered'>Loading Recipes!</Loader>)
+          : (
           <GridList
             cellHeight={300}
             style={styles.gridList}
@@ -65,6 +78,8 @@ class Recipes extends Component {
               return <RecipeCard key={recipe.id} recipe={recipe} /> })}
 
           </GridList>
+            )
+          }
 
 
       </Container>

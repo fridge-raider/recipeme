@@ -1,16 +1,16 @@
 import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { fetchFavoriteRecipes, 
-  fetchCategoryOrderHistory, 
-  fetchNutrientOrderHistory, 
-  fetchDeficientCategories, 
-  fetchDeficientNutrients, 
-  getRecipesByDefCategory, 
-  getRecipesByIngredient, 
-  fetchIngredientNames, 
+import { fetchFavoriteRecipes,
+  fetchCategoryOrderHistory,
+  fetchNutrientOrderHistory,
+  fetchDeficientCategories,
+  fetchDeficientNutrients,
+  getRecipesByDefCategory,
+  getRecipesByIngredient,
+  fetchIngredientNames,
   fetchShoppingList,
-  getRecipeDetails } from '../store'
+  getRecipeDetails, getRecipes } from '../store'
 import SearchBar from 'material-ui-search-bar'
 import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
@@ -115,6 +115,7 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchShoppingList())
       // dispatch(fetchIngredientNames()) // can do this before logging in to speed up
       dispatch(fetchFavoriteRecipes())
+      dispatch(getRecipes([]))
     },
     handleClick(evt, recipeId) {
       dispatch(getRecipeDetails(recipeId))
