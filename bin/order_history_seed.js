@@ -4,7 +4,6 @@ const id = 1;
 const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "alcohol"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "agave"},
-<<<<<<< HEAD
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "alfredo sauce"}, 
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "apple schnapps"}, 
 	{servings: 4, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "almond"}, 
@@ -40,7 +39,6 @@ const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chicken pieces"},
 	{servings: 7, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chili powder"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chipped beef"}, 
-=======
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "alfredo sauce"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "apple schnapps"},
 	{servings: 15, price: 3.35, week: new Date(Date.now()).getTime() - week, createdAt: Date.now() - week, userId: id, ingredientName: "cabbage"},
@@ -90,7 +88,6 @@ const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chicken pieces"},
 	{servings: 7, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chili powder"},
 	{servings: 5, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "chipped beef"},
->>>>>>> a9365b3b0c2f67ac1ed617d4ecfc171defedaa07
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "ciabatta"},
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "beets"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 3*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "cider vinegar"},
@@ -101,21 +98,13 @@ const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "coconut"},
 	{servings: 5, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "grapefruit"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "corn bread"},
-<<<<<<< HEAD
-
-=======
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "beets"},
->>>>>>> a9365b3b0c2f67ac1ed617d4ecfc171defedaa07
 	{servings: 5, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 3*week, userId: id, ingredientName: "sourdough"},
 	{servings: 8, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "sticky rice"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "clementine"},
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "nonfat milk"},
-<<<<<<< HEAD
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "corn bread"},
-
-=======
 	{servings: 4, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "corn bread"},
->>>>>>> a9365b3b0c2f67ac1ed617d4ecfc171defedaa07
 	{servings: 4, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "corn tortillas"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "cottage cheese"},
 	{servings: 9, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 4*week, userId: id, ingredientName: "crabmeat"},
@@ -125,15 +114,12 @@ const order_histories = [
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "crescent"},
 	{servings: 8, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "cherry"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "crostini"},
-<<<<<<< HEAD
 	{servings: 5, price: 3.35, week: new Date(Date.now()).getTime() - 4*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "grapefruit"},
-=======
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "beets"},
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "sourdough"},
 	{servings: 10, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "ciabatta"},
 	{servings: 15, price: 3.35, week: new Date(Date.now()).getTime() - 6*week, createdAt: Date.now() - 6*week, userId: id, ingredientName: "bran flakes"},
 	{servings: 5, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "grapefruit"},
->>>>>>> a9365b3b0c2f67ac1ed617d4ecfc171defedaa07
 	{servings: 7, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "sharp cheddar cheese"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 5*week, createdAt: Date.now() - 5*week, userId: id, ingredientName: "cucumber salad"},
 	{servings: 1, price: 3.35, week: new Date(Date.now()).getTime() - 6*week, createdAt: Date.now() - 6*week, userId: id, ingredientName: "date sugar"},
