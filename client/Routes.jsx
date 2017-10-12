@@ -12,9 +12,21 @@ import {fetchFavoriteRecipes} from './store'
  * COMPONENT
  */
 class Routes extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      isLoaded : false
+    }
+  }
   componentDidMount () {
     this.props.loadInitialData()
     //store.dispatch(fetchFavoriteRecipes(req.user.id))
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if(nextProps !== this.props) {
+      this.setState({isLoaded: true})
+    }
   }
 
   render () {
@@ -22,25 +34,25 @@ class Routes extends Component {
 
     return (
       <Router history={history}>
-
-      { (this.props.isLoggedIn)
-        ? (<div className ="container-fluid">
-              <Main>
-                <Navbar />
-                  <Switch>
-                    {/* Routes placed here are available to all visitors */}
-                    <Route path='/findrecipes' component={FindRecipes} />
-                    <Route path='/recipes/deficiencies' component={Recipes} />
-                    <Route path='/receipt' component={ReceiptUpload} />
-                    <Route path='/data' component={Data} />
-                    <Route path='/home' component={UserHome} />
-                    <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
-                    <Route path='/' component={UserHome} />
-                  </Switch>
-              </Main>
-            </div>)
-        : <Login />
-
+      {(this.state.isLoaded)
+        ? (this.props.isLoggedIn)
+            ? (<div className ="container-fluid">
+                  <Main>
+                    <Navbar />
+                      <Switch>
+                        {/* Routes placed here are available to all visitors */}
+                        <Route path='/findrecipes' component={FindRecipes} />
+                        <Route path='/recipes/deficiencies' component={Recipes} />
+                        <Route path='/receipt' component={ReceiptUpload} />
+                        <Route path='/data' component={Data} />
+                        <Route path='/home' component={UserHome} />
+                        <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
+                        <Route path='/' component={UserHome} />
+                      </Switch>
+                  </Main>
+                </div>)
+            : <Login />
+          : <div></div>
       }
       </Router>
     )
