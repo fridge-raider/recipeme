@@ -48,13 +48,13 @@ class Recipes extends Component {
     return (
       <Container fluid style={{padding: '1em 2em'}} >
 
-        <h2>Recommended Recipes</h2>
+        <h2 style={{fontSize: 40}}>Recommended Recipes</h2>
         <p style={{fontStyle: 'italic'}}>Based on your past purchases</p>
         { this.renderSearch() }
         <br /><br />
 
           <GridList
-            cellHeight={500}
+            cellHeight={300}
             style={styles.gridList}
             cols={3}
             padding={6}

@@ -64,12 +64,12 @@ export class UserHome extends Component {
         <div className="row" style={{margin:0}}>
           <div className="four wide column">
             <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
-            <Subheader style={{fontSize: 16}}>Favorite Recipes</Subheader>
+            <Subheader style={{fontSize: 18}}>Favorite Recipes</Subheader>
               {this.renderSearch()}
               <FavoritesList search={this.state.search}/>
               <Divider />
-            <Subheader style={{fontSize: 16}}>Shopping List</Subheader>
-             <ShoppingList />
+            <Subheader style={{fontSize: 18}}>Shopping List</Subheader>
+             <ShoppingList style={{padding: "0px, 0px"}}/>
             </Paper>
           </div>
           <div className="twelve wide column" style={{paddingRight:30}}>

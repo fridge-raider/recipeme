@@ -195,7 +195,7 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <h2>Your Purchasing Dashboard</h2>
+        <h2 className="headings" style={{fontSize: 40}}>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}

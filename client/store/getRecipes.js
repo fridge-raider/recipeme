@@ -24,7 +24,6 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
     .then(ingredients => {
-      console.log('ingredients', ingredients)
       const ing1 = axios.get(`http://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredients[0].ingredientName}&maxResult=75`)
       let ing2 = ''
       if (ingredients[1]) {
