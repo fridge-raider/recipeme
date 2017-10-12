@@ -115,18 +115,19 @@ class GraphVisualizations extends Component {
       padding: nutrientDeficientInfo.padding
     })
 
-    const div = d3.select('#app').insert('div')
-      .style('position', 'relative')
-      .style('background-color', '#484848')
-      .style('opacity', 0.8)
-      .style('border-style', 'solid')
-      .style('border-color', '#808080')
-      .style('display', 'inline-block')
-      .style('z-index', 999999)
+    let div; 
 
     d3.selectAll('#category_def_chart g.tick')
       .on('mouseover', (val) => {
-        console.log(val)
+        div = d3.select('#app').insert('div')
+        .style('position', 'relative')
+        .style('background-color', '#484848')
+        .style('opacity', 0.8)
+        .style('border-style', 'solid')
+        .style('border-color', '#808080')
+        .style('display', 'inline-block')
+        .style('z-index', 999999)
+
         let category = ''
         if(val === 0) category = 'grains'
         else if(val === 1) category = 'vegetables'
@@ -149,10 +150,7 @@ class GraphVisualizations extends Component {
           .style('color', '#ffffff')
       })
       .on('mouseout', () => {
-        let mouseEvent = categoryDeficitChart.internal.d3.event
-        div.style('visibility', 'hidden')
-        .style('left', (mouseEvent-90)+"px")
-        .style('bottom', (mouseEvent.pageY+10)+"px")
+        div.remove() 
       })
 
     d3.selectAll('#category_def_chart g.tick')
