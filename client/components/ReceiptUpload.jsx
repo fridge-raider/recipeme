@@ -12,18 +12,20 @@ import RaisedButton from 'material-ui/RaisedButton'
 import 'react-fine-uploader/gallery/gallery.css'
 import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
 import Dialog from 'material-ui/Dialog';
-import ErrorModal from './ErrorModal.jsx'; 
+import ErrorModal from './ErrorModal.jsx';
 import FloatingActionButton from 'material-ui/FloatingActionButton';
 import ContentAdd from 'material-ui/svg-icons/content/add';
-import DailyRecommendedModal from './DailyRecommendedModal.jsx' 
+import DailyRecommendedModal from './DailyRecommendedModal.jsx'
 import { setReceipt } from '../store'
 
+const bucket_name = 'groceryreceipts'
+const client_access_key = 'AKIAICX6Y4Q4M5VMOXSA'
 
 const uploader = new FineUploaderS3({
   options: {
       request: {
-          endpoint: `${process.env.BUCKET_NAME}.s3.amazonaws.com`,
-          accessKey: process.env.CLIENT_ACCESS_KEY,
+          endpoint: `${bucket_name}.s3.amazonaws.com`,
+          accessKey: client_access_key,
       },
       template: 'qq-template-s3',
       cors: {
@@ -58,10 +60,10 @@ export class ReceiptUpload extends React.Component {
     super(props);
 
     this.state = {
-      submittedFiles: [], 
-      isLoading: false, 
-      openError: false, 
-      openQuestion: false, 
+      submittedFiles: [],
+      isLoading: false,
+      openError: false,
+      openQuestion: false,
       isReceipt: true
     }
 
@@ -73,12 +75,12 @@ export class ReceiptUpload extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("inside receipt upload", nextProps.currentReceipt); 
+    console.log("inside receipt upload", nextProps.currentReceipt);
     if(this.props !== nextProps) {
       //checking product has been set from state to props -- error with .length off of null
       if(Array.isArray(nextProps.currentReceipt)) {
         this.setState({isLoading: false})
-      } 
+      }
       if(nextProps.currentReceipt.length === 0) {
         this.setState({openError: true})
       }
@@ -110,7 +112,7 @@ export class ReceiptUpload extends React.Component {
 
   handleSubmit(evt) {
     evt.preventDefault()
-    this.props.getReceipt() 
+    this.props.getReceipt()
     this.setState({isLoading: true})
   }
 
@@ -119,14 +121,14 @@ export class ReceiptUpload extends React.Component {
   }
 
   handleManualReceipt() {
-    console.log("hello"); 
+    console.log("hello");
     const manualItem = { ingredientName: "" , userId: this.props.user.id, servings: 1, price: 0.00, week: Date.now(), createdAt: Date.now() }
-    const manualReceipt = []; 
+    const manualReceipt = [];
     for(var i=0; i<5; i++) {
-      manualReceipt.push(manualItem); 
+      manualReceipt.push(manualItem);
     }
     this.setState({ isReceipt: false})
-    this.props.setUserReceipt(manualReceipt); 
+    this.props.setUserReceipt(manualReceipt);
   }
 
   isFileGone() {
@@ -142,8 +144,8 @@ export class ReceiptUpload extends React.Component {
   return (
     <div>
       {
-        (this.state.isLoading) 
-        ? (<Dimmer active><Loader indeterminate>Parsing Files, Be Back Shortly</Loader></Dimmer>) 
+        (this.state.isLoading)
+        ? (<Dimmer active><Loader indeterminate>Parsing Files, Be Back Shortly</Loader></Dimmer>)
         : (
           <div className="ui grid">
             <div className="one wide column"></div>
@@ -151,7 +153,7 @@ export class ReceiptUpload extends React.Component {
                       <div style={{width: 400, marginLeft: "auto", marginRight:"auto"}}>
                         <Container>
                         { (this.props.currentReceipt.length > 0)
-                          ? <CheckReceiptIng receipt={this.props.currentReceipt} isReceipt={this.state.isReceipt}/> 
+                          ? <CheckReceiptIng receipt={this.props.currentReceipt} isReceipt={this.state.isReceipt}/>
                           : <ErrorModal open={this.state.openError} title="Parsing Error" message="Your receipt could not be parsed. We are sorry from the bottom of our hearts. ♥ "/>
                         }
 
@@ -172,7 +174,7 @@ export class ReceiptUpload extends React.Component {
               <FloatingActionButton style={{marginTop: 15}} mini={true} onClick={this.handleOpenQuestion}>
                 ?
               </FloatingActionButton>
-            </div> 
+            </div>
 
             <DailyRecommendedModal open={this.state.openQuestion} />
 
@@ -188,8 +190,8 @@ export class ReceiptUpload extends React.Component {
 
 const mapState = (state) => {
   return {
-    currentReceipt: state.currentReceipt, 
-    isLoading: state.isLoading, 
+    currentReceipt: state.currentReceipt,
+    isLoading: state.isLoading,
     user: state.user
   }
 }
@@ -198,7 +200,7 @@ const mapDispatch = (dispatch) => {
   return {
     getReceipt() {
       dispatch(addReceipt())
-    }, 
+    },
     setUserReceipt(manualReceipt) {
       dispatch(setReceipt(manualReceipt))
     }
