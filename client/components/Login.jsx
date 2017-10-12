@@ -43,7 +43,7 @@ class Login extends Component {
     }
 
     const food1 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/FR5KGzul750E4SFIjmV6vUFphLzZn9TTDt6YMVi6L4_2XRspoubXNngHdp4B4hV1uvKmf0maNQVpPXUk6exh8w=s320-c-e365")`,
+      backgroundImage: `url("/homepage1.jpg")`,
       backgroundSize: "100%",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -52,7 +52,7 @@ class Login extends Component {
     }
 
     const food2 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/dTIMzMwlvF3_B2a254WRzrYqooxMwXBqnWY-Zcrv4fpR4i4TWHdZXqHbzB_q8fwOBOX2TaVYUlsS1huNHCxjzx8=s320-c-e365")`,
+      backgroundImage: `url("/homepage2.jpg")`,
       backgroundSize: "100%",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -61,7 +61,7 @@ class Login extends Component {
     }
 
     const food3 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/4VRowJtHAQ2BiCWKZczFf8rJ1L8m4N4u18FO5UzOHF2F0HiFZvSOH2ldeQo4XqkqiJOvK_E873ufYC2SFLMCQg=s320-c-e365")`,
+      backgroundImage: `url("/homepage3.jpg")`,
       backgroundSize: "100%",
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
@@ -70,7 +70,7 @@ class Login extends Component {
     }
 
     const food4 = {
-      backgroundImage: `url("https://lh3.googleusercontent.com/IcYpfainJZDHfnMJqLyJP1L4L1-zaCW-rHXZUAJf8NYTUDcLtf-ZiF-b8ufmNkhD91Uezpmw-YP4cuWgpFiR5A=s320-c-e365")`, 
+      backgroundImage: `url("/homepage4.jpg")`, 
       backgroundSize: "100%", 
       backgroundRepeat: "no-repeat", 
       backgroundSize: "cover", 
@@ -78,7 +78,7 @@ class Login extends Component {
       opacity: 1.5
     }
     const shade = {
-      backgroundImage: `url("https://static.pexels.com/photos/139321/pexels-photo-139321.jpeg")`,
+      backgroundImage: `url("/homepage_background.jpg")`,
       backgroundSize: "100%",
       backgroundSize: "cover"
     }
@@ -87,10 +87,10 @@ class Login extends Component {
       <div style={shade}>
         <div className="ui grid" style={{marginTop:-10}}>
           <div className="row" style={{minHeight:"50vh"}}>
-            <div className="four wide column olive" style={food1}><div style={shade}></div></div>
-            <div className="four wide column black" style={food2}> </div>
-            <div className="four wide column olive" style={food3}> </div>
-            <div className="four wide column black" style={food4}> </div>
+            <div className="four wide column" style={food1}><div style={shade}></div></div>
+            <div className="four wide column" style={food2}> </div>
+            <div className="four wide column" style={food3}> </div>
+            <div className="four wide column" style={food4}> </div>
           </div> 
 
           <div className="row blur" style={{minHeight:400, padding:0}}> 
