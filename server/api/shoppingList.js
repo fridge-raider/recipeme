@@ -6,14 +6,18 @@ module.exports = router
 
 // add recipe to shopping list
 router.post('/', (req, res, next) => {
+
   const shoppingRec = req.body.recipe
   Recipe.find({
     where: {
-      yummlyID: shoppingRec.id
+      yummlyID: shoppingRec.id,
+      userShoppingId: req.user.id
     }
   })
   .then(recipe => {
-    if (recipe) res.json('Already added')
+    if (recipe) {
+      res.json('Already added')
+    }
     else {
       Recipe.create({
         name: shoppingRec.recipeName,

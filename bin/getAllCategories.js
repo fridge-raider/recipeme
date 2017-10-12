@@ -7,11 +7,12 @@ const seed = () => {
 
 	// return Ingredient.findAll({
 	// 	where: {
-	// 		category: 'Sugars'
+	// 		category: 'Vegtables'
 	// 	}
 	// }).then(allIngredients => {
+	// 	console.log(allIngredients)
 	// 	let promises = allIngredients.map(ingred => {
-	// 		return ingred.update({category:'Added Sugars'})
+	// 		return ingred.update({category:'Vegetables'})
 	// 	})
 	// 	return Promise.all(promises)
 	// })
