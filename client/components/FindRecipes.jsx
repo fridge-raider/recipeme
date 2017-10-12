@@ -95,7 +95,7 @@ class FindRecipes extends Component {
         <div style={styles.root}>
         {
           (this.state.isLoading)
-          ? (<Dimmer active><Loader indeterminate inline>Loading Recipes, Be Back Shortly!</Loader></Dimmer>)
+          ? (<Loader active inline='centered'>Loading Recipes, Be Back Shortly!</Loader>)
           : (
 
           <GridList
