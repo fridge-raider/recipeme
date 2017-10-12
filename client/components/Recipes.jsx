@@ -64,7 +64,7 @@ class Recipes extends Component {
         <br /><br />
         {
           (this.state.isLoading)
-          ? (<Loader active inline='centered'>Loading Recipes, Be Back Shortly!</Loader>)
+          ? (<Loader active inline='centered'>Loading Recipes!</Loader>)
           : (
           <GridList
             cellHeight={500}
