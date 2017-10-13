@@ -60,7 +60,7 @@ class FindRecipes extends Component {
         />
         </Grid.Column>
         <Grid.Column>
-        <RaisedButton backgroundColor="#a4c639" style={{borderRadius:"25"}} onClick={(evt)=>this.handleSubmit(evt, this.state.mainIngredient)}>Find Recipes!</RaisedButton>
+        <RaisedButton backgroundColor='#E62342' style={{opacity: 0.7, marginTop: 5, paddingTop:2.5, paddingBottom: 2, borderRadius:50, paddingLeft:20, paddingRight:20, backgroundColor:"#E62342"}} onClick={(evt)=>this.handleSubmit(evt, this.state.mainIngredient)}><span style={{color:'white'}}>Find Recipes!</span></RaisedButton>
         </Grid.Column>
         </Grid.Row>
         </Grid>
