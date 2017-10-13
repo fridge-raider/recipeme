@@ -151,10 +151,13 @@ class GraphVisualizations extends Component {
       })
       .on('mouseout', () => {
         div.remove() 
+      }).on('click', (val) => {
+        div.remove()
+        this.props.handleCategoryClick(categories[val])
       })
 
-    d3.selectAll('#category_def_chart g.tick')
-    .on('click', this.handleCategoryClick)
+    // d3.selectAll('#category_def_chart g.tick')
+    // .on('click', this.handleCategoryClick)
 
     // add on click handler to nutrient def chart ticks
     d3.selectAll('#nutrient_def_chart .tick')
