@@ -4,23 +4,13 @@ import {connect} from 'react-redux'
 import { fetchFavoriteRecipes,
   fetchCategoryOrderHistory,
   fetchNutrientOrderHistory,
-  fetchDeficientCategories,
-  fetchDeficientNutrients,
-  getRecipesByDefCategory,
-  getRecipesByIngredient,
-  fetchIngredientNames,
   fetchShoppingList,
   getRecipeDetails, getRecipes } from '../store'
 import SearchBar from 'material-ui-search-bar'
-import {List, ListItem} from 'material-ui/List';
 import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
-import CommunicationChatBubble from 'material-ui/svg-icons/communication/chat-bubble';
 import Divider from 'material-ui/Divider';
-import {Grid, Container, Menu} from 'semantic-ui-react'
 import Paper from 'material-ui/Paper';
 import GraphVisualizations from './GraphVisualizations.jsx'
-import Favorite from 'material-ui/svg-icons/action/favorite'
 import ShoppingList from './ShoppingList.jsx'
 import FavoritesList from './FavoritesList.jsx'
 
@@ -47,7 +37,7 @@ export class UserHome extends Component {
     return (
 
       <SearchBar
-        style={{borderRadius:25, maxWidth:"90%", marginLeft:20, maxHeight:40, marginBottom:15}}
+        style={{borderRadius: '25px', maxWidth: '90%', marginLeft: '20px', maxHeight: '40px', marginBottom: '15px'}}
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={(value) => this.setState({submit: value})}
         hintText="Search Favorites"
@@ -59,17 +49,17 @@ export class UserHome extends Component {
   render() {
 
     return (
-      <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
+      <div style={{backgroundColor: '#F5F5F5', marginTop: -20}}>
         <div className="ui grid">
-        <div className="row" style={{margin:0}}>
+        <div className="row" style={{margin: 0}}>
           <div className="four wide column">
-            <Paper style={{height:"100%", width:"100%", marginLeft:10, overflowY:"scroll"}} zDepth={2}>
+            <Paper style={{height: '100%', width: '100%', marginLeft: '10px', overflowY: 'scroll'}} zDepth={2}>
             <Subheader style={{fontSize: 18}}>Favorite Recipes</Subheader>
               {this.renderSearch()}
-              <FavoritesList search={this.state.search}/>
+              <FavoritesList search={this.state.search} />
               <Divider />
             <Subheader style={{fontSize: 18}}>Shopping List</Subheader>
-             <ShoppingList style={{padding: "0px, 0px"}}/>
+             <ShoppingList style={{padding: '0px, 0px'}} />
             </Paper>
           </div>
           <div className="twelve wide column" style={{paddingRight:30}}>
@@ -113,7 +103,6 @@ const mapDispatch = (dispatch) => {
       dispatch(fetchCategoryOrderHistory())
       dispatch(fetchNutrientOrderHistory())
       dispatch(fetchShoppingList())
-      // dispatch(fetchIngredientNames()) // can do this before logging in to speed up
       dispatch(fetchFavoriteRecipes())
       dispatch(getRecipes([]))
     },
