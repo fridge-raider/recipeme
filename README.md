@@ -1,7 +1,7 @@
 # RecipeME
 
 ## Link to Site:
-https://obscure-headland-73376.herokuapp.com/
+http://obscure-headland-73376.herokuapp.com/
 
 ## Description
 A web application that provides recipes based on prior purchasing behavior and nutrient intake. Tracks and provides visualizations for nutrient and food group intake based on prior purchases. Includes functionality for uploading grocery receipts.

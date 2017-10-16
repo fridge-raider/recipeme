@@ -34,6 +34,7 @@ passport.deserializeUser((id, done) =>
     .catch(done))
 
 const createApp = () => {
+  console.log('im in create app')
   // logging middleware
   app.use(morgan('dev'))
 
@@ -52,15 +53,6 @@ const createApp = () => {
 
 
   app.use(cors(corsOptions))
-
-//   app.use('/s3', require('react-s3-uploader/s3router')({
-//     bucket: process.env.BUCKET_NAME,
-//     region: 'us-east-1', //optional,
-//     cors: true,
-//     headers: {'Access-Control-Allow-Origin': '*'}, // optional
-//     ACL: 'private', // this is default
-//     uniquePrefix: true // (4.0.2 and above) default is true, setting the attribute to false preserves the original filename in S3
-// }));
 
   // session middleware with passport
   app.use(session({
@@ -108,9 +100,16 @@ const syncDb = () => db.sync({force: false})
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  sessionStore.sync()
-    .then(syncDb)
-    .then(createApp)
+  console.log('in here')
+  // sessionStore.sync()
+  //   .then(() => {
+      console.log('syncing db')
+       syncDb()
+    //})
+    .then(() => {
+      console.log('creating app')
+      createApp()
+    })
     .then(startListening)
 } else {
   createApp()
