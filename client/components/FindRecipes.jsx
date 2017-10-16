@@ -80,7 +80,7 @@ class FindRecipes extends Component {
       subtitle = `Auto-populated with recipes with ${this.props.deficientCategories.defCategory.toLowerCase()} (your largest deficiency), based on past purchases`
     }
     else {
-      subtitle = `Auto-populated with recipes with ${this.props.deficientCategories.defCategory.toLowerCase()} (your largest deficiency)`
+      subtitle = `Auto-populated with recipes including popular ingredients`
     }
     return (
       <Container fluid style={{ padding: '1em 2em' }}>
