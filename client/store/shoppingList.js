@@ -66,31 +66,12 @@ export function removeRecipeFromList(name) {
   }
 }
 
-// add this functionality later
-
-// export function handleDeleteIng(item) {
-//   return function thunk(dispatch) {
-//     return axios.put(`/api/shoppingList/${item}`)
-//       .then(res => res.data)
-//       .then(shoppingListRecipe => {
-//         if (shoppingListRecipe !== 'Already added') {
-//           return axios.get(`http://api.yummly.com/v1/api/recipe/${recipe.id}?_app_id=${app_id}&_app_key=${app_key}`)
-//             .then(res => res.data)
-//             .then(recipeDetails => {
-//               dispatch(setShoppingList({ ingredients: shoppingListRecipe, recipeDetails: [{ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl }] }))
-//             })
-//         }
-//       })
-//   }
-// }
-
 /**
  * REDUCER
  */
 export default function (state = { ingredients: [], recipeDetails: [] }, action) {
   switch (action.type) {
     case ADD_TO_SHOPPING_LIST:
-      console.log('in reducer')
       const newList = state.ingredients.concat(action.recipe.ingredients)
       const newRecipeDetails = state.recipeDetails.concat(action.recipe.recipeDetails)
       return { ingredients: newList, recipeDetails: newRecipeDetails }
