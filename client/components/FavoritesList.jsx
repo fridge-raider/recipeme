@@ -1,16 +1,16 @@
+// libraries and packages
 import React, {Component} from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import { fetchFavoriteRecipes, getRecipeDetails } from '../store'
-import {List, ListItem} from 'material-ui/List';
-import Subheader from 'material-ui/Subheader';
-import Avatar from 'material-ui/Avatar';
 import { withRouter } from 'react-router'
 import FuzzySearch from 'fuzzysearch-js'
 import levenshteinFS from 'fuzzysearch-js/js/modules/LevenshteinFS'
 import indexOfFS from 'fuzzysearch-js/js/modules/IndexOfFS'
 import wordCountFS from 'fuzzysearch-js/js/modules/WordCountFS'
 
+import { getRecipeDetails } from '../store'
+
+import {List, ListItem} from 'material-ui/List';
+import Avatar from 'material-ui/Avatar';
 
 class FavoritesList extends Component {
   constructor(props) {
@@ -34,14 +34,13 @@ class FavoritesList extends Component {
     fuzzySearch.addModule(indexOfFS({'minTermLength': 3, 'maxIterations': 500, 'factor': 3}));
     fuzzySearch.addModule(wordCountFS({'maxWordTolerance': 3, 'factor': 1}));
 
-    const searchResult = fuzzySearch.search(this.props.search)
-    return searchResult
+    return fuzzySearch.search(this.props.search)
   }
 
   renderSearchValue(searchResult) {
     const { favoriteRecipes, search } = this.props
     let searchValues = []
-    if (searchResult) searchValues = searchResult.filter(result => result.score>500)
+    if (searchResult) searchValues = searchResult.filter(result => result.score > 500)
 
     let recipeSet = new Set()
     searchValues.forEach((value) => {
@@ -62,19 +61,19 @@ class FavoritesList extends Component {
     const search = this.renderSearchValue(searchResult)
 
     return (
-      <List style={{maxHeight: '350px', overflowY: "auto"}}>
-        { (!search.length && search=='') ? favoriteRecipes.map(recipe => {
+      <List style={{maxHeight: '350px', overflowY: 'auto'}}>
+        { (!search.length && search == '') ? favoriteRecipes.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
               key={recipe.name}
-              leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
+              leftAvatar={<Avatar size={40} style={{borderStyle: 'solid', borderColor: 'pink', borderWidth: 3}} src={recipe.image} />}
               onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
             />)
           }) : search.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
               key={recipe.name}
-              leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
+              leftAvatar={<Avatar size={40} style={{borderStyle: 'solid', borderColor: 'pink', borderWidth: 3}} src={recipe.image} />}
               onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
             />)
           })}

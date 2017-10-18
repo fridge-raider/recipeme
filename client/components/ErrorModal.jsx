@@ -11,7 +11,7 @@ class ErrorModal extends Component {
     this.state = {
       open: props.open
     }
-    this.handleClose = this.handleClose.bind(this); 
+    this.handleClose = this.handleClose.bind(this);
   }
 
   handleClose() {
@@ -20,16 +20,16 @@ class ErrorModal extends Component {
 
   render() {
     return (
-      <Dialog modal={false} 
-        open={this.state.open} 
+      <Dialog
+        modal={false}
+        open={this.state.open}
         title={this.props.title}
-        onRequestClose={this.handleClose} >
+        onRequestClose={this.handleClose}
+      >
       {this.props.message}
       </Dialog>
     )
   }
 }
 
-export default (ErrorModal); 
-
-
+export default (ErrorModal);

@@ -1,31 +1,22 @@
 //import * as d3 from 'd3';
 import c3 from 'c3';
+import * as d3 from 'd3';
 import React, { Component } from 'react';
 import ReactFauxDOM from 'react-faux-dom';
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+
 import { Container } from 'semantic-ui-react'
 import { Card, CardHeader } from 'material-ui/Card';
 import { GridList, GridTile } from 'material-ui/GridList';
-import * as d3 from 'd3';
-
 import { Tabs, Tab } from 'material-ui/Tabs'
+
 import getCategoryChart from './getCategoryChart.jsx'
 import getNutrientChart from './getNutrientChart.jsx'
 import getCategoryDeficientChart from './getCategoryDeficientChart.jsx'
 import getNutrientDeficientChart from './getNutrientDeficientChart.jsx'
-import RaisedButton from 'material-ui/RaisedButton'
 import history from '../history'
 import { getRecipesByDefCategory, fetchIDofDefNutrient, getRecipes } from '../store'
-
-const styles = {
-  headline: {
-    fontSize: 24,
-    paddingTop: 16,
-    marginBottom: 12,
-    fontWeight: 400,
-  }
-};
 
 const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fats and Oil", "Nuts and Legumes", "Added Sugars"]
 const nutrients = ['nf_total_fat', 'nf_saturated_fat', 'nf_total_carbohydrate', 'nf_dietary_fiber', 'nf_sugars', 'nf_protein']
@@ -56,13 +47,7 @@ class GraphVisualizations extends Component {
     this.props.handleNutrientClick(nutrients[nutrient])
   }
 
-  handleNutrientHover(nutrient) {
-    //this.props.handleNutrientClick(nutrients[nutrient])
-  }
-
   componentDidUpdate() {
-
-
 
     // CATEGORIES TAB CHARTS
     const { lineGraphObj, pieGraphObj } = getCategoryChart(this.props.categoryHistory)
@@ -115,33 +100,32 @@ class GraphVisualizations extends Component {
       padding: nutrientDeficientInfo.padding
     })
 
-    let div; 
+    let div;
 
     d3.selectAll('#category_def_chart g.tick')
       .on('mouseover', (val) => {
         div = d3.select('#app').insert('div')
-        .style('position', 'relative')
-        .style('background-color', '#484848')
-        .style('opacity', 0.8)
-        .style('border-style', 'solid')
-        .style('border-color', '#808080')
-        .style('display', 'inline-block')
-        .style('z-index', 999999)
+          .style('position', 'relative')
+          .style('background-color', '#484848')
+          .style('opacity', 0.8)
+          .style('border-style', 'solid')
+          .style('border-color', '#808080')
+          .style('display', 'inline-block')
+          .style('z-index', 999999)
 
         let category = ''
-        if(val === 0) category = 'grains'
-        else if(val === 1) category = 'vegetables'
-        else if(val === 2) category = 'fruits'
-        else if(val === 3) category = 'dairy'
-        else if(val === 4) category = 'meat'
-        else if(val === 5) category = 'fats and oils'
-        else if(val === 6) category = 'nuts and legumes'
-        else if(val === 7) category = 'added sugars'
+        if (val === 0) category = 'grains'
+        else if (val === 1) category = 'vegetables'
+        else if (val === 2) category = 'fruits'
+        else if (val === 3) category = 'dairy'
+        else if (val === 4) category = 'meat'
+        else if (val === 5) category = 'fats and oils'
+        else if (val === 6) category = 'nuts and legumes'
+        else if (val === 7) category = 'added sugars'
         let mouseEvent = categoryDeficitChart.internal.d3.event
-        console.log(mouseEvent)
         div.html('click for recipes with ' + category)
-          .style('left', (mouseEvent.pageX-90)+"px")
-          .style('bottom', (mouseEvent.pageY+10)+"px")
+          .style('left', (mouseEvent.pageX - 90) + "px")
+          .style('bottom', (mouseEvent.pageY + 10) + "px")
           .style('visibility', 'visible')
           .style('padding-left', '7px')
           .style('padding-right', '7px')
@@ -150,22 +134,17 @@ class GraphVisualizations extends Component {
           .style('color', '#ffffff')
       })
       .on('mouseout', () => {
-        div.remove() 
+        div.remove()
       }).on('click', (val) => {
         div.remove()
         this.props.handleCategoryClick(categories[val])
       })
 
-    // d3.selectAll('#category_def_chart g.tick')
-    // .on('click', this.handleCategoryClick)
-
-    // add on click handler to nutrient def chart ticks
+    // add on click handler to nutrient def chart ticks - would like to add tooltip here too
     d3.selectAll('#nutrient_def_chart .tick')
-    //.on('mouseover', this.handleNutrientHover)
-    .on('click', this.handleNutrientClick)
+      .on('click', this.handleNutrientClick)
 
   }
-
 
   render() {
 
@@ -175,15 +154,11 @@ class GraphVisualizations extends Component {
 
     let body = d3.select(categoryLineDiv).append('div').attr('id', 'myDiv')
 
-
-
-
     let categoryPieDiv = ReactFauxDOM.createElement('div');
     categoryPieDiv.setAttribute('id', 'category_pie_chart');
 
     let categoryDefDiv = ReactFauxDOM.createElement('div');
     categoryDefDiv.setAttribute('id', 'category_def_chart');
-
 
     // NUTRIENT TAB CHARTS
     let nutrientLineDiv = ReactFauxDOM.createElement('div');
@@ -198,7 +173,7 @@ class GraphVisualizations extends Component {
     return (
       <Container>
 
-        <h2 className="headings" style={{fontSize: 40}}>Your Purchasing Dashboard</h2>
+        <h2 className="headings" style={{ fontSize: 40 }}>Your Purchasing Dashboard</h2>
         <Tabs
           value={this.state.value}
           onChange={this.handleChange}
@@ -303,7 +278,7 @@ const mapProps = (state) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
   return {
     handleCategoryClick: (category) => {
       dispatch(getRecipes([]))

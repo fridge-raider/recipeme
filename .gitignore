@@ -3,6 +3,7 @@ secrets.js
 public/bundle.js
 public/bundle.js.map
 .DS_Store
+.eslintrc.json
 
 semantic
 semantic.json

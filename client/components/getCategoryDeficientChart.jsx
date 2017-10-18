@@ -1,6 +1,4 @@
 const categories = ["Grains", "Vegetables", "Fruits", "Dairy", "Meat", "Fats and Oil", "Nuts and Legumes", "Added Sugars"]
-import IconButton from 'material-ui/IconButton';
-import React, { Component } from 'react';
 
 export default function getCategoryDeficientChart(deficits, onClickHandler) {
 

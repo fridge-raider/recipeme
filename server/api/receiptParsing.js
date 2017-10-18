@@ -18,18 +18,13 @@ function receiptParsingMinDist(item) {
       var lev = ed.levenshtein(item.name, searchArr[i], insert, remove, update);
       if(lev.distance < min) {
         min = lev.distance;
-        //possibleWord = searchArr[i];
       }
     }
   }
-  console.log(item.name, item.name.length)
   return min
 }
 
-// think about making this more modular - different functions for the if and else
-// make function names descriptive
 function receiptParsingInitial(text) {
-  console.log('text', text)
   const lines = text.split('\n');
   const cleanLines = [];
   const priceRegex = /\$*\d+\s*[\.\,\-]\s*\d+\s*\w*\$*/;
@@ -41,21 +36,17 @@ function receiptParsingInitial(text) {
           item.name = lines[i].substring(0, lines[i].indexOf(item.price)).trim().toLowerCase();
           item.price = item.price.replace(',', '.').replace(/\s+/, '').replace(/([a-zA-Z])/, '');
           if(parseFloat(item.price) > 15) {
-            console.log("nulling cause of price", item.name, item.price)
-            item.price = null; //handles subtotal, total items that aren't handled by exact word matching, cleaning receipts should solve this problem
+            item.price = null; 
           }
           item.name = item.name.replace(/[^\w\s]/, '');
           const tempName = item.name.replace(/\s/g, '');
           if (tempName.match(/^[0-9]*$/)) item.name = null
           if (tempName.includes('total') || tempName.includes('cash') || tempName.includes('subtotal')) item.name = null
       } else if(lines[i].match(itemRegex)) {
-        console.log('match', lines[i].match(itemRegex))
-        console.log('lines', lines[i])
           //if we can get cleaner images with imagemagick, can use levenstein distaces to accuratly determine food items from other items
           item.name = lines[i].match(itemRegex)[0].replace(/[^a-zA-Z]/gi, "").trim().toLowerCase();
           item.name.replace(/[^a-zA-Z]/gi, "");
           if(receiptParsingMinDist(item) > 0) {
-            console.log('nulling because not matching levenstien', item.name)
             item.name = null;
           }
           item.price = "0.00";
@@ -88,10 +79,8 @@ function returnCleanReceipt(imageName) {
               reject(err);
           } else {
               // write the file image to a text file
-              console.log("hullo", text);
               fs.writeFileSync('receipt.txt', text, err => {
                   if (err) reject(err)
-                  console.log('file has beed saved')
               })
 
               // read in the text file and start cleaning
