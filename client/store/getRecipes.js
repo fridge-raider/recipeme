@@ -20,26 +20,11 @@ export const getRecipesByIngredient = (ingredient) => dispatch => {
 export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
-    .then(ingredients => {
-      const ing1 = axios.get(`/api/recipes/ingredient/${ingredients[0].ingredientName}`)
-      let ing2 = ''
-      if (ingredients[1]) {
-        ing2 = axios.get(`/api/recipes/ingredient/${ingredients[1].ingredientName}`)
-      }
-
-      Promise.all([ing1, ing2])
-        .then(promises => {
-          let recipes = []
-          promises.forEach(promise => {
-            if (promise) recipes = recipes.concat(promise.data.matches)
-          })
-          return recipes
-        })
-        .then(recipes => {
+    .then(recipes => {
           dispatch(getRecipes(recipes))
-         })
-      .catch(console.log)
-  })
+
+     })
+    .catch(console.log)
 }
 
 export const fetchIDofDefNutrient = (nutrient) => dispatch => {

@@ -1,23 +1,8 @@
-<<<<<<< HEAD
-import React, {Component} from 'react'
-import {connect} from 'react-redux'
-<<<<<<< HEAD
-import { fetchFavoriteRecipes, fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchShoppingList, getRecipeDetails, getRecipes } from '../store'
-=======
-import { fetchFavoriteRecipes,
-  fetchCategoryOrderHistory,
-  fetchNutrientOrderHistory,
-  fetchShoppingList,
-  getRecipeDetails, getRecipes } from '../store'
->>>>>>> master
-=======
 // libraries / packages
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 // UI
->>>>>>> clean-up
 import SearchBar from 'material-ui-search-bar'
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
