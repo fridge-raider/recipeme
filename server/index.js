@@ -10,7 +10,6 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const fs = require('fs');
-const socketio = require('socket.io')
 const cors = require('cors')
 
 module.exports = app
@@ -34,7 +33,6 @@ passport.deserializeUser((id, done) =>
     .catch(done))
 
 const createApp = () => {
-  console.log('im in create app')
   // logging middleware
   app.use(morgan('dev'))
 
@@ -87,10 +85,6 @@ const createApp = () => {
 const startListening = () => {
   // start listening (and create a 'server' object representing our server)
   const server = app.listen(PORT, () => console.log(`Mixing it up on port ${PORT}`))
-
-  // set up our socket control center
-  const io = socketio(server)
-  require('./socket')(io)
 }
 
 const syncDb = () => db.sync({force: false})
@@ -100,14 +94,11 @@ const syncDb = () => db.sync({force: false})
 // It will evaluate false when this module is required by another module - for example,
 // if we wanted to require our app in a test spec
 if (require.main === module) {
-  console.log('in here')
-  // sessionStore.sync()
-  //   .then(() => {
-      console.log('syncing db')
-       syncDb()
-    //})
+  sessionStore.sync()
     .then(() => {
-      console.log('creating app')
+       syncDb()
+    })
+    .then(() => {
       createApp()
     })
     .then(startListening)
