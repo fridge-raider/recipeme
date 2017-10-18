@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -30,7 +29,7 @@ export function setReceiptToOrderHistory(currentReceipt) {
     return axios.post(`/api/receipts/add`, {currentReceipt})
       .then(res => res.data)
       .then(succ => {
-        dispatch(setReceipt({})); 
+        dispatch(setReceipt({}));
       })
   }
 }

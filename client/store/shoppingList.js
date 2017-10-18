@@ -1,9 +1,6 @@
 import axios from 'axios'
 import Promise from 'bluebird'
 
-const app_id = "1bae5fc6"
-const app_key = "3eefade9510fd0f9d50fcfeb98587587"
-
 /**
  * ACTION TYPES
  */
@@ -23,7 +20,7 @@ export function addToShoppingList(recipe) {
       .then(res => res.data)
       .then(shoppingListRecipe => {
         if (shoppingListRecipe !== 'Already added') {
-          return axios.get(`http://api.yummly.com/v1/api/recipe/${recipe.id}?_app_id=${app_id}&_app_key=${app_key}`)
+          return axios.get(`/api/recipes/shoppinglist/${recipe.id}`)
             .then(res => res.data)
             .then(recipeDetails => {
               dispatch(addToList({ ingredients: shoppingListRecipe, recipeDetails: [{ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl }] }))
@@ -43,7 +40,7 @@ export function fetchShoppingList() {
         const recipes = []
 
         Promise.map(recipeIds, recipeId => {
-          return axios.get(`http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=${app_id}&_app_key=${app_key}`)
+          return axios.get(`/api/recipes/shoppinglist/${recipeId}`)
             .then(res => res.data)
             .then(recipeDetails => {
               recipes.push({ name: recipeDetails.name, url: recipeDetails.source.sourceRecipeUrl })

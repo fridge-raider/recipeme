@@ -114,8 +114,6 @@ export default function getNutrientChart(nutrientHistory) {
     lineGraphNutObj,
     pieGraphNutObj
   }
-
-
 }
 
 function begOfWeekDate(date) {

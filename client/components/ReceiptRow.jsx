@@ -72,7 +72,7 @@ export class ReceiptRow extends Component {
     this.setState({newIng: ingredient})
   }
 
-  handleNameChange(ingredient) {
+  handleNameChange() {
     this.props.updateReceipt(this.state, this.props.row, this.props.receipt)
   }
 
@@ -148,15 +148,12 @@ const mapState = (state) => {
 const mapDispatch = (dispatch) => {
   return {
     updateReceipt(state, row, receipt) {
-
       let item = {ing: state.newIng, servings: state.servings, price: state.price, category: state.category_str, rep: state.rep};
-      console.log(item);
       receipt[row] = item;
 
       dispatch(setReceipt(receipt))
     },
     removeItemReceipt(row, receipt, callback) {
-      console.log(row, receipt)
       receipt.splice(row, 1);
       dispatch(setReceipt(receipt));
       callback();

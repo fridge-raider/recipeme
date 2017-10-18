@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import { connect } from 'react-redux'
-import { withRouter, Link, NavLink } from 'react-router-dom'
-import { Container, Menu, Grid } from 'semantic-ui-react'
-import {getRecipes,logout} from '../store'
+import { withRouter, NavLink } from 'react-router-dom'
 
-const buttonStyle = {
-  backgroundColor: "rgba(0,0,0,0.06)"
-}
+import { Menu } from 'semantic-ui-react'
+
+import {getRecipes, logout} from '../store'
 
 export class Navbar extends Component {
   constructor(props) {
@@ -20,37 +17,37 @@ export class Navbar extends Component {
     this.handleMouseEnter = this.handleMouseEnter.bind(this)
     this.handleMouseLeave = this.handleMouseLeave.bind(this)
   }
-  handleMouseEnter(e) {
+  handleMouseEnter() {
     this.setState({ hover: true })
   }
 
-  handleMouseLeave(e) {
+  handleMouseLeave() {
     this.setState({ hover: false })
   }
 
   render() {
     return (
-      <Menu size='large' color="grey" inverted secondary className='nav-bar' style={{height:60}}>
-        <a><Menu.Item className='item'>
+      <Menu size="large" color="grey" inverted secondary className="nav-bar" style={{height: 60}}>
+        <Menu.Item className="item">
           <img
-            src='http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png'
-            onClick={(e) => this.props.handleClickImg()}
+            src="http://cdn.appstorm.net/android.appstorm.net/android/files/2013/08/Logo-Burpple1.png"
+            onClick={() => this.props.handleClickImg()}
           />
-          <NavLink to='/home'>
+          <NavLink to="/home">
             <span
-              onMouseEnter={(e) => this.handleMouseEnter()}
-              className='title'
-              style={{fontSize: 30, fontWeight: "bold"}}
+              onMouseEnter={() => this.handleMouseEnter()}
+              className="title"
+              style={{fontSize: 30, fontWeight: 'bold'}}
             >RecipeMe</span>
           </NavLink>
-        </Menu.Item></a>
-        <Menu.Item>
-          <NavLink to='/findrecipes' onClick={this.props.handleClick}>Find Recipes</NavLink>
         </Menu.Item>
         <Menu.Item>
-          <NavLink to='/receipt'>Upload Receipt</NavLink>
+          <NavLink to="/findrecipes" onClick={this.props.handleClick}>Find Recipes</NavLink>
         </Menu.Item>
-        <Menu.Menu position='right'>
+        <Menu.Item>
+          <NavLink to="receipt">Upload Receipt</NavLink>
+        </Menu.Item>
+        <Menu.Menu position="right">
         <Menu.Item>
           <div onClick={this.props.logout}>Logout</div>
         </Menu.Item>

@@ -1,5 +1,4 @@
 import axios from 'axios'
-import history from '../history'
 
 /**
  * ACTION TYPES
@@ -23,28 +22,6 @@ export function fetchDeficientNutrients(nutrientHistory) {
       })
   }
 }
-
-// export function fetchIDofDefNutrient(nutrient) {
-//   return function thunk(dispatch) {
-//     return axios.get(`/api/nutrients/${nutrient}`)
-//       .then(res => res.data)
-//       .then(defNutId => {
-//         return axios.get(`https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=${NBDapp_key}&nutrients=211&nutrients=328&nutrients=636&sort=c`)
-//       })
-//   }
-// }
-
-
-
-// export const getFoodsbyNutrient = (nutrient) => dispatch => {
-//   // return console.log(ingredient,'inreducer')
-//   return axios.get(`https://api.nal.usda.gov/ndb/nutrients/?format=json&api_key=${NBDapp_key}&nutrients=211&nutrients=328&nutrients=636&sort=c`)
-//     .then(res => res.data.foods)
-//     .then(recipes => {
-//       dispatch(getRecipes(recipes.matches))
-//     })
-//     .catch(console.log)
-// }
 
 /**
  * REDUCER

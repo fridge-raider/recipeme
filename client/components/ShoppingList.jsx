@@ -10,7 +10,6 @@ import {deleteIngredient, clearList, removeRecipeFromList} from '../store'
 class ShoppingList extends Component {
   constructor(props) {
     super(props)
-
     this.handleRecipeClick = this.handleRecipeClick.bind(this)
   }
 
@@ -24,9 +23,9 @@ class ShoppingList extends Component {
       <ul>
         <Subheader style={{marginLeft:'-15px'}}>Ingredients</Subheader>
         {
-          this.props.shoppingList.ingredients.map(item => {
+          this.props.shoppingList.ingredients.map((item, index) => {
             return (
-              <li key={item} style={{marginLeft: '15px'}}>{item}
+              <li key={index} style={{marginLeft: '15px'}}>{item}
               </li>
             )
           })
@@ -34,9 +33,9 @@ class ShoppingList extends Component {
         <br/>
         <Subheader>Recipes</Subheader>
         {
-          this.props.shoppingList.recipeDetails.map(recipe => {
+          this.props.shoppingList.recipeDetails.map((recipe, index) => {
             return (
-              <div key={recipe.name}>
+              <div key={index}>
               <li style={{display: 'inline-block', float: 'left', width:"100%"}}>
               <span onClick={(evt)=>this.handleRecipeClick(evt,recipe.url)}>{recipe.name}</span>
               <Delete style={{float: 'right'}} onClick={(evt)=>this.props.removeRecipe(evt,recipe.name)} />

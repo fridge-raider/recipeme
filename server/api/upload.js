@@ -79,7 +79,6 @@ router.get('/clean', (req, res, next) => {
                     var writeFileStream = fs.createWriteStream(filename)
 
                     request(url).pipe(writeFileStream).on('close', function () {
-                        console.log(url, 'saved to', filename)
                         returnCleanReceipt(filename)
                             .then(cleanLines => {
                                 getReceiptIngredients(cleanLines)
@@ -89,6 +88,8 @@ router.get('/clean', (req, res, next) => {
                                         })
                                         res.json(result)
                                     })
+                            }).then(() => {
+                                fs.unlink(filename); 
                             })
                     })
                 }
