@@ -4,7 +4,7 @@ import {Router} from 'react-router'
 import {Route, Switch} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import history from './history'
-import {Main, Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr, SideBar} from './components'
+import {Login, UserHome, Navbar, FindRecipes, ReceiptUpload, Data, Recipes, RecRecipesNutr, SideBar} from './components'
 import {me, fetchIngredientNames} from './store'
 import {fetchFavoriteRecipes} from './store'
 
@@ -37,7 +37,6 @@ class Routes extends Component {
       {(this.state.isLoaded)
         ? (this.props.isLoggedIn)
             ? (<div className ="container-fluid">
-                  <Main>
                     <Navbar />
                       <Switch>
                         {/* Routes placed here are available to all visitors */}
@@ -49,7 +48,6 @@ class Routes extends Component {
                         <Route path='/recnutrientrecipes' component={RecRecipesNutr} />
                         <Route path='/' component={UserHome} />
                       </Switch>
-                  </Main>
                 </div>)
             : <Login />
           : <div></div>

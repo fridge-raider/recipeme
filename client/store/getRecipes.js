@@ -40,7 +40,6 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
           dispatch(getRecipes(recipes))
 
       })
-    })
     .catch(console.log)
 }
 
