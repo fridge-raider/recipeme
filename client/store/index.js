@@ -8,13 +8,12 @@ import nutrientHistory from './nutrientHistory'
 import categoryHistory from './categoryHistory'
 import deficientCategories from './deficientCategories'
 import deficientNutrients from './deficientNutrients'
-import foods from './foods'
 import ingredients from './ingredients'
 import shoppingList from './shoppingList'
 import favoriteRecipes from './favoriteRecipes'
 import autopopRecipes from './autopopRecipes'
 
-const reducer = combineReducers({user, foods, getRecipes, currentReceipt, nutrientHistory, categoryHistory, deficientCategories, deficientNutrients, ingredients, shoppingList, favoriteRecipes, autopopRecipes})
+const reducer = combineReducers({user, getRecipes, currentReceipt, nutrientHistory, categoryHistory, deficientCategories, deficientNutrients, ingredients, shoppingList, favoriteRecipes, autopopRecipes})
 
 const middleware = applyMiddleware(thunkMiddleware, createLogger({collapsed: true}))
 const store = createStore(reducer, middleware)
@@ -27,7 +26,6 @@ export * from './nutrientHistory'
 export * from './categoryHistory'
 export * from './deficientNutrients'
 export * from './deficientCategories'
-export * from './foods'
 export * from './ingredients'
 export * from './shoppingList'
 export * from './favoriteRecipes'

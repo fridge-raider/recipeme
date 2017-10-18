@@ -21,6 +21,7 @@ export const getRecipesByIngredient = (ingredient) => dispatch => {
 export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
   return axios.get(`/api/recipes/${deficientCategory}`)
     .then(res => res.data)
+<<<<<<< HEAD
     .then(ingredients => {
       const ing1 = axios.get(`/api/recipes/ingredient/${ingredients[0].ingredientName}`)
       let ing2 = ''
@@ -37,10 +38,12 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
           return recipes
         })
         .then(recipes => {
+=======
+    .then(recipes => {
+>>>>>>> master
           dispatch(getRecipes(recipes))
 
       })
-    })
     .catch(console.log)
 }
 

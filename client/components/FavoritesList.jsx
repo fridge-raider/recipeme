@@ -15,7 +15,7 @@ import wordCountFS from 'fuzzysearch-js/js/modules/WordCountFS'
 class FavoritesList extends Component {
   constructor(props) {
     super(props)
-  
+
     this.state = {
       ingredients: []
     }
@@ -34,7 +34,7 @@ class FavoritesList extends Component {
     fuzzySearch.addModule(indexOfFS({'minTermLength': 3, 'maxIterations': 500, 'factor': 3}));
     fuzzySearch.addModule(wordCountFS({'maxWordTolerance': 3, 'factor': 1}));
 
-    const searchResult = fuzzySearch.search(this.props.search) 
+    const searchResult = fuzzySearch.search(this.props.search)
     return searchResult
   }
 
@@ -46,13 +46,12 @@ class FavoritesList extends Component {
     let recipeSet = new Set()
     searchValues.forEach((value) => {
       favoriteRecipes.forEach((recipe) => {
-        console.log('maybe',recipe.name, recipe.name.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1)
         if (recipe.ingredientsList.includes(value.value) || recipe.name.toLowerCase().indexOf(this.props.search.toLowerCase()) !== -1) {
           recipeSet.add(recipe)
         }
       })
     })
-    let recipeArr = Array.from(recipeSet)  
+    let recipeArr = Array.from(recipeSet)
     return recipeArr
   }
 
@@ -63,16 +62,18 @@ class FavoritesList extends Component {
     const search = this.renderSearchValue(searchResult)
 
     return (
-      <List style={{maxHeight: 350, overflowY: "auto"}}>
+      <List style={{maxHeight: '350px', overflowY: "auto"}}>
         { (!search.length && search=='') ? favoriteRecipes.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
+              key={recipe.name}
               leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
               onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
-            />) 
+            />)
           }) : search.map(recipe => {
           return (<ListItem
               primaryText={recipe.name}
+              key={recipe.name}
               leftAvatar={<Avatar size={40} style={{borderStyle: "solid", borderColor: "pink", borderWidth: 3}} src={recipe.image} />}
               onClick={(evt) => this.props.handleClick(evt, recipe.yummlyID)}
             />)

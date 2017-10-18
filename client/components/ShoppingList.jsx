@@ -20,7 +20,7 @@ class ShoppingList extends Component {
 
   render() {
     return (
-      <List style={{maxHeight: '400', overflowY: 'auto'}}>
+      <List style={{maxHeight: '400px', overflowY: 'auto'}}>
       <ul>
         <Subheader style={{marginLeft:'-15px'}}>Ingredients</Subheader>
         {

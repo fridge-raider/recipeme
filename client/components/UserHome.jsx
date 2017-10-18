@@ -1,6 +1,14 @@
 import React, {Component} from 'react'
 import {connect} from 'react-redux'
+<<<<<<< HEAD
 import { fetchFavoriteRecipes, fetchCategoryOrderHistory, fetchNutrientOrderHistory, fetchShoppingList, getRecipeDetails, getRecipes } from '../store'
+=======
+import { fetchFavoriteRecipes,
+  fetchCategoryOrderHistory,
+  fetchNutrientOrderHistory,
+  fetchShoppingList,
+  getRecipeDetails, getRecipes } from '../store'
+>>>>>>> master
 import SearchBar from 'material-ui-search-bar'
 import Subheader from 'material-ui/Subheader';
 import Divider from 'material-ui/Divider';
@@ -32,7 +40,11 @@ export class UserHome extends Component {
     return (
 
       <SearchBar
+<<<<<<< HEAD
         style={{borderRadius: 25, maxWidth: '90%', marginLeft: 20, maxHeight: 40, marginBottom: 15}}
+=======
+        style={{borderRadius: '25px', maxWidth: '90%', marginLeft: '20px', maxHeight: '40px', marginBottom: '15px'}}
+>>>>>>> master
         onChange={(value) => this.setState({search: value})}
         onRequestSearch={(value) => this.setState({submit: value})}
         hintText="Search Favorites"
@@ -44,11 +56,15 @@ export class UserHome extends Component {
   render() {
 
     return (
-      <div fluid style={{backgroundColor:'#F5F5F5', marginTop:-20}}>
+      <div style={{backgroundColor: '#F5F5F5', marginTop: -20}}>
         <div className="ui grid">
         <div className="row" style={{margin: 0}}>
           <div className="four wide column">
+<<<<<<< HEAD
             <Paper style={{height: '100%', width: '100%', marginLeft: 10, overflowY: 'scroll'}} zDepth={2}>
+=======
+            <Paper style={{height: '100%', width: '100%', marginLeft: '10px', overflowY: 'scroll'}} zDepth={2}>
+>>>>>>> master
             <Subheader style={{fontSize: 18}}>Favorite Recipes</Subheader>
               {this.renderSearch()}
               <FavoritesList search={this.state.search} />
