@@ -9,7 +9,11 @@ const app_id = process.env.YUMMLY_ID
 const app_key = process.env.YUMMLY_KEY
 
 router.get('/shoppinglist/:recipeId', (req, res, next) => {
-  
+  const recipeId = req.params.recipeId
+  return axios.get(`http://api.yummly.com/v1/api/recipe/${recipeId}?_app_id=${app_id}&_app_key=${app_key}`)
+    .then(res => res.data)
+    .then(list => res.json(list))
+    .catch(console.log)
 })
 
 router.get('/ingredient/:ingredient', (req, res, next) => {
