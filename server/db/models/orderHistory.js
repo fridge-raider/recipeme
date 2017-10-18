@@ -23,13 +23,12 @@ const OrderHistory = db.define('orderHistory', {
   },
   hooks: {
     beforeCreate: function(inst) {
-      // can return promises for testing (maybe)
       Frequency.findOrCreate({
         where: {
           userId: inst.userId,
           ingredientName: inst.ingredientName
         }
-      }).spread((item, created) => { // use ES6 to destructure array
+      }).spread((item, created) => { 
         if (created) {
           let freq = +inst.servings;
           item.update({ freq });
@@ -54,7 +53,6 @@ const OrderHistory = db.define('orderHistory', {
       })
     }
   },
-  // dont need "week" field anymore
   setterMethods: {
     week: function(val) {
       this.setDataValue('week', moment(val).week())

@@ -49,25 +49,6 @@ const strategy = new GoogleStrategy(googleConfig, (token, refreshToken, profile,
   apiVersion: '2006-03-01',
   params: {Bucket: process.env.BUCKET_NAME}
   });
-
- // Obtain AWS credentials
-//  AWS.config.credentials.get(function(){
-//     // Access AWS resources here.
-//  });
-// const data = {Key: "Receipt", Body: './Receipt1.jpg'};
-// s3.putObject(data, function(err, data){
-//   if (err)
-//     { console.log('Error uploading data: ', data);
-//     } else {
-//       console.log('succesfully uploaded the image!');
-//     }
-// });
-
-// const urlParams = {Bucket: process.env.BUCKET_NAME, Key: 'Receipt'};
-// s3.getSignedUrl('getObject', urlParams, function(err, url){
-//   console.log('the url of the image is', url);
-// })
-
   User.find({where: {googleId}})
     .then(user => user
       ? done(null, user)

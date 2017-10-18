@@ -4,5 +4,4 @@ const db = new Sequelize(
     logging: false
   }
 )
-console.log('db',db)
 module.exports = db
