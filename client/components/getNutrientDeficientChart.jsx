@@ -57,5 +57,4 @@ export default function getNutrientDeficientChart(deficits) {
 
   return chartObj
 
-
 }
