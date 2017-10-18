@@ -1,6 +1,5 @@
 import axios from 'axios'
 import Promise from 'bluebird'
-import history from '../history'
 
 const GET_RECIPES = 'GET_RECIPES'
 
@@ -40,10 +39,10 @@ export const getRecipesByDefCategory = (deficientCategory) => dispatch => {
           dispatch(getRecipes(recipes))
          })
       .catch(console.log)
+  })
 }
 
-export function fetchIDofDefNutrient(nutrient) {
-  return function thunk(dispatch) {
+export const fetchIDofDefNutrient = (nutrient) => dispatch => {
     return axios.get(`/api/nutrients/${nutrient}`)
       .then(res => res.data)
       .then(defNutId => {
@@ -69,9 +68,8 @@ export function fetchIDofDefNutrient(nutrient) {
 
       .catch(console.log)
       })
-
-  }
 }
+
 
 export const getRecipeDetails = (recipeId) => dispatch => {
   return axios.get(`/api/recipes/recipedetails/${recipeId}`)
@@ -83,8 +81,8 @@ export const getRecipeDetails = (recipeId) => dispatch => {
 }
 
 
-const getRecipesReducer = (state=[], action) => {
-  switch(action.type) {
+const getRecipesReducer = (state = [], action) => {
+  switch (action.type) {
     case GET_RECIPES:
       return action.recipes
     default:

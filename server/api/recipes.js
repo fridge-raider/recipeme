@@ -8,6 +8,10 @@ module.exports = router
 const app_id = process.env.YUMMLY_ID
 const app_key = process.env.YUMMLY_KEY
 
+router.get('/shoppinglist/:recipeId', (req, res, next) => {
+  
+})
+
 router.get('/ingredient/:ingredient', (req, res, next) => {
   const ingredient = req.params.ingredient
   return axios.get(`https://api.yummly.com/v1/api/recipes?_app_id=${app_id}&_app_key=${app_key}&requirePictures=true&allowedIngredient=${ingredient}&maxResult=50`)
