@@ -95,8 +95,6 @@ export default function getCategoryChart(categoryHistory) {
     }
   }
 
-
-
   const pieGraphObj = {
     padding: {
       top: 0,
@@ -119,11 +117,8 @@ export default function getCategoryChart(categoryHistory) {
     }
   }
 
-
   return {
     lineGraphObj,
     pieGraphObj
   }
-
-
 }

@@ -1,9 +1,7 @@
-import React, {Component} from 'react'
+import React, { Component } from 'react'
 import Dialog from 'material-ui/Dialog';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table'
-import {Toolbar, ToolbarGroup, ToolbarSeparator, ToolbarTitle} from 'material-ui/Toolbar';
-
-
+import { Table, TableBody, TableRow, TableRowColumn } from 'material-ui/Table'
+import { Toolbar, ToolbarTitle } from 'material-ui/Toolbar';
 
 /**
  * COMPONENT
@@ -15,26 +13,27 @@ class DailyRecommendedModal extends Component {
     this.state = {
       open: this.props.open
     }
-    this.handleClose = this.handleClose.bind(this); 
+    this.handleClose = this.handleClose.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
-    if(this.props !== nextProps) {
-      this.setState({open: nextProps.open})
+    if (this.props !== nextProps) {
+      this.setState({ open: nextProps.open })
     }
   }
 
   handleClose() {
-    this.setState({open: false})
+    this.setState({ open: false })
   }
 
   render() {
-    console.log("hello am i in here", this.props.open, this.state.open)
     return (
-      <Dialog modal={false} 
-        open={this.state.open} 
+      <Dialog
+        modal={false}
+        open={this.state.open}
         onRequestClose={this.handleClose}
-        autoScrollBodyContent={true}>
+        autoScrollBodyContent={true}
+      >
         <Toolbar default={true}>
           <ToolbarTitle text="Suggested Serving per Food Group" />
         </Toolbar>
@@ -50,7 +49,7 @@ class DailyRecommendedModal extends Component {
               <TableRowColumn>1 cup raw leafy vegetables</TableRowColumn>
               <TableRowColumn>1/2 cup cut-up raw</TableRowColumn>
             </TableRow>
-             <TableRow>
+            <TableRow>
               <TableRowColumn><h4>Fruits</h4></TableRowColumn>
               <TableRowColumn>1 medium (baseball size) fruit</TableRowColumn>
               <TableRowColumn>1/4 cup dried fruit</TableRowColumn>
@@ -80,13 +79,11 @@ class DailyRecommendedModal extends Component {
               <TableRowColumn>1 Tbsp sugar</TableRowColumn>
               <TableRowColumn>1 Tbsp jelly or jam</TableRowColumn>
             </TableRow>
-          </TableBody> 
+          </TableBody>
         </Table>
       </Dialog>
     )
   }
 }
 
-export default (DailyRecommendedModal); 
-
-
+export default (DailyRecommendedModal);

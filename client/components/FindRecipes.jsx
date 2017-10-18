@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
-import { NavLink } from 'react-router-dom'
-import { Card, Container, Form, Grid } from 'semantic-ui-react'
-import RecipeCard from './RecipeTiles.jsx'
-import { getRecipesByIngredient } from '../store'
-import { GridList, GridTile } from 'material-ui/GridList';
-import Subheader from 'material-ui/Subheader';
+
+import { Container, Grid, Loader } from 'semantic-ui-react'
+import { GridList } from 'material-ui/GridList';
 import SearchBar from 'material-ui-search-bar'
-import { Dimmer, Loader, Image, Segment } from 'semantic-ui-react'
-import {getRecipes} from '../store'
 import RaisedButton from 'material-ui/RaisedButton'
 
+import RecipeCard from './RecipeTiles.jsx'
+import { getRecipesByIngredient, getRecipes } from '../store'
+
+const styles = {
+  root: {
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+  },
+  gridList: {
+    width: 'flex',
+    height: 'flex',
+    overflowY: 'flex',
+  },
+};
 
 class FindRecipes extends Component {
   constructor(props) {
@@ -28,53 +38,47 @@ class FindRecipes extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log("inside props", nextProps.autopopRecipes);
-    console.log('this.props', this.props)
     if (this.props !== nextProps) {
-      //checking product has been set from state to props -- error with .length off of null
-        this.setState({isLoading: false})
+      this.setState({ isLoading: false })
     }
   }
 
   componentDidMount() {
-    console.log('in component did mount')
     if (this.props.autopopRecipes.length && !this.state.hasRequested) {
-      this.setState({isLoading: false})
+      this.setState({ isLoading: false })
     }
   }
 
   renderSearch() {
     return (
       <Grid columns={2}>
-      <Grid.Row>
-      <Grid.Column>
-      <SearchBar
-        style={{borderRadius:25, maxWidth:"flex"}}
-        onChange={(value) => {
-          this.setState({mainIngredient: value})
-          }}
-        onRequestSearch={(evt) => {
-          this.handleSubmit(evt, this.state.mainIngredient)
-        }}
-        hintText="Begin new search by ingredient!"
-        />
-        </Grid.Column>
-        <Grid.Column>
-        <RaisedButton backgroundColor='#E62342' style={{opacity: 0.7, marginTop: 5, paddingTop:2.5, paddingBottom: 2, borderRadius:50, paddingLeft:20, paddingRight:20, backgroundColor:"#E62342"}} onClick={(evt)=>this.handleSubmit(evt, this.state.mainIngredient)}><span style={{color:'white'}}>Find Recipes!</span></RaisedButton>
-        </Grid.Column>
+        <Grid.Row>
+          <Grid.Column>
+            <SearchBar
+              style={{ borderRadius: 25, maxWidth: 'flex' }}
+              onChange={(value) => {
+                this.setState({ mainIngredient: value })
+              }}
+              onRequestSearch={(evt) => {
+                this.handleSubmit(evt, this.state.mainIngredient)
+              }}
+              hintText="Begin new search by ingredient!"
+            />
+          </Grid.Column>
+          <Grid.Column>
+            <RaisedButton backgroundColor="#E62342" style={{ opacity: 0.7, marginTop: 5, paddingTop: 2.5, paddingBottom: 2, borderRadius: 50, paddingLeft: 20, paddingRight: 20, backgroundColor: '#E62342' }} onClick={(evt) => this.handleSubmit(evt, this.state.mainIngredient)}><span style={{ color: 'white' }}>Find Recipes!</span></RaisedButton>
+          </Grid.Column>
         </Grid.Row>
-        </Grid>
+      </Grid>
     )
   }
 
   handleSubmit(evt, mainIngredient) {
-    this.setState({isLoading: true, hasRequested: true})
+    this.setState({ isLoading: true, hasRequested: true })
     this.props.handleSubmit(evt, mainIngredient)
   }
 
   render() {
-    //const { getRecipes, autopopRecipes, deficientCategories } = this.props
-    let counter = 0;
     let subtitle = ''
     if (this.props.categoryHistory.length) {
       subtitle = `Auto-populated with recipes with ${this.props.deficientCategories.defCategory.toLowerCase()} (your largest deficiency), based on past purchases`
@@ -84,55 +88,42 @@ class FindRecipes extends Component {
     }
     return (
       <Container fluid style={{ padding: '1em 2em' }}>
-        <h2 style={{fontSize: 40}}>Recipes</h2>
+        <h2 style={{ fontSize: 40 }}>Recipes</h2>
         {
           !this.state.hasRequested &&
-          <p style={{fontStyle: 'italic'}}>{subtitle}</p>
+          <p style={{ fontStyle: 'italic' }}>{subtitle}</p>
         }
 
-        { this.renderSearch() }
+        {this.renderSearch()}
         <br />
         <div style={styles.root}>
-        {
-          (this.state.isLoading)
-          ? (<Loader active inline='centered'>Loading Recipes!</Loader>)
-          : (
-          <GridList
-          cols={3}
-          cellHeight={300}
-          style={styles.gridList}
-          >
-            { !this.state.hasRequested ?
-              this.props.autopopRecipes.map(recipe => {
-                return <RecipeCard key={recipe.id} recipe={recipe} />
-              })
-              :
-              this.props.getRecipes.map(recipe => {
-                return <RecipeCard key={recipe.id} recipe={recipe} /> })
-            }
-
-          </GridList>
-          )
-        }
+          {
+            (this.state.isLoading)
+              ? (<Loader active inline="centered">Loading Recipes!</Loader>)
+              : (
+                <GridList
+                  cols={3}
+                  cellHeight={300}
+                  style={styles.gridList}
+                >
+                  {!this.state.hasRequested ?
+                    this.props.autopopRecipes.map(recipe => {
+                      return <RecipeCard key={recipe.id} recipe={recipe} />
+                    })
+                    :
+                    this.props.getRecipes.map(recipe => {
+                      return <RecipeCard key={recipe.id} recipe={recipe} />
+                    })
+                  }
+                </GridList>
+              )
+          }
         </div>
 
       </Container>
     )
   }
 }
-
-const styles = {
-  root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-  },
-  gridList: {
-    width: 'flex',
-    height: 'flex',
-    overflowY: 'flex',
-  },
-};
 
 const mapProps = (state) => {
   return {
@@ -143,7 +134,7 @@ const mapProps = (state) => {
   }
 }
 
-const mapDispatch = (dispatch, ownProps) => {
+const mapDispatch = (dispatch) => {
   return {
     handleSubmit: (evt, ingred) => {
       dispatch(getRecipes([]))
