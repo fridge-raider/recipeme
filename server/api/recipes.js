@@ -2,12 +2,6 @@ const router = require('express').Router()
 const {Ingredient, Frequency} = require('../db/models')
 const Sequelize = require('sequelize')
 const axios = require('axios')
-<<<<<<< HEAD
-=======
-
-const app_id = process.env.YUMMLY_ID
-const app_key = process.env.YUMMLY_KEY
->>>>>>> master
 
 module.exports = router
 
